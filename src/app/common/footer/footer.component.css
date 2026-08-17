@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'CustomFont';
+    src: url('/assets/font/centurygothic.ttf');
+    /* src: url('/assets/font/inter.regular.ttf'); */
+}
+strong{
+    font-family: 'CustomFont';
+}

@@ -1,0 +1,370 @@
+<br><br>
+<div class="container">
+    <br>
+    <h1>All Vendor Data</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="container">
+                <br>
+                <h5>Add New Vendor: </h5>
+                <div class="card">
+                    <div class="card-body">
+                        <form [formGroup]="AddVendorForm" (submit)="AddVendor()">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Vendor Name :<sup>*</sup> </label>
+                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" formControlName="Vendor_Name"
+                                    placeholder="Enter Vendor Name" [ngClass]="{'is-invalid': (submitted || AddVendorForm.get('Vendor_Name')?.touched) &&
+                  AddVendorForm.get('Vendor_Name')?.invalid }">
+
+                                <div class="invalid-feedback" *ngIf="(submitted || AddVendorForm.get('Vendor_Name')?.touched) &&
+            AddVendorForm.get('Vendor_Name')?.errors?.['required']">
+                                    Vendor Name is required.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Vendor Phone No :<sup>*</sup>
+                                </label>
+                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" formControlName="Vendor_Phoneno"
+                                    placeholder="Enter Vendor Phone No" [ngClass]="{'is-invalid': (submitted || AddVendorForm.get('Vendor_Phoneno')?.touched) &&
+                  AddVendorForm.get('Vendor_Phoneno')?.invalid }">
+
+                                <div class="invalid-feedback" *ngIf="(submitted || AddVendorForm.get('Vendor_Phoneno')?.touched) &&
+                AddVendorForm.get('Vendor_Phoneno')?.errors?.['required']">
+                                    Vendor Phoneno is required.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Vendor Email :<sup>*</sup> </label>
+                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" formControlName="Vendor_Email"
+                                    placeholder="Enter Vendor Email" [ngClass]="{'is-invalid': (submitted || AddVendorForm.get('Vendor_Email')?.touched) &&
+                  AddVendorForm.get('Vendor_Email')?.invalid }">
+
+                                <div class="invalid-feedback" *ngIf="(submitted || AddVendorForm.get('Vendor_Email')?.touched) &&
+                AddVendorForm.get('Vendor_Email')?.errors?.['required']">
+                                    Vendor Email is required.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label"> Company Name :<sup>*</sup> </label>
+                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" formControlName="Vendor_CompanyName"
+                                    placeholder="Enter Company Name" [ngClass]="{'is-invalid': (submitted || AddVendorForm.get('Vendor_CompanyName')?.touched) &&
+                  AddVendorForm.get('Vendor_CompanyName')?.invalid }">
+
+                                <div class="invalid-feedback" *ngIf="(submitted || AddVendorForm.get('Vendor_CompanyName')?.touched) &&
+                AddVendorForm.get('Vendor_CompanyName')?.errors?.['required']">
+                                    Vendor Company Name is required.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">GST_No :<sup>*</sup> </label>
+                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" formControlName="VendorGST_No"
+                                    placeholder="Enter Vendor GST_No" [ngClass]="{'is-invalid' : (submitted || AddVendorForm.get('VendorGST_No')?.touched) && 
+                                    AddVendorForm.get('VendorGST_No')?.invalid}">
+
+                                <div class="invalid-feedback"
+                                    *ngIf="(submitted || AddVendorForm.get('VendorGST_No')?.touched) && AddVendorForm.get('VendorGST_No')?.errors?.['required']">
+                                    Vendor GST No is required.
+                                </div>
+
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Company Address :
+                                    <sup>*</sup></label>
+                                <textarea type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" formControlName="Vendor_CompanyAddress"
+                                    placeholder="Enter Company Address" [ngClass]="{'is-invalid' : (submitted || AddVendorForm.get('Vendor_CompanyAddress')?.touched)&&
+                                        AddVendorForm.get('Vendor_CompanyAddress')?.invalid}"></textarea>
+
+                                <div class="invalid-feedback"
+                                    *ngIf="(submitted || AddVendorForm.get('Vendor_CompanyAddress')?.touched)&& AddVendorForm.get('Vendor_CompanyAddress')?.errors?.['required']">
+                                    Vendor Company Address is required.
+                                </div>
+
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Vendor_Status">Status :<sup>*</sup> </label>
+                                <select class="form-select form-select-sm" formControlName="Vendor_Status"
+                                    aria-label="select example">
+                                    <option value="Active">Active</option>
+                                    <option value="InActive">InActive </option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-success">Add Vendor </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <br><br>
+            <div class="container">
+
+                <div class="row">
+                    <h5>Search Vendor Data : </h5>
+                    <br>
+                    <div class="col-md-6">
+                        <label for="Vendor_Name"> <b>Select Vendor Name.</b> <br>
+                            <select name="Vendor_Name" id="Vendor_Name" [(ngModel)]="Vendor_Name" class="form-select"
+                                placeholder="Select Vendor_Name" aria-label="Multiple select example">
+                                <option *ngFor="let b of AllVendor" [value]="b.Vendor_Name">
+                                    {{b.Vendor_Name}}</option>
+                            </select>
+                        </label>
+                        <button style="margin-left: 3%;" class="btn btn-success"
+                            (click)="SearchdatabyvendorName()">Search</button>
+                        <button class="btn btn-secondary" (click)="Vendors()" title="Reset All Data"><i
+                                class="fa-solid fa-arrows-rotate"></i></button>
+                        <br>
+                    </div>
+                    <br>
+                    <div class="col-md-6">
+                        <label for="Vendor_CompanyName"> <b>Select Company Name .</b> <br>
+                            <select name="Vendor_CompanyName" id="Vendor_CompanyName" [(ngModel)]="Vendor_CompanyName"
+                                class="form-select" placeholder="Select Company Name"
+                                aria-label="Multiple select example">
+                                <option *ngFor="let b of AllVendor" [value]="b.Vendor_CompanyName">
+                                    {{b.Vendor_CompanyName}}</option>
+                            </select>
+                        </label>
+                        <button style="margin-left: 3%;" class="btn btn-success"
+                            (click)="searchbycomapnyname()">Search</button>
+                        <button class="btn btn-secondary" (click)="Vendors()" title="Reset All Data"><i
+                                class="fa-solid fa-arrows-rotate"></i></button>
+                        <br>
+                    </div>
+                    <br>
+                    <div class="col-md-5"> <br>
+                        <label for="Vendor_Status"> <b>Select Vendor Status.</b> <br>
+                            <select name="Vendor_Status" id="Vendor_Status" [(ngModel)]="Vendor_Status"
+                                class="form-select" placeholder="Select Vendor_Status"
+                                aria-label="Multiple select example">
+                                <option value="Active">Active</option>
+                                <option value="InActive">InActive</option>
+                            </select>
+                        </label>
+                        <button style="margin-left: 3%;" class="btn btn-success"
+                            (click)="Searchbystatus()">Search</button>
+                        <button class="btn btn-secondary" (click)="Vendors()" title="Reset All Data"><i
+                                class="fa-solid fa-arrows-rotate"></i></button>
+                        <br>
+                    </div>
+                    <br>
+                    <div class="col-md-5"> <br>
+                        <label for="Added_Date"> <b>Select Date .</b></label> <br>
+                        <input type="date" [(ngModel)]="Added_Date" value="Added_Date">
+
+                        <button style="margin-left: 3%;" class="btn btn-success"
+                            (click)="Searchbydate()">Search</button>
+                        <button class="btn btn-secondary" (click)="Vendors()" title="Reset All Data"><i
+                                class="fa-solid fa-arrows-rotate"></i></button><br>
+                    </div>
+                    <br>
+                    <div class="col-md-2"> <br>
+                        <label for=""><b>Download</b> </label>
+                        <br> <button class="btn btn-success" (click)="exportexcel()" title="Download excelfile"><i
+                                class="fa-solid fa-file-arrow-down"></i></button>
+                    </div>
+                </div>
+
+                <br>
+                <h5>All Vendor Data : </h5>
+                <br>
+                <div class="row" *ngIf="AllVendor.length == 0">
+                    <div class="text-center">
+                        <h2>Vendor Not Found</h2>
+                        <p>Please remove your filters to view all Vendors.</p> <br>
+                        <button class="btn btn-success" (click)="Vendors()">All VendorData</button>
+                    </div>
+                </div>
+
+
+                <div class="row" *ngIf="AllVendor.length > 0 ">
+                    <div class="col-md-6 cols"
+                        *ngFor="let Vendor of AllVendor | paginate :{itemsPerPage :2 ,currentPage:pro}">
+                        <div class="card">
+                            <div class="card-body">
+                                <td style="float: right;">
+                                    <a type="button" (click)="editVendor(Vendor.Vendor_id)" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal1" title="Edit a Vendor">
+                                        <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                                    </a>
+                                    <span style="margin-left:15px;cursor:pointer;">
+
+                                        <!-- <a (click)="openDeleteModal(Vendor.Vendor_id)" title="Delete Vendor">
+                                            <i class="fa-solid fa-trash-can text-danger"></i>
+                                        </a> -->
+
+                                        <a data-bs-toggle="modal" data-bs-target="#deleteVendorModal"
+                                            (click)="openDeleteModal(Vendor.Vendor_id)">
+                                            <i class="fa-solid fa-trash-can text-danger"></i>
+                                        </a>
+                                    </span>
+                                    <!-- <span style="margin-left:15px;cursor: pointer;" +.><a (click)="DeleteVendor(Vendor.Vendor_id)"
+                                title="Delete a Vendor"> <i class="fa-solid fa-trash-can"></i></a></span> -->
+                                </td>
+                                <br>
+                                <p>
+                                    <b>Code :</b> {{Vendor.Vendor_Code}} <br>
+                                    <b>Vendor Name :</b> {{Vendor.Vendor_Name}} <br>
+                                    <b>Company Name :</b> {{Vendor.Vendor_CompanyName}} <br>
+                                    <b>GST_NO :</b> {{Vendor.VendorGST_No}} <br>
+                                    <b>Company Address :</b> {{Vendor.Vendor_CompanyAddress}} <br>
+                                    <b>PhoneNo. :</b> {{Vendor.Vendor_Phoneno}} <br>
+                                    <b>Email :</b> {{Vendor.Vendor_Email}} <br>
+                                    <b>Added Date :</b> {{Vendor.Added_Date | date}} <br>
+                                    <b>Added Time :</b> {{Vendor.Added_Date | date :'hh:ss:mm a'}} <br>
+                                    <b>Updated Date : </b>{{Vendor.Updated_Date | date}} <br>
+                                    <b>Updated Time : </b> {{Vendor.Updated_Date | date :'hh:ss:mm a'}} <br>
+                                    <b>Status :</b> {{Vendor.Vendor_Status}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="text-center">
+                        <br><pagination-controls (pageChange)=" pro = $event "
+                            style="background-color: #252847 !important; z-index: -2 !important;"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<br><br>
+
+<!-- Update Modal-->
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Vendor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+
+                    <form [formGroup]="UpdateVendorForm">
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Vendor Name : </label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                formControlName="Vendor_Name" placeholder="Enter Vendor Name">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="exampleInputEmail1" class="form-label">Vendor Phone No : </label>
+                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" formControlName="Vendor_Phoneno"
+                                    placeholder="Enter Vendor Phone No">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="exampleInputEmail1" class="form-label">Vendor Email : </label>
+                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" formControlName="Vendor_Email"
+                                    placeholder="Enter Vendor Email">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label"> Company Name : </label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                formControlName="Vendor_CompanyName" placeholder="Enter Company Name">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Company Address : </label>
+                            <textarea type="text" class="form-control" id="exampleInputEmail1"
+                                aria-describedby="emailHelp" formControlName="Vendor_CompanyAddress"
+                                placeholder="Enter Company Address"></textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">GST_No : </label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" formControlName="VendorGST_No"
+                                        placeholder="Enter Vendor GST_No">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="Vendor_Status">Status : </label>
+                                    <select class="form-select form-select-md" formControlName="Vendor_Status"
+                                        aria-label="select example">
+                                        <option value="Active">Active</option>
+                                        <option value="InActive">InActive </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <br>
+                        <button class="btn btn-success mb-4" (click)="UpdateVendor()">Save Changes </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="deleteVendorModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5>Delete Vendor</h5>
+            </div>
+
+            <div class="modal-body">
+                <label>Enter Admin Password</label>
+                <!-- <input type="password" class="form-control" [(ngModel)]="adminPassword"> -->
+                <div class="input-group mb-3">
+                    <input [type]="liked ? 'password' : 'adminPassword'" type="Password" class="form-control"
+                        [(ngModel)]="adminPassword" placeholder="Enter Password" required>
+                    <span class="btn btn-outline-secondary" type="" [ngClass]="{
+                                                        'fa-eye-slash': !liked,
+                                                        'fa-eye': liked }" (click)="Show()" id="button-addon2"><i
+                            class="fa-solid fa-eye-slash"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                <button class="btn btn-danger" (click)="DeleteVendor()">
+                    Delete
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+</div>

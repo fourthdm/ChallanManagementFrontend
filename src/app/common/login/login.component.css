@@ -1,0 +1,205 @@
+.app {
+    background-image: url('/assets/background.png');
+    background-color: rgba(72, 70, 182);
+    height: 100vh;
+    background-position-y: bottom;
+    background-position-x: right;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.main {
+    padding: 5%;
+}
+
+.login-page {
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* LEFT */
+
+.left-panel {
+    background: linear-gradient(180deg, #4746B6, #4746B6);
+    color: white;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
+.left-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, .08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .08) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: .4;
+}
+
+.left-content {
+    z-index: 10;
+}
+
+.factory-icon {
+    width: 130px;
+    height: 130px;
+    margin: auto;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .08);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.factory-icon i {
+    font-size: 65px;
+}
+
+.left-content h1 {
+    font-size: 45px;
+    font-weight: 700; font-family: 'CustomFont';
+}
+
+.left-content p {
+    margin-top: 20px;
+    font-size: 22px;
+    line-height: 35px; font-family: 'CustomFont';
+}
+
+/* RIGHT */
+
+.right-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f5f7fb;
+}
+
+.login-card {
+    width: 470px;
+    background: white;
+    padding: 45px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, .08);
+}
+
+.login-card h2 {
+    text-align: center;
+    font-weight: 700;
+}
+
+.subtitle {
+    text-align: center;
+    color: gray;
+    margin-bottom: 40px; font-family: 'CustomFont';
+}
+
+label {
+    font-weight: 600;
+    margin-bottom: 8px; font-family: 'CustomFont';
+}
+
+.form-control {
+    height: 50px;
+    border-radius: 10px;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #4746B6;
+}
+
+.password-box {
+    position: relative;
+}
+
+.eye-btn {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    border: none;
+    background: transparent;
+    color: gray;
+}
+
+.login-btn {
+    height: 50px;
+    background: #4746B6;
+    color: white;
+    font-weight: 600;
+    border-radius: 10px;
+}
+
+.login-btn:hover {
+    background: #4746B6;
+    color: white;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 25px 0;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #ddd;
+}
+
+.divider span {
+    padding: 0 15px;
+    color: gray;
+}
+
+.google-btn {
+    border: 1px solid #ddd;
+    height: 50px;
+    background: white;
+    border-radius: 10px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.signup {
+    margin-top: 35px;
+}
+
+.signup a,
+.text-end a {
+    text-decoration: none;
+    color: #4746B6;
+    font-weight: 600;
+}
+
+/* Responsive */
+
+@media(max-width:991px) {
+
+    .left-panel {
+        display: none;
+    }
+
+    .right-panel {
+        padding: 20px;
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 450px;
+        padding: 30px;
+    }
+}
+
+@font-face {
+    font-family: 'CustomFont';
+    src: url('/assets/font/centurygothic.ttf');
+    /* src: url('/assets/font/inter.regular.ttf'); */
+}

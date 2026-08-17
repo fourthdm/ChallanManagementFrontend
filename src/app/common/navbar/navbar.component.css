@@ -1,0 +1,55 @@
+.navbar-brand {
+    color: #fff;
+    font-family: 'CustomFont';
+}
+
+.nav-link {
+    color: white;
+    font-family: 'CustomFont';
+}
+
+.dropdown {
+    color: white;
+}
+
+.dropdown-menu {
+    background-color: rgba(237, 237, 255);
+    color: #000;
+}
+
+@font-face {
+    font-family: 'CustomFont';
+    src: url('/assets/font/centurygothic.ttf');
+    /* src: url('/assets/font/inter.regular.ttf'); */
+}
+
+.offcanvas {
+    background-color: rgb(237, 237, 255);
+    font-family: 'CustomFont';
+}
+
+p,
+h5,
+span,
+a {
+    font-family: 'CustomFont';
+}
+
+/* .mobileview {
+    display: none;
+}
+
+.laptopview {
+    display: block;
+}
+
+@media(min-width:319px) and (max-width:769px) {
+    .mobileview {
+        display: block;
+    }
+
+    .laptopview {
+        display: none;
+    }
+
+} */

@@ -1,0 +1,185 @@
+<div class="container-fluid login-page">
+    <div class="row h-100">
+
+        <!-- Left Side -->
+        <div class="col-lg-5 left-panel d-none d-lg-flex">
+            <div class="left-content text-center">
+
+                <div class="factory-icon">
+                    <img src="/assets/manufactureiconwhite.png" width="100" alt="">
+                </div>
+
+                <h1>Manufacturing App</h1>
+
+                <p>
+                    Challan Management System
+                </p>
+
+            </div>
+        </div>
+
+        <!-- Right Side -->
+        <div class="col-lg-7 col-12 right-panel">
+
+            <div class="login-card">
+
+                <h2>Welcome Back!</h2>
+                <p class="subtitle">Sign in to continue</p>
+
+                <form [formGroup]="Loginform" (ngSubmit)="login()">
+                
+                    <br>
+                    <div class="col-md-12">
+                        <label for="Username"> Username :</label>
+                        <input type="text" class="form-control" id="Username" autocomplete="username"
+                            formControlName="Username" value="" placeholder="Enter Username" required>
+                        <div class="valid-feedback">
+                            Your Name
+                        </div>
+                    </div><br>
+
+                    <div class="col-md-12">
+                        <label for="Password">Password :</label>
+                        <div class="input-group mb-3">
+                            <input [type]="liked ? 'text' : 'password'" type="Password" class="form-control"
+                                id="validationCustom03" id="Password" formControlName="Password"
+                                placeholder="Enter Password" required>
+                            <button class="btn btn-light" type="button" [ngClass]="{
+                                                        'fa-eye-slash': !liked,
+                                                        'fa-eye': liked }" (click)="Show()" id="button-addon2"><i
+                                    class="fa-solid fa-eye-slash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- <label for="Password">Password</label>
+                                        <input [type]="liked ? 'text' : 'password'" type="password"
+                                            formControlName="Password" class="form-control" id="Password"
+                                            placeholder="Password">
+                                        <button class="btn btn-light" type="button" [ngClass]="{
+                                                        'fa-eye-slash': !liked,
+                                                        'fa-eye': liked }" (click)="Show()" id="button-addon2"><i
+                                                class="fa-solid fa-eye-slash"></i>
+                                        </button> -->
+                    <br>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-outline-primary btn-lg">
+                            Log in</button>
+                    </div>
+                </form>
+
+                <!-- <form>
+
+                    <div class="mb-3">
+                        <label>Username</label>
+                        <input type="text"
+                            class="form-control"
+                            placeholder="Enter username">
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Password</label>
+
+                        <div class="password-box">
+
+                            <input
+                                type="password"
+                                class="form-control"
+                                placeholder="Enter password">
+
+                            <button type="button" class="eye-btn">
+                                <i class="fas fa-eye"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                  
+                    <button class="btn login-btn w-100">
+                        Login
+                    </button>
+
+                 
+
+                </form> -->
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="app">
+                <img src="/assets/manufactureicon.png" width="100" alt="">
+                <br>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam culpa ipsa optio sapiente beatae,
+                blanditiis fugit libero velit ipsam esse et atque tempore nam explicabo voluptatibus ratione error
+                veniam harum.
+            </div>
+        </div> <br>
+        <div class="col-md-6">
+            <div class="main">
+                <div class="container">
+                    <section class="vh-100">
+                        <div class="container  h-100">
+                            <div class="row d-flex justify-content-center align-items-center h-100">
+                                <div class="col">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+
+                                                <form [formGroup]="Loginform" (ngSubmit)="login()">
+                                                    <br>
+                                                    <div class="text-center">
+                                                        <p class="logins">Welcome Back </p>
+                                                        <span>Sign in to continue</span>
+                                                    </div>
+                                                    <br>
+                                                    <div class="col-md-12">
+                                                        <label for="Username"> Username :</label>
+                                                        <input type="text" class="form-control" id="Username"
+                                                            autocomplete="username" formControlName="Username" value=""
+                                                            placeholder="Enter Username" required>
+                                                        <div class="valid-feedback">
+                                                            Your Name
+                                                        </div>
+                                                    </div><br>
+
+                                                    <div class="col-md-12">
+                                                        <label for="Password">Password :</label>
+                                                        <div class="input-group mb-3">
+                                                            <input [type]="liked ? 'text' : 'password'" type="Password"
+                                                                class="form-control" id="validationCustom03"
+                                                                id="Password" formControlName="Password"
+                                                                placeholder="Enter Password" required>
+                                                            <button class="btn btn-light" type="button" [ngClass]="{
+                                                        'fa-eye-slash': !liked,
+                                                        'fa-eye': liked }" (click)="Show()" id="button-addon2"><i
+                                                                    class="fa-solid fa-eye-slash"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                  
+                                                    <br>
+                                                    <div class="text-center">
+                                                        <button type="submit" class="btn btn-outline-primary btn-lg">
+                                                            Log
+                                                            in</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div> <br>
+    </div>
+</div> -->

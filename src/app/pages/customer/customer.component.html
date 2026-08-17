@@ -1,0 +1,389 @@
+<br><br>
+<div class="container">
+    <br>
+    <h1>All Customer Data</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="container">
+                <br>
+                <h5>Add New Customer : </h5>
+                <div class="card">
+                    <div class="card-body">
+                        <form [formGroup]="AddCustomerForm" (submit)="AddCustomer()">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Customer Name : <sup>*</sup> </label>
+                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" formControlName="Customer_Name"
+                                    placeholder="Enter Customer Name" [ngClass]="{'is-invalid': (submitted || AddCustomerForm.get('Customer_Name')?.touched) &&
+                  AddCustomerForm.get('Customer_Name')?.invalid }">
+
+                                <div class="invalid-feedback" *ngIf="(submitted || AddCustomerForm.get('Customer_Name')?.touched) &&
+                AddCustomerForm.get('Customer_Name')?.errors?.['required']">
+                                    Customer Name is required.
+                                </div>
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Customer Phone No : <sup>*</sup>
+                                </label>
+                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" formControlName="Customer_PhoneNo"
+                                    placeholder="Enter  Phone No" [ngClass]="{'is-invalid': (submitted || AddCustomerForm.get('Customer_PhoneNo')?.touched) &&
+                  AddCustomerForm.get('Customer_PhoneNo')?.invalid }">
+
+                                <div class="invalid-feedback" *ngIf="(submitted || AddCustomerForm.get('Customer_PhoneNo')?.touched) &&
+            AddCustomerForm.get('Customer_PhoneNo')?.errors?.['required']">
+                                    Customer PhoneNo is required.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Customer Email :<sup>*</sup>
+                                </label>
+                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" formControlName="Customer_Email"
+                                    placeholder="Enter  Email" [ngClass]="{'is-invalid': (submitted || AddCustomerForm.get('Customer_Email')?.touched) &&
+                  AddCustomerForm.get('Customer_Email')?.invalid }">
+                                <div class="invalid-feedback" *ngIf="(submitted || AddCustomerForm.get('Customer_Email')?.touched) &&
+            AddCustomerForm.get('Customer_Email')?.errors?.['required']">
+                                    Customer Email is required.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label"> Company Name :<sup>*</sup> </label>
+                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" formControlName="Company_Name"
+                                    placeholder="Enter Company Name" [ngClass]="{'is-invalid': (submitted || AddCustomerForm.get('Company_Name')?.touched) &&
+                  AddCustomerForm.get('Company_Name')?.invalid }">
+                                <div class="invalid-feedback" *ngIf="(submitted || AddCustomerForm.get('Company_Name')?.touched) &&
+            AddCustomerForm.get('Company_Name')?.errors?.['required']">
+                                    Customer Email is required.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">GST_No :<sup>*</sup> </label>
+                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" formControlName="GST_No" placeholder="Enter GST_No"
+                                    [ngClass]="{'is-invalid': (submitted || AddCustomerForm.get('GST_No')?.touched) &&
+                  AddCustomerForm.get('GST_No')?.invalid }">
+                                <div class="invalid-feedback" *ngIf="(submitted || AddCustomerForm.get('GST_No')?.touched) &&
+            AddCustomerForm.get('GST_No')?.errors?.['required']">
+                                    Company GST_No is required.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Company Address :<sup>*</sup>
+                                </label>
+                                <textarea type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" formControlName="Company_Address"
+                                    placeholder="Enter Company Address" [ngClass]="{'is-invalid': (submitted || AddCustomerForm.get('Company_Address')?.touched) &&
+                  AddCustomerForm.get('Company_Address')?.invalid }">
+
+                                    </textarea>
+                                <div class="invalid-feedback" *ngIf="(submitted || AddCustomerForm.get('Company_Address')?.touched) &&
+            AddCustomerForm.get('Company_Address')?.errors?.['required']">
+                                    Company Address is required.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Delivery Address :
+                                </label>
+                                <textarea type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" formControlName="Delivery_Address"
+                                    placeholder="Enter Delivery Address"></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Customer_Status">Status : <sup>*</sup> </label>
+                                <select class="form-select form-select-sm" formControlName="Customer_Status"
+                                    aria-label="select example" [ngClass]="{'is-invalid': (submitted || AddCustomerForm.get('Customer_Status')?.touched) &&
+                  AddCustomerForm.get('Customer_Status')?.invalid }">>
+                                    <option value="Active">Active</option>
+                                    <option value="In Active">In Active </option>
+                                </select>
+                                <div class="invalid-feedback" *ngIf="(submitted || AddCustomerForm.get('Customer_Status')?.touched) &&
+            AddCustomerForm.get('Customer_Status')?.errors?.['required']">
+                                    Customer Status is required.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-success">Add Customer </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <br><br>
+            <div class="container">
+                <div class="row">
+                    <h5>Search Customer Data : </h5>
+                    <div class="col-md-6">
+                        <label for="Customer_Name"> <b>Select Customer Name.</b> <br>
+                            <select name="Customer_Name" id="Customer_Name" [(ngModel)]="Customer_Name"
+                                class="form-select" placeholder="Select Customer_Name"
+                                aria-label="Multiple select example">
+                                <option *ngFor="let b of AllCustomers" [value]="b.Customer_Name">
+                                    {{b.Customer_Name}}</option>
+                            </select>
+                        </label>
+                        <button style="margin-left: 3%;" class="btn btn-success"
+                            (click)="SearchdatabyCustomerName()">Search</button>
+                        <button class="btn btn-secondary" (click)="Allcustomer()" title="Reset a Data"><i
+                                class="fa-solid fa-arrows-rotate"></i></button><br>
+                    </div>
+                    <br>
+                    <div class="col-md-6">
+                        <label for="Company_Name"> <b>Select Company Name .</b> <br>
+                            <select name="Company_Name" id="Company_Name" [(ngModel)]="Company_Name" class="form-select"
+                                placeholder="Select Company Name" aria-label="Multiple select example">
+                                <option *ngFor="let b of AllCustomers" [value]="b.Company_Name">
+                                    {{b.Company_Name}}</option>
+                            </select>
+                        </label>
+                        <button style="margin-left: 3%;" class="btn btn-success"
+                            (click)="searchbycomapnyname()">Search</button>
+
+                        <button class="btn btn-secondary" (click)="Allcustomer()" title="Reset a Data"><i
+                                class="fa-solid fa-arrows-rotate"></i></button>
+                        <br>
+                    </div>
+                    <br>
+                    <div class="col-md-5">
+                        <br>
+                        <label for="Customer_Status"> <b>Select Customer Status.</b> <br>
+                            <select name="Customer_Status" id="Customer_Status" [(ngModel)]="Customer_Status"
+                                class="form-select" placeholder="Select Customer_Status"
+                                aria-label="Multiple select example">
+                                <option value="Active">Active</option>
+                                <option value="In Active">In Active</option>
+                            </select>
+                        </label>
+                        <button style="margin-left: 3%;" class="btn btn-success"
+                            (click)="Searchbystatus()">Search</button>
+                        <button class="btn btn-secondary" (click)="Allcustomer()" title="Reset a Data"><i
+                                class="fa-solid fa-arrows-rotate"></i></button>
+                        <br>
+                    </div>
+                    <br>
+                    <div class="col-md-5">
+                        <br>
+                        <label for="Customer_Status"> <b>Select Date .</b></label> <br>
+                        <input type="date" [(ngModel)]="Added_Date" value="Added_Date">
+
+                        <button style="margin-left: 3%;" class="btn btn-success"
+                            (click)="Searchbydate()">Search</button>
+                        <button class="btn btn-secondary" (click)="Allcustomer()" title="Reset a Data"><i
+                                class="fa-solid fa-arrows-rotate"></i></button>
+                        <br>
+                    </div>
+                    <br>
+
+                    <div class="col-md-2">
+                        <br>
+                        <label for=""><b>Download</b> </label>
+                        <br> <button class="btn btn-success" (click)="exportexcel()" title="Download excelfile"><i
+                                class="fa-solid fa-file-arrow-down"></i></button>
+                    </div>
+
+                </div>
+                <br>
+                <h5>All Customer Data : </h5>
+
+
+                <div class="row" *ngIf="AllCustomers.length == 0">
+                    <div class="text-center">
+                        <h2>Customer Not Found</h2>
+                        <p>Please remove your filters to view all Customer.</p> <br>
+                        <button class="btn btn-success" (click)="Allcustomer()">All Customer Data</button>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="AllCustomers.length > 0 ">
+                    <div class="col-md-6 cols"
+                        *ngFor="let customer of AllCustomers  | paginate :{itemsPerPage :2 ,currentPage:pro}">
+                        <div class="card">
+                            <div class="card-body">
+                                <td style="float: right;">
+                                    <a type="button" (click)="editCustomer(customer.Customer_id)" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal1" title="Edit a customer">
+                                        <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                                    </a>
+                                    <span style="margin-left:15px;cursor:pointer;">
+                                        <a data-bs-toggle="modal" data-bs-target="#deleteCustomerModal"
+                                            (click)="openDeleteModal(customer.Customer_id)">
+                                            <i class="fa-solid fa-trash-can text-danger"></i>
+                                        </a>
+                                    </span>
+                                </td>
+                                <br>
+                                <p>
+                                    <b>Code :</b> {{customer.Customer_Code}} <br>
+                                    <b>Customer Name :</b> {{customer.Customer_Name}} <br>
+                                    <b>Company Name :</b> {{customer.Company_Name}} <br>
+                                    <b>GST_NO :</b> {{customer.GST_No}} <br>
+                                    <b>Company Address :</b> {{customer.Company_Address}} <br>
+                                    <b>Delivery Address :</b> {{customer.Delivery_Address}} <br>
+                                    <b>PhoneNo. :</b> {{customer.Customer_PhoneNo}} <br>
+                                    <b>Email :</b> {{customer.Customer_Email}} <br>
+                                    <b>Added Date :</b> {{customer.Added_Date | date}} <br>
+                                    <b>Added Time :</b> {{customer.Added_Date | date :'hh:ss:mm a'}} <br>
+                                    <b>Updated Date : </b>{{customer.Updated_Date | date}} <br>
+                                    <b>Updated Time : </b> {{customer.Updated_Date | date :'hh:ss:mm a'}} <br>
+                                    <b>Status :</b> {{customer.Customer_Status}}
+                                </p>
+                            </div>
+                        </div>
+
+                    </div><br>
+                    <br>
+                    <div class="text-center">
+                        <br><pagination-controls (pageChange)=" pro = $event "
+                            style="background-color: #252847 !important; z-index: -2 !important;"></pagination-controls>
+                    </div>
+                </div><br>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<br><br>
+
+<!-- Update Modal-->
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Customer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+
+                    <form [formGroup]="UpdateCustomerForm">
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Customer Name : </label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                formControlName="Customer_Name" placeholder="Enter  Name">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Customer Phone No : </label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" formControlName="Customer_PhoneNo"
+                                        placeholder="Enter  Phone No">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Customer Email : </label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" formControlName="Customer_Email"
+                                        placeholder="Enter  Email">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label"> Company Name : </label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                formControlName="Company_Name" placeholder="Enter Company Name">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">GST_No : </label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" formControlName="GST_No"
+                                        placeholder="Enter GST_No">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="Customer_Status">Status : </label><br>
+                                    <select class="form-select form-select-md" formControlName="Customer_Status"
+                                        aria-label="select example">
+                                        <option value="Active">Active</option>
+                                        <option value="InActive">InActive </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Company Address : </label>
+                            <textarea type="text" class="form-control" id="exampleInputEmail1"
+                                aria-describedby="emailHelp" formControlName="Company_Address"
+                                placeholder="Enter Company Address"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Delivery Address : </label>
+                            <textarea type="text" class="form-control" id="exampleInputEmail1"
+                                aria-describedby="emailHelp" formControlName="Delivery_Address"
+                                placeholder="Enter Delivery Address"></textarea>
+                        </div>
+
+                        <br>
+                        <button class="btn btn-success mb-4" (click)="UpdateCustomer()">Save Changes </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="deleteCustomerModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5>Delete Customer</h5>
+            </div>
+
+            <div class="modal-body">
+                <!-- <label>Enter Admin Password</label>
+                <input type="password" class="form-control" [(ngModel)]="adminPassword"> -->
+                <label>Enter Admin Password</label>
+                <div class="input-group mb-3">
+                    <input [type]="liked ? 'password' : 'adminPassword'" type="Password" class="form-control"
+                        [(ngModel)]="adminPassword" placeholder="Enter Password" required>
+                    <span class="btn btn-outline-secondary" type="" [ngClass]="{
+                                                        'fa-eye-slash': !liked,
+                                                        'fa-eye': liked }" (click)="Show()" id="button-addon2"><i
+                            class="fa-solid fa-eye-slash"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                <button class="btn btn-danger" (click)="DeleteCustomer()">
+                    Delete
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,400 @@
+<br><br>
+<div class="container">
+    <br>
+    <h1>All Admin Data</h1>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="container">
+                <br>
+                <h5>Add New User : </h5>
+                <div class="card">
+                    <div class="card-body">
+                        <form [formGroup]="AddAdminForm" (submit)="AddAdmin()">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label"> Name : <sup>*</sup> </label>
+                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" formControlName="Name" placeholder="Enter Name"
+                                    [ngClass]="{'is-invalid': (submitted || AddAdminForm.get('Name')?.touched) &&
+                  AddAdminForm.get('Name')?.invalid }">
+
+                                <div class="invalid-feedback" *ngIf="(submitted || AddAdminForm.get('Name')?.touched) &&
+            AddAdminForm.get('Name')?.errors?.['required']">
+                                    Name is required.
+                                </div>
+
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label"> Phone No :<sup>*</sup> </label>
+                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" formControlName="PhoneNo" placeholder="Enter  Phone No"
+                                    [ngClass]="{'is-invalid': (submitted || AddAdminForm.get('PhoneNo')?.touched) &&
+                  AddAdminForm.get('PhoneNo')?.invalid }">
+
+                                <div class="invalid-feedback" *ngIf="(submitted || AddAdminForm.get('PhoneNo')?.touched) &&
+            AddAdminForm.get('PhoneNo')?.errors?.['required']">
+                                    PhoneNo is required.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label"> Email :<sup>*</sup> </label>
+                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" formControlName="Email" placeholder="Enter  Email"
+                                    [ngClass]="{'is-invalid': (submitted || AddAdminForm.get('Email')?.touched) &&
+                  AddAdminForm.get('Email')?.invalid }">
+
+                                <div class="invalid-feedback" *ngIf="(submitted || AddAdminForm.get('Email')?.touched) &&
+            AddAdminForm.get('Email')?.errors?.['required']">
+                                    Email is required.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label"> Username :<sup>*</sup> </label>
+                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" formControlName="Username"
+                                    placeholder="Enter  Username" [ngClass]="{'is-invalid': (submitted || AddAdminForm.get('Username')?.touched) &&
+                  AddAdminForm.get('Username')?.invalid }">
+
+                                <div class="invalid-feedback" *ngIf="(submitted || AddAdminForm.get('Username')?.touched) &&
+            AddAdminForm.get('Username')?.errors?.['required']">
+                                    Username is required.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label"> Address :</label>
+                                <textarea type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" formControlName="Address"
+                                    placeholder="Enter Address"></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Role">Role :<sup>*</sup> </label>
+                                <select class="form-select form-select-sm" formControlName="Role"
+                                    aria-label="select example" [ngClass]="{'is-invalid': (submitted || AddAdminForm.get('Role')?.touched) &&
+                  AddAdminForm.get('Role')?.invalid }">
+
+                                    <option value="Admin">Admin </option>
+                                    <option value="Manager">Manager </option>
+                                    <option value="Dispatch Manager">Transport Manager </option>
+                                </select>
+                                <div class="invalid-feedback" *ngIf="(submitted || AddAdminForm.get('Role')?.touched) &&
+            AddAdminForm.get('Role')?.errors?.['required']">
+                                    Role is required.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Status">Status :<sup>*</sup> </label>
+                                <select class="form-select form-select-sm" formControlName="Status"
+                                    aria-label="select example" [ngClass]="{'is-invalid': (submitted || AddAdminForm.get('Status')?.touched) &&
+                  AddAdminForm.get('Status')?.invalid }">
+                                    <option value="Active">Active</option>
+                                    <option value="In Active">In Active </option>
+                                </select>
+
+                                <div class="invalid-feedback"
+                                    *ngIf="(submitted || AddAdminForm.get('Status')?.touched) && AddAdminForm.get('Status')?.errors?.['required']">
+                                    Status is required.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-success">Add Admin</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <br><br>
+
+            <div class="row">
+                <h5>Search Admin Data : </h5>
+                <br>
+                <div class="col-md-5">
+                    <label for="Status"> <b>Select Admin Status.</b> <br>
+                        <select name="Status" id="Status" [(ngModel)]="Status" class="form-select"
+                            placeholder="Select Status" aria-label="Multiple select example">
+                            <option value="Active">Active</option>
+                            <option value="In Active">In Active</option>
+                        </select>
+                    </label>
+                    <button style="margin-left: 3%;" class="btn btn-success" (click)="DatabyStatus()">Search</button>
+                    <button class="btn btn-secondary" (click)="AllAdmin()" title="Reset All Data"><i
+                            class="fa-solid fa-arrows-rotate"></i></button>
+                    <br>
+                </div>
+                <br>
+
+                <div class="col-md-5">
+                    <label for="Added_Date"> <b>Select Date .</b></label> <br>
+                    <input type="date" [(ngModel)]="Added_Date" value="Added_Date">
+
+                    <button style="margin-left: 3%;" class="btn btn-success" (click)="DatabyDate()">Search</button>
+                    <button class="btn btn-secondary" (click)="AllAdmin()" title="Reset All Data"><i
+                            class="fa-solid fa-arrows-rotate"></i></button><br>
+                </div>
+
+                <div class="col-md-2">
+                    <label for=""> <b>Download</b> </label>
+                    <br> <button class="btn btn-success" (click)="exportexcel()" title="Download Excelfile"><i
+                            class="fa-solid fa-file-arrow-down"></i></button>
+                </div>
+
+            </div>
+
+            <br>
+            <div class="container">
+                <h5>All Admin Data : </h5>
+
+                <div class="alert" *ngIf="AllAdmins.length == 0">
+                    <div class="text-center">
+                        <h2>Admin Not Found</h2>
+                        <p>Please remove your filters to view all Admin.</p>
+                        <button class="btn btn-success" (click)="AllAdmin()">All Admin</button>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="AllAdmins.length > 0">
+                    <div class="col-md-6 cols"
+                        *ngFor="let admin of AllAdmins | paginate:{itemsPerPage :2 ,currentPage:pro}">
+                        <div class="card">
+                            <div class="card-body">
+                                <td style="float: right;">
+                                    <a type="button" (click)="editAdmin(admin.Admin_id)" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal" title="Edit a Admin">
+                                        <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                                    </a>
+                                    <span style="margin-left:15px;cursor:pointer;">
+
+                                        <a (click)="openDeleteModal(admin.Admin_id)" title="Delete Admin">
+                                            <i class="fa-solid fa-trash-can text-danger"></i>
+                                        </a>
+                                    </span>
+                                    <!-- <span style="margin-left:15px;cursor: pointer;" +.><a (click)="DeleteAdmin(admin.Admin_id)"
+                                title="Delete a Admin"> <i class="fa-solid fa-trash-can"></i></a></span> -->
+                                </td>
+                                <br>
+                                <p>
+                                    <b>Code :</b> {{admin.Code}} <br>
+                                    <b>Name :</b> {{admin.Name}} <br>
+                                    <b>Role :</b> {{admin.Role}} <br>
+                                    <b>Password :</b> {{admin.Password}} <br>
+                                    <b>PhoneNo. :</b> {{admin.PhoneNo}} <br>
+                                    <b>Email :</b> {{admin.Email}} <br>
+                                    <b>Address :</b> {{admin.Address}} <br>
+                                    <b>Added Date :</b> {{admin.Added_Date | date}} <br>
+                                    <b>Added Time :</b> {{admin.Added_Date | date :'hh:ss:mm a'}} <br>
+                                    <b>Updated Date : </b>{{admin.Updated_Date | date}} <br>
+                                    <b> Updated Time : </b> {{admin.Updated_Date | date :'hh:ss:mm a'}} <br>
+                                    <b>Status :</b> {{admin.Status}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <br>
+                        <pagination-controls (pageChange)=" pro = $event "
+                            style="background-color: #252847 !important; z-index: -2 !important;"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<br><br>
+
+<!-- Update Modal-->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Admin</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+
+                    <form [formGroup]="UpdateAdminForm">
+
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label"> Name : </label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                formControlName="Name" placeholder="Enter  Name">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label"> Phone No : </label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" formControlName="PhoneNo"
+                                        placeholder="Enter  Phone No">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label"> Email : </label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" formControlName="Email" placeholder="Enter  Email">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label"> Username : </label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" formControlName="Username"
+                                        placeholder="Enter  Username">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="Password" class="form-label"> Password : </label>
+                                    <input type="text" class="form-control" id="Password" aria-describedby="emailHelp"
+                                        formControlName="Password" placeholder="Enter  Password">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label"> Address : </label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                formControlName="Address" placeholder="Enter  Address">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="Role">Role Name : </label>
+                                    <select class="form-select form-select-md" formControlName="Role"
+                                        aria-label="select example">
+                                        <option value="SuperAdmin">SuperAdmin </option>
+                                        <option value="Admin">Admin </option>
+                                        <option value="Manager">Manager </option>
+                                        <option value="Accountant">Accountant </option>
+                                        <option value="Engineer">Engineer </option>
+                                        <option value="QC">QC </option>
+                                        <option value="Dispatch Manager">Dispatch Manager </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="mb-3">
+                                    <label for="Status">Status : </label>
+                                    <select class="form-select form-select-md" formControlName="Status"
+                                        aria-label="select example">
+                                        <option value="Active">Active</option>
+                                        <option value="In Active">In Active </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <br>
+                        <button class="btn btn-success mb-4" (click)="UpdateAdmin()">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5>Delete Admin</h5>
+            </div>
+
+            <div class="modal-body">
+
+                <label>Enter Admin Password</label>
+
+                <!-- <input type="password" class="form-control" [(ngModel)]="adminPassword"> -->
+                <div class="input-group mb-3">
+                    <input [type]="liked ? 'password' : 'adminPassword'" type="Password" class="form-control"
+                        [(ngModel)]="adminPassword" placeholder="Enter Password" required>
+                    <span class="btn btn-outline-secondary" type="" [ngClass]="{
+                                                        'fa-eye-slash': !liked,
+                                                        'fa-eye': liked }" (click)="Show()" id="button-addon2"><i
+                            class="fa-solid fa-eye-slash"></i>
+                    </span>
+                </div>
+                <!-- <button class="btn btn-light" type="button" [ngClass]="{
+                                                        'fa-eye-slash': !liked,
+                                                        'fa-eye': liked }" (click)="Show()" id="button-addon2"><i
+                        class="fa-solid fa-eye-slash"></i>
+                </button> -->
+            </div>
+
+            <div class="modal-footer">
+
+                <button class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                <button class="btn btn-danger" (click)="DeleteAdmin()">
+                    Delete
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- <div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <p>Please enter your password to continue.</p>
+
+                <input type="password" class="form-control" [(ngModel)]="deletePassword" placeholder="Enter Password">
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                <button class="btn btn-danger" (click)="DeleteAdmins()">
+                    Delete
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+</div> -->

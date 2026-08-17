@@ -1,0 +1,48 @@
+.card {
+    min-height: 100%;
+    background-color: rgba(237, 237, 255);
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.cols{
+     margin-bottom: 2%;
+}
+
+p, h1, h3,h5, label, b{
+    font-family: 'CustomFont';
+}
+
+select,
+option,
+button {
+    font-family: 'CustomFont';
+}
+
+@font-face {
+    font-family: 'CustomFont';
+    src: url('/assets/font/centurygothic.ttf');
+    /* src: url('/assets/font/inter.regular.ttf'); */
+}
+
+.btn-secondary{
+    margin-left: 5px;
+}
+
+sup{
+    color: rgb(243, 20, 20);
+}
+
+.is-invalid {
+    border: 2px solid rgb(255,0,0) !important;
+}
+
+.invalid-feedback {
+    display: block;
+    color: #e72236;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.modal-body, .modal-header, .modal-footer{
+      background-color: rgba(237, 237, 255);    
+}

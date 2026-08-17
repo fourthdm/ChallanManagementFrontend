@@ -1,0 +1,163 @@
+label {
+    font-size: 16px;
+    /* font-weight: 600; */
+    line-height: 28px;
+    color: black;
+}
+
+.colmd {
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    gap: 5px;
+
+}
+
+.formcheckbox {
+    display: grid;
+    grid-template-columns: repeat(3);
+    gap: 10px;
+    border: 1px solid #000;
+    background-color: white;
+    border-radius: 3px;
+    padding: 3% 8% 3% 8%;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+}
+
+.Discount {
+    float: right;
+    padding-left: 5%;
+}
+
+i {
+    padding-top: 5%;
+    float: right;
+}
+
+.radio {
+    font-size: 22px;
+    margin-right: 5% !important;
+}
+
+.card {
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+
+
+
+.work-tabs {
+    display: flex;
+    gap: 20px;
+}
+
+.work-tabs .nav-item {
+    flex: 1;
+}
+
+.work-tabs .nav-link {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 18px 20px;
+    color: #222;
+    transition: .3s;
+    text-align: left;
+    width: 100%;
+}
+
+/* .work-tabs .nav-link:hover {
+    border-color: #0d6efd;
+} */
+
+.tab-card {
+    display: flex;
+    align-items: center;
+}
+
+.radio-circle {
+    width: 28px;
+    height: 28px;
+    border: 2px solid #2d445e;
+    border-radius: 50%;
+    margin-right: 18px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+/* Selected Radio */
+.nav-link.active .radio-circle::after {
+    content: "";
+    width: 14px;
+    height: 14px;
+    background: #0278ff;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+.tab-content h5 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.tab-content p {
+    margin: 3px 0 0;
+    color: #666;
+    font-size: 16px;
+}
+
+/* Active Tab */
+.work-tabs .nav-link.active {
+    background: #fff;
+    /* border: 2px solid #0d4c92; */
+    color: #000;
+}
+
+/* Remove Bootstrap shadow */
+.work-tabs .nav-link:focus {
+    box-shadow: none;
+}
+
+/* Mobile */
+@media (max-width:768px) {
+
+    .work-tabs {
+        flex-direction: column;
+    }
+
+    .work-tabs .nav-item {
+        width: 100% !important;
+        padding: 0 !important;
+    }
+
+    .tab-content h5 {
+        font-size: 18px;
+    }
+
+    .tab-content p {
+        font-size: 14px;
+    }
+}
+
+sup{
+    color: red;
+}
+
+label{
+    font-family: 'CustomFont' ;
+}
+
+h2, h5, h4, select, option, button {
+    font-family: 'CustomFont';
+}
+
+@font-face {
+    font-family: 'CustomFont';
+    src: url('/assets/font/centurygothic.ttf');
+    /* src: url('/assets/font/inter.regular.ttf'); */
+}

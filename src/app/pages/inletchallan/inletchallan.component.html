@@ -1,0 +1,599 @@
+<div class="container">
+    <br><br><br>
+    <h2><b>Inlet Challan List</b></h2>
+    <br>
+
+    <div class="row">
+        <div class="col-md-4">
+            <label for="Customer_Name"> <b>Select Customer Name.</b> <br>
+                <select name="Customer_Name" id="Customer_Name" [(ngModel)]="Customer_Name" class="form-select"
+                    placeholder="Select Customer_Name" aria-label="Multiple select example">
+                    <option *ngFor="let b of AllCustomerData" [value]="b.Customer_Name">
+                        {{b.Customer_Name}}</option>
+                </select>
+            </label>
+            <button style="margin-left: 3%;" class="btn btn-success" (click)="DatabyCustomername()">Search</button>
+            <button class="btn btn-secondary" (click)="AllchallanDetails()"><i
+                    class="fa-solid fa-arrows-rotate"></i></button><br>
+        </div>
+        <br>
+        <div class="col-md-4">
+            <label for="Company_Name"> <b>Select Company Name .</b> <br>
+                <select name="Company_Name" id="Company_Name" [(ngModel)]="Company_Name" class="form-select"
+                    placeholder="Select Company Name" aria-label="Multiple select example">
+                    <option *ngFor="let b of AllCustomerData" [value]="b.Company_Name">
+                        {{b.Company_Name}}</option>
+                </select>
+            </label>
+            <button style="margin-left: 3%;" class="btn btn-success" (click)="DatabyCompanyname()">Search</button>
+            <button class="btn btn-secondary" (click)="AllchallanDetails()"><i
+                    class="fa-solid fa-arrows-rotate"></i></button><br>
+        </div>
+        <br>
+
+        <div class="col-md-4">
+            <label for="Work_Status"> <b>Select Work Status.</b> <br>
+                <select name="Work_Status" id="Work_Status" [(ngModel)]="Work_Status" class="form-select"
+                    placeholder="Select Work_Status" aria-label="Multiple select example">
+                    <option value="In Queue">In Queue</option>
+                    <option value="Hold">Hold</option>
+                    <option value="Processing">Processing</option>
+                    <option value="Breakdown">Breakdown</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </label>
+            <button style="margin-left: 3%;" class="btn btn-success" (click)="DatabyWorkStatus()">Search</button>
+            <button class="btn btn-secondary" (click)="AllchallanDetails()"><i
+                    class="fa-solid fa-arrows-rotate"></i></button><br>
+        </div>
+        <br>
+
+        <div class="col-md-4"><br>
+            <label for="Delivery_Status"> <b>Select Delivery Status.</b> <br>
+                <select name="Delivery_Status" id="Delivery_Status" [(ngModel)]="Delivery_Status" class="form-select"
+                    placeholder="Select Delivery_Status" aria-label="Multiple select example">
+                    <option value="In Transport">In Transport</option>
+                    <option value="Delivered">Delivered</option>
+                    <option value="Not Delivered">Not Delivered</option>
+                </select>
+            </label>
+            <button style="margin-left: 3%;" class="btn btn-success" (click)="DatabyDeliveryStatus()">Search</button>
+            <button class="btn btn-secondary" (click)="AllchallanDetails()"><i
+                    class="fa-solid fa-arrows-rotate"></i></button>
+            <br>
+        </div>
+        <br>
+
+        <div class="col-md-3"><br>
+            <label for="Challan_Status"> <b>Select Challan Status.</b> <br>
+                <select name="Challan_Status" id="Challan_Status" [(ngModel)]="Challan_Status" class="form-select"
+                    placeholder="Select Challan_Status" aria-label="Multiple select example">
+                    <option value="Open">Open</option>
+                    <option value="Close">Close</option>
+                    <option value="Not Close">Not Close</option>
+                </select>
+            </label>
+            <button style="margin-left: 3%;" class="btn btn-success" (click)="DatabyChallanStatus()">Search</button>
+            <button class="btn btn-secondary" (click)="AllchallanDetails()"><i
+                    class="fa-solid fa-arrows-rotate"></i></button><br>
+        </div>
+        <br>
+
+        <div class="col-md-3"><br>
+            <label for="Added_Date"> <b>Select Date .</b></label> <br>
+            <input type="date" [(ngModel)]="Added_Date" value="Added_Date">
+            <button style="margin-left: 3%;" class="btn btn-success" (click)="DatabyDate()">Search</button>
+            <button class="btn btn-secondary" (click)="AllchallanDetails()"><i
+                    class="fa-solid fa-arrows-rotate"></i></button><br>
+        </div>
+        <br>
+        <div class="col-md-2">
+            <br>
+            <label for=""><b>Download</b> </label>
+            <br> <button class="btn btn-success" (click)="exportexcel()" title="Download excelfile"><i
+                    class="fa-solid fa-file-arrow-down"></i></button>
+        </div>
+
+    </div>
+    <br>
+    <div class="card externalcard">
+        <div class="card-body">
+
+            <div class="row" *ngIf="AllChallan.length == 0">
+                <div class="text-center">
+                    <h2>Inlet Challan Data Not Found</h2>
+                    <p>Please remove your filters to view all Inlet Challan.</p> <br>
+                    <button class="btn btn-success" (click)="AllchallanDetails()">All Challan Data</button>
+                </div>
+            </div>
+
+            <div class="row" *ngIf="AllChallan.length > 0">
+                <div class="col-md-4" *ngFor="let Ch of AllChallan | paginate:{itemsPerPage :6 ,currentPage:pro}">
+                    <div class="card carddata">
+                        <div class="card-body">
+                            <a data-bs-toggle="modal" data-bs-target="#deleteVendorModal"
+                                (click)="openDeleteModal(Ch.Challan_id)" title="Delete a Challan">
+                                <i class="fa-solid fa-trash-can text-danger i"></i>
+                            </a>
+                            <i class="fa-solid fa-pencil i" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                title="Edit a Challan" (click)="editRequirement(Ch.Challan_id)" title="Update a Challan"></i>
+
+                            <i class="fa-solid fa-print i" (click)="printPdf(Ch.Challan_id)"  title="Print a Challan"></i>
+
+                            <i class="fa-regular fa-eye i" [routerLink]="['/Home/InletchallanData', Ch.Challan_id]" title="View a Challan Details"></i>
+                            <br>
+                            <br>
+                            <p>
+                                <b>Challan Code :</b> {{Ch.Challan_Code}} <br>
+                                <b>Customer Name :</b> {{Ch.Customer_Name}} <br>
+
+                                <span class="status-line" [ngClass]="{
+        'status-breakdown': Ch.Work_Status === 'Breakdown',
+        'status-completed': Ch.Work_Status === 'Completed',
+        'status-processing': Ch.Work_Status === 'Processing',
+        'status-hold': Ch.Work_Status === 'Hold',
+        'status-queue': Ch.Work_Status === 'In Queue'
+      }">
+                                    <b>Work Status : </b>
+                                    <span *ngIf="Ch.Work_Status === 'In Queue'">
+                                        <i class="fa-solid fa-clock fa-lg text-primary"></i>
+                                    </span>
+
+                                    <span *ngIf="Ch.Work_Status === 'Completed'">
+                                        <i class="fa-solid fa-circle-check fa-lg text-success"></i>
+                                    </span>
+
+                                    <span *ngIf="Ch.Work_Status === 'Hold'">
+                                        <i class="fa-solid fa-circle-pause fa-lg text-warning"></i>
+                                    </span>
+
+                                    <span *ngIf="Ch.Work_Status === 'Processing'">
+                                        <i class="fa-solid fa-arrows-spin fa-lg text-success"></i>
+                                    </span>
+
+                                    <span *ngIf="Ch.Work_Status === 'Breakdown'" class="animate__animated animate__flash animate__infinite">
+                                        <i class="fa-solid fa-triangle-exclamation fa-lg"></i>
+                                    </span> 
+
+                                    {{ Ch.Work_Status }}
+                                </span>
+                                <!-- <span >
+                                    <b>Work Status : </b> <span *ngIf="Ch.Work_Status">
+
+                                        <span *ngIf="Ch.Work_Status === 'In Queue'">
+                                            <i class="fa-solid fa-clock fa-lg text-primary"></i>
+                                        </span>
+
+                                        <span *ngIf="Ch.Work_Status === 'Completed'">
+                                            <i class="fa-solid fa-circle-check fa-lg text-success"></i>
+                                        </span>
+
+                                        <span *ngIf="Ch.Work_Status === 'Hold'">
+                                            <i class="fa-solid fa-circle-pause fa-lg text-warning"></i>
+                                        </span>
+
+                                        <span *ngIf="Ch.Work_Status === 'Processing'">
+                                            <i class="fa-solid fa-arrows-spin fa-lg text-success"></i>
+                                        </span>
+
+                                        <span *ngIf="Ch.Work_Status === 'Breakdown'">
+                                            <i class="fa-solid fa-triangle-exclamation fa-lg text-danger"></i>
+                                        </span>
+                                    </span> {{Ch.Work_Status}}
+                                </span> -->
+
+                                <br>
+                                <b>Delivery Status : </b> <span *ngIf="Ch.Delivery_Status">
+
+                                    <span *ngIf="Ch.Delivery_Status === 'In Transport'">
+                                        <i class="fa-solid fa-truck-fast fa-lg text-warning"></i>
+                                    </span>
+
+                                    <span *ngIf="Ch.Delivery_Status === 'Delivered'">
+                                        <i class="fa-solid fa-handshake fa-lg text-success"></i>
+                                    </span>
+
+                                    <span *ngIf="Ch.Delivery_Status === 'Not Delivered'">
+                                        <i class="fa-solid fa-truck-fast fa-lg text-danger"></i>
+                                    </span>
+
+                                </span> {{Ch.Delivery_Status}} <br>
+
+                                <b>Challan Status : </b> <span *ngIf="Ch.Challan_Status">
+
+                                    <span *ngIf="Ch.Challan_Status === 'Open'">
+                                        <i class="fa-solid fa-clipboard-list fa-lg text-secondary"></i>
+                                    </span>
+
+                                    <span *ngIf="Ch.Challan_Status === 'Close'">
+                                        <i class="fa-regular fa-circle-check fa-lg text-success"></i>
+                                    </span>
+
+                                    <span *ngIf="Ch.Challan_Status === 'Not Close'">
+                                        <i class="fa-regular fa-circle-xmark fa-lg text-danger"></i>
+                                    </span>
+
+                                </span> {{Ch.Challan_Status}} <br>
+                            </p>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+
+                <br>
+                <div class="text-center">
+                    <br><pagination-controls (pageChange)=" pro = $event "
+                        style="background-color: #252847 !important; z-index: -2 !important;"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Update a Challan</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="Updateinletchallanfrom">
+                    <br>
+                    <div class="card">
+                        <div class="card-body">
+                            <h4><b>1. Customer Details</b></h4>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="Customer_Name">Customer Name</label>
+                                    <br>
+                                    <input class="form-control" formControlName="Customer_Name">
+                                    <!-- <select class="form-control" formControlName="Customer_Name">
+                                        
+                                        <option value="">-- Select Customer Name --</option>
+                                        <option *ngFor="let Cust of AllCustomerData" [value]="Cust.Customer_Name">
+                                            {{Cust.Customer_Name}}</option>
+                                    </select> <br> -->
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Company Name</label>
+                                    <input class="form-control" formControlName="Company_Name">
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Company Address</label>
+                                    <input class="form-control" formControlName="Company_Address">
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Company GST No.</label>
+                                    <input class="form-control" formControlName="GST_No">
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Delivery Address</label>
+                                    <input class="form-control" formControlName="Delivery_Address">
+                                </div>
+
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="card">
+                        <div class="card-body">
+                            <h4><b>2. Products</b></h4>
+                            <div formArrayName="items">
+
+                                <div *ngFor="let product of items.controls; let i=index" [formGroupName]="i"
+                                    class="border rounded p-3 mb-3">
+
+                                    <div class="row">
+
+                                        <!-- Product Name -->
+                                        <div class="col-md-3">
+                                            <label>Product Name</label>
+                                            <input class="form-control" formControlName="Product_Name">
+                                        </div>
+
+                                        <!-- HSN -->
+                                        <div class="col-md-2">
+                                            <label>HSN Code</label>
+                                            <input class="form-control" formControlName="HSN_Code">
+                                        </div>
+
+                                        <!-- Qty -->
+                                        <div class="col-md-2">
+                                            <label>Qty</label>
+                                            <input type="number" class="form-control" formControlName="Product_Quantity"
+                                                (input)="calculateSubtotal(i)">
+                                        </div>
+
+                                        <!-- Rate -->
+                                        <div class="col-md-2">
+                                            <label>Rate</label>
+                                            <input type="number" class="form-control" formControlName="Rate"
+                                                (input)="calculateSubtotal(i)">
+                                        </div>
+
+                                        <!-- Subtotal -->
+                                        <div class="col-md-2">
+                                            <label>Subtotal</label>
+                                            <input class="form-control" formControlName="SubTotal" readonly>
+                                        </div>
+
+                                        <!-- Remove -->
+                                        <div class="col-md-1 d-flex align-items-end">
+
+                                            <button class="btn btn-danger" type="button" (click)="removeProduct(i)">
+
+                                                <i class="fa fa-trash"></i>
+
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <button class="btn btn-success" type="button" (click)="addProduct()">
+                                    Add New Product
+                                </button>
+                            </div>
+
+                            <div class="Discount">
+                                <div class="">
+                                    <label for="Discount_Amount">Discount Amount</label>
+                                    <input type="number" class="form-control" placeholder="Discount_Amount"
+                                        formControlName="Discount_Amount">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h4><b>3. Transport Details </b></h4>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Mode Of Transport</label>
+                                    <input class="form-control" formControlName="Mode_of_Transport">
+
+                                </div><br>
+
+                                <div class="col-md-6">
+                                    <label>Transporter Name</label>
+                                    <input class="form-control" formControlName="Transporter_Name">
+                                </div><br>
+
+                                <div class="col-md-6">
+                                    <label>Vehicle Number</label>
+                                    <input class="form-control" formControlName="Vehicle_Number">
+                                </div><br>
+
+                                <div class="col-md-6">
+                                    <label>Remark</label>
+                                    <input class="form-control" formControlName="Remark">
+                                </div><br>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="card">
+                        <div class="card-body">
+                            <h4><b>4. Work Status </b></h4>
+                            <br>
+                            <div class="colmd">
+                                <div class="formcheckbox">
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="Work_Status"
+                                            id="inlinecheckbox1" value="In Queue" class="radio"
+                                            formControlName="Work_Status" />
+                                        <label class="form-check-label" for="inlinecheckbox1">
+                                            <span><b>In Queue</b></span>
+                                        </label>
+                                        <i class="fa-solid fa-clock fa-lg text-primary iconi"></i>
+                                    </div>
+                                </div>
+
+                                <div class="formcheckbox">
+                                    <div>
+                                        <input type="radio" name="Work_Status" id="inlinecheckbox2" value="Hold"
+                                            class="radio" formControlName="Work_Status" />
+                                        <label class="form-check-label" for="inlinecheckbox2">
+                                            <span><b>Hold</b></span>
+                                        </label>
+                                        <i class="fa-solid fa-circle-pause fa-lg text-warning iconi"></i>
+                                    </div>
+                                </div>
+
+                                <div class="formcheckbox">
+                                    <div>
+                                        <input type="radio" name="Work_Status" id="inlinecheckbox2" value="Processing"
+                                            class="radio" formControlName="Work_Status" />
+                                        <label class="form-check-label" for="inlinecheckbox2">
+                                            <span><b>Processing</b></span>
+                                        </label>
+                                        <i class="fa-solid fa-arrows-spin fa-lg text-success iconi"></i>
+                                    </div>
+                                </div>
+
+                                <div class="formcheckbox">
+                                    <div>
+                                        <input type="radio" name="Work_Status" id="inlinecheckbox2" value="Breakdown"
+                                            class="radio" formControlName="Work_Status" />
+                                        <label class="form-check-label" for="inlinecheckbox2">
+                                            <span><b>Breakdown</b></span>
+                                        </label>
+                                        <i class="fa-solid fa-triangle-exclamation fa-lg text-danger iconi"></i>
+                                    </div>
+                                </div>
+
+                                <div class="formcheckbox">
+                                    <div>
+                                        <input type="radio" name="Work_Status" id="inlinecheckbox2" value="Completed"
+                                            class="radio" formControlName="Work_Status" />
+                                        <label class="form-check-label" for="inlinecheckbox2">
+                                            <span><b>Completed</b></span>
+                                        </label>
+                                        <i class="fa-solid fa-circle-check fa-lg text-success iconi"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="card">
+                        <div class="card-body">
+                            <h4><b>5. Delivery Status </b></h4>
+                            <br>
+                            <div class="colmddelivery">
+                                <div class="formcheckbox">
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="Delivery_Status"
+                                            class="radio" id="inlinecheckbox1" value="In Transport"
+                                            formControlName="Delivery_Status" />
+                                        <label class="form-check-label" for="inlinecheckbox1">
+                                            <span><b>In Transport</b></span> <br>
+                                            <span>Product has been on the way</span>
+                                        </label>
+                                        <i class="fa-solid fa-truck-fast fa-xl text-warning iconi"></i>
+                                    </div>
+                                </div>
+
+                                <div class="formcheckbox">
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="Delivery_Status"
+                                            id="inlinecheckbox2" value="Delivered" class="radio"
+                                            formControlName="Delivery_Status" />
+                                        <label class="form-check-label" for="inlinecheckbox2">
+                                            <span><b>Delivered</b></span><br>
+                                            <span>Product has been delivered</span>
+                                        </label>
+                                        <i class="fa-solid fa-handshake fa-xl text-success iconi"></i>
+                                    </div>
+                                </div>
+
+                                <div class="formcheckbox">
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="Delivery_Status"
+                                            id="inlinecheckbox2" value="Not Delivered" class="radio"
+                                            formControlName="Delivery_Status" />
+                                        <label class="form-check-label" for="inlinecheckbox2">
+                                            <span><b>Not Delivered</b></span> <br>
+                                            <span>Product not yet delivered</span>
+                                        </label>
+                                        <i class="fa-solid fa-truck-fast fa-xl text-danger iconi"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h4><b>6. Challan Status </b></h4>
+                            <br>
+                            <div class="colmd">
+                                <div class="formcheckbox">
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="Challan_Status"
+                                            id="inlinecheckbox1" value="Open" class="radio"
+                                            formControlName="Challan_Status" />
+                                        <label class="form-check-label" for="inlinecheckbox1">
+                                            <span><b> Open</b></span><br>
+                                            <span>Challan is Open</span>
+                                        </label>
+                                        <i class="fa-solid fa-clipboard-list fa-xl text-secondary iconi"></i>
+                                    </div>
+                                </div>
+
+                                <div class="formcheckbox">
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="Challan_Status"
+                                            id="inlinecheckbox2" value="Close" class="radio"
+                                            formControlName="Challan_Status" />
+                                        <label class="form-check-label" for="inlinecheckbox2">
+                                            <span><b> Close</b></span> <br>
+                                            <span>Challan is complete/ closed</span>
+                                        </label>
+                                        <i class="fa-regular fa-circle-check fa-xl text-success iconi"></i>
+                                    </div>
+                                </div>
+
+                                <div class="formcheckbox">
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="Challan_Status"
+                                            id="inlinecheckbox2" value="Not Close" class="radio"
+                                            formControlName="Challan_Status" />
+                                        <label class="form-check-label" for="inlinecheckbox2">
+                                            <span><b> Not Close</b></span><br>
+                                            <span>Challan is open/not complete</span>
+                                        </label>
+                                        <i class="fa-regular fa-circle-xmark fa-xl text-danger iconi"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="text-end">
+                        <button class="btn btn-primary ms-3" type="button" (click)="Update()">
+                            Save Challan
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteVendorModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5>Delete Challan</h5>
+            </div>
+
+            <div class="modal-body">
+                <label>Enter Admin Password</label>
+                <div class="input-group ">
+                    <input [type]="liked ? 'password' : 'adminPassword'" type="Password" class="form-control"
+                        [(ngModel)]="adminPassword" placeholder="Enter Password" required>
+                    <span class="btn btn-outline-secondary" type="" [ngClass]="{
+                                                        'fa-eye-slash': !liked,
+                                                        'fa-eye': liked }" (click)="Show()" id="button-addon2"><i
+                            class="fa-solid fa-eye-slash"></i>
+                    </span>
+                </div>
+                <!-- <input type="password" class="form-control" [(ngModel)]="adminPassword"> -->
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                <button class="btn btn-danger" (click)="DeleteChallan()">
+                    Delete
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
