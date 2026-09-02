@@ -3,14 +3,14 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { RestService } from 'src/app/services/rest.service';
 
-declare var bootstrap :any
+declare var bootstrap: any
 
 @Component({
   selector: 'app-outwardchallanview',
   templateUrl: './outwardchallanview.component.html',
   styleUrls: ['./outwardchallanview.component.css']
 })
-export class OutwardchallanviewComponent{
+export class OutwardchallanviewComponent {
 
   AllVendorData: any[] = [];
   AllVendorChallan: any[] = [];
@@ -92,8 +92,8 @@ export class OutwardchallanviewComponent{
   }
 
   liked: boolean = false;
-  
-  Show(){
+
+  Show() {
     this.liked = !this.liked;
   }
 
@@ -457,29 +457,145 @@ export class OutwardchallanviewComponent{
 
   selectedchallanId = 0;
   adminPassword = '';
+  // [type]="liked ? 'text' : 'password'";
+  deletionReason = '';
+  isDeleting: boolean = false;
 
   openDeleteModal(id: number) {
     this.selectedchallanId = id;
+    this.adminPassword = '';
+    this.deletionReason = '';
+    this.liked = false;
   }
 
   DeleteChallan() {
-    this._rest.DeleteVendorChallan(
-      this.selectedchallanId,
-      this.adminPassword
-    ).subscribe({
-      next: (res: any) => {
-        alert(res.message);
-        if (res.success) {
-          this.AllchallanDetails();
-          this.adminPassword = '';
-        }
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    });
+
+  if (!this.adminPassword || this.adminPassword.trim() === '') {
+
+    alert('Please enter Admin Password');
+
+    return;
   }
-  
+
+
+  if (!this.deletionReason || this.deletionReason.trim() === '') {
+
+    alert('Please enter the reason for deletion');
+
+    return;
+  }
+
+
+  if (this.deletionReason.trim().length < 5) {
+
+    alert('Please enter a valid deletion reason');
+
+    return;
+  }
+
+
+  if (!this.selectedchallanId) {
+
+    alert('Invalid Challan');
+
+    return;
+  }
+
+
+  this.isDeleting = true;
+
+
+  this._rest.DeleteVendorChallan(
+    this.selectedchallanId,
+    this.adminPassword,
+    this.deletionReason.trim()
+  )
+  .subscribe({
+
+    next: (res: any) => {
+
+      this.isDeleting = false;
+
+      alert(res.message);
+
+
+      if (res.success) {
+
+        // Refresh challan list
+        this.AllchallanDetails();
+
+
+        // Clear values
+        this.adminPassword = '';
+
+        this.deletionReason = '';
+
+        this.selectedchallanId = 0;
+
+        this.liked = false;
+
+
+        // Close modal
+        const modalElement =
+          document.getElementById('deleteVendorModal');
+
+        if (modalElement) {
+
+          const modal =
+            (window as any).bootstrap.Modal
+              .getInstance(modalElement);
+
+          if (modal) {
+            modal.hide();
+          }
+        }
+
+      }
+
+    },
+
+    error: (err) => {
+
+      this.isDeleting = false;
+
+      console.log(err);
+
+      if (err.error && err.error.message) {
+
+        alert(err.error.message);
+
+      } else {
+
+        alert('Something went wrong while deleting challan');
+
+      }
+
+    }
+
+  });
+
+}
+
+
+  // DeleteChallan() {
+  //   this._rest.DeleteVendorChallan(
+  //     this.selectedchallanId,
+  //     this.adminPassword,
+  //     this.deletionReason.trim()
+  //   ).subscribe({
+  //     next: (res: any) => {
+  //       alert(res.message);
+  //       if (res.success) {
+  //         this.AllchallanDetails();
+  //         this.adminPassword = '';
+  //       }
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //     }
+  //   });
+  // }
+
   // selectedchallanId = 0;
   // adminPassword = '';
 

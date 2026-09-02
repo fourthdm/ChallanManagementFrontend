@@ -19,6 +19,8 @@ import { OutwardchallanComponent } from './pages/outwardchallan/outwardchallan.c
 import { VendorComponent } from './pages/vendor/vendor.component';
 import { InletchallanviewComponent } from './views/inletchallanview/inletchallanview.component';
 import { OutwardchallanviewComponent } from './views/outwardchallanview/outwardchallanview.component';
+import { AlldeleteddataComponent } from './pages/alldeleteddata/alldeleteddata.component';
+import { DeletedvendorchallanhistoryComponent } from './pages/deletedvendorchallanhistory/deletedvendorchallanhistory.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { OutwardchallanviewComponent } from './views/outwardchallanview/outwardc
     OutwardchallanComponent,
     VendorComponent,
     InletchallanviewComponent,
-    OutwardchallanviewComponent
+    OutwardchallanviewComponent,
+    AlldeleteddataComponent,
+    DeletedvendorchallanhistoryComponent
   ],
   imports: [
     BrowserModule,

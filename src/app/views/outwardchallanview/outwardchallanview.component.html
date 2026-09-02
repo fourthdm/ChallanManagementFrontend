@@ -29,7 +29,8 @@
                         </a> -->
                         <a> <i class="fa-solid fa-pencil" data-bs-toggle="modal" data-bs-target="#exampleModal"
                                 title="Edit a Challan" (click)="editRequirement(c.VendorChallan_id)"></i></a>
-                        <a> <i class="fa-solid fa-print" (click)="printPdf(c.VendorChallan_id)" title="Print a Challan"></i></a>
+                        <a> <i class="fa-solid fa-print" (click)="printPdf(c.VendorChallan_id)"
+                                title="Print a Challan"></i></a>
                     </span>
                     <span class="times"><b>Time : </b> {{c.Added_Date | date:'hh:mm a'}}</span>
                 </div>
@@ -54,9 +55,9 @@
                                     <th>Sr No</th>
                                     <th>Product Name</th>
                                     <th>HSN Code</th>
-                                    <th>Operation_Perform</th>
+                                    <th>Operation - Rate</th>
+                                    <th>Product Rate</th>
                                     <th>Product Quantity</th>
-                                    <th>Rate</th>
                                     <th>Total</th>
                                 </tr>
                             </thead>
@@ -69,13 +70,13 @@
 
                                     <td>
                                         <div *ngFor="let op of item.operations">
-                                            {{ op.Operation_Name }} - {{ op.Rate }}
+                                            {{ op.Operation_Name }} - {{ op.Rate }} &#8377;
                                         </div>
                                     </td>
 
+                                    <td>{{ item.Rate }} &#8377;</td>
                                     <td>{{ item.Product_Quantity }}</td>
-                                    <td>{{ item.Rate }}</td>
-                                    <td>{{ item.SubTotal }}</td>
+                                    <td>{{ item.SubTotal }} &#8377;</td>
                                 </tr>
                             </tbody>
 
@@ -108,11 +109,11 @@
                         </div>
                         <div class="col-md-5">
                             <p>
-                                <b>SubTotal :</b> {{c.Sub_Total}} <br>
-                                <b>Total Amount :</b> {{c.Total_Amount}} <br>
-                                <b>CGST Amount :</b> {{c.CGST_amount}} <br>
-                                <b>SGST Amount :</b> {{c.SGST_amount}} <br>
-                                <b>Grand Total :</b> {{c.Grand_Total}} <br>
+                                <b>SubTotal :</b> {{c.Sub_Total}} &#8377;<br>
+                                <b>Total Amount :</b> {{c.Total_Amount}} &#8377;<br>
+                                <b>CGST Amount :</b> {{c.CGST_amount}} &#8377; <br>
+                                <b>SGST Amount :</b> {{c.SGST_amount}} &#8377; <br>
+                                <b>Grand Total :</b> {{c.Grand_Total}} &#8377; <br>
                             </p>
                         </div>
                     </div>
@@ -621,7 +622,81 @@
     </div>
 </div>
 
-<div class="modal fade" id="deleteVendorModal">
+
+
+<div class="modal fade" id="deleteVendorModal" tabindex="-1">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Delete Challan
+                </h5>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <!-- Warning -->
+                <div class="alert alert-warning">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <!-- This action cannot be undone. -->
+                    Please enter the admin password and deletion reason.
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                    <label class="form-label">
+                        Admin Password <span class="text-danger">*</span>
+                    </label>
+
+                    <div class="input-group">
+                        <input [type]="liked ? 'text' : 'password'" class="form-control" [(ngModel)]="adminPassword"
+                            placeholder="Enter Admin Password" autocomplete="off">
+                        <button type="button" class="btn btn-outline-secondary" (click)="Show()">
+                            <i class="fa-solid" [ngClass]="liked ? 'fa-eye' : 'fa-eye-slash'">
+                            </i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Deletion Reason -->
+                <div class="mb-3">
+                    <label class="form-label">
+                        Reason for Deletion
+                        <span class="text-danger">*</span>
+                    </label>
+                    <textarea class="form-control" rows="4" [(ngModel)]="deletionReason"
+                        placeholder="Enter reason for deleting this challan" maxlength="500">
+                    </textarea>
+                    <small class="text-muted">
+                        {{ deletionReason.length || 0 }}/500 characters
+                    </small>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                <button type="button" class="btn btn-danger" (click)="DeleteChallan()" [disabled]="isDeleting">
+                    <span *ngIf="isDeleting" class="spinner-border spinner-border-sm me-2">
+                    </span>
+                    {{ isDeleting ? 'Deleting...' : 'Delete Challan' }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Old modal to delete a data  -->
+
+<!-- <div class="modal fade" id="deleteVendorModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -629,7 +704,6 @@
             </div>
             <div class="modal-body">
                 <label>Enter Admin Password</label>
-                <!-- <input type="password" class="form-control" [(ngModel)]="adminPassword"> -->
                 <div class="input-group mb-3">
                     <input [type]="liked ? 'password' : 'adminPassword'" type="Password" class="form-control"
                         [(ngModel)]="adminPassword" placeholder="Enter Password" required>
@@ -650,4 +724,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

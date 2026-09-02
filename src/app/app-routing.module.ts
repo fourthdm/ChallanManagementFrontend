@@ -11,6 +11,7 @@ import { InletchallanComponent } from './pages/inletchallan/inletchallan.compone
 import { InletchallanviewComponent } from './views/inletchallanview/inletchallanview.component';
 import { OutwardchallanviewComponent } from './views/outwardchallanview/outwardchallanview.component';
 import { OutwardchallanComponent } from './pages/outwardchallan/outwardchallan.component';
+import { AlldeleteddataComponent } from './pages/alldeleteddata/alldeleteddata.component';
 
 const routes: Routes = [
   { path: ' ', redirectTo: 'login', pathMatch: "full" },
@@ -27,6 +28,8 @@ const routes: Routes = [
       { path: 'InletchallanData/:Challan_id', component: InletchallanviewComponent },
       { path: 'OutwardChallan', component: OutwardchallanComponent },
       { path: 'OutwardChallanData/:VendorChallan_id', component: OutwardchallanviewComponent },
+      { path: 'Deleteddata', component:AlldeleteddataComponent},
+      { path: 'DeletedOutwardChallanHistory/:DeletionHistory_id', component: OutwardchallanviewComponent },
       { path: '**', redirectTo: 'Dashboard' }
     ]
   },

@@ -1,0 +1,98 @@
+<div class="container">
+    <br><br><br>
+    <div class="container mt-4">
+
+        <div class="card">
+            <div class="card-body">
+                <h3>
+                    Vendor Challan Deletion History
+                </h3>
+
+                <div class="table-responsive mt-3">
+
+                    <table class="table table-bordered table-hover">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Sr No.</th>
+
+                                <th> Vendor Challan ID</th>
+
+                                <th> Vendor Challan Code</th>
+
+                                <th>Deleted By</th>
+
+                                <th>Reason</th>
+
+                                <!-- <th>Challan Data</th> -->
+
+                                <th>Deleted Date</th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr *ngFor="
+                        let history of AllDeletionHistory;
+                        let i = index ">
+
+                                <td>
+                                    {{ i + 1 }}
+                                </td>
+
+                                <td>
+                                    {{ history.VendorChallan_id }} 
+                                    <i class="fa-regular fa-eye i"
+                                [routerLink]="['/Home/DeletedOutwardChallanHistory', history.DeletionHistory_id]"
+                                title="View a Vendor Challan Deleted Details"></i>
+                                </td>
+
+                                <td>
+                                    {{ history.VendorChallan_Code }}
+                                </td>
+
+                                <td>
+                                    {{ history.Deleted_By_Admin_Name }}
+                                </td>
+
+                                <td>
+                                    {{ history.Deletion_Reason }}
+                                </td>
+
+                                <td>
+                                    {{ history.Deleted_Date | date :'dd-MM-yyyy hh:mm a' }}
+                                </td>
+
+
+
+                            </tr>
+
+
+                            <tr *ngIf="AllDeletionHistory.length === 0">
+
+                                <td colspan="7" class="text-center">
+
+                                    No deletion history found.
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<br><br>

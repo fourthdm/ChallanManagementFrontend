@@ -67,8 +67,8 @@
                                     <td>{{ item.Product_Name }}</td>
                                     <td>{{ item.HSN_Code }}</td>
                                     <td>{{ item.Product_Quantity }}</td>
-                                    <td>{{ item.Rate }}</td>
-                                    <td>{{ item.SubTotal }}</td>
+                                    <td>{{ item.Rate }} &#8377;</td>
+                                    <td>{{ item.SubTotal }} &#8377;</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -89,12 +89,12 @@
                         </div>
                         <div class="col-md-5">
                             <p>
-                                <b>SubTotal :</b> {{c.Sub_Total}} <br>
-                                <b>Discount Amount :</b> {{c.Discount_Amount}} <br>
-                                <b>Total Amount :</b> {{c.Total_Amount}} <br>
-                                <b>CGST Amount :</b> {{c.CGST_amount}} <br>
-                                <b>SGST Amount :</b> {{c.SGST_amount}} <br>
-                                <b>Grand Total :</b> {{c.Grand_Total}} <br>
+                                <b>SubTotal :</b> {{c.Sub_Total}} &#8377; <br>
+                                <b>Discount Amount :</b> {{c.Discount_Amount}} &#8377; <br>
+                                <b>Total Amount :</b> {{c.Total_Amount}} &#8377;<br>
+                                <b>CGST Amount :</b> {{c.CGST_amount}} &#8377; <br>
+                                <b>SGST Amount :</b> {{c.SGST_amount}} &#8377; <br>
+                                <b>Grand Total :</b> {{c.Grand_Total}} &#8377; <br>
                             </p>
                         </div>
                     </div>
@@ -519,8 +519,8 @@
                                 <td>{{p.old_product?.Product_Name}}</td>
                                 <td>{{p.old_product?.HSN_Code}}</td>
                                 <td>{{p.old_product?.Product_Quantity}}</td>
-                                <td>{{p.old_product?.Rate}}</td>
-                                <td>{{p.old_product?.SubTotal}}</td>
+                                <td>{{p.old_product?.Rate}} &#8377;</td>
+                                <td>{{p.old_product?.SubTotal}} &#8377;</td>
                             </tr>
 
                             <tr>
@@ -528,8 +528,8 @@
                                 <td>{{p.new_product?.Product_Name}}</td>
                                 <td>{{p.new_product?.HSN_Code}}</td>
                                 <td>{{p.new_product?.Product_Quantity}}</td>
-                                <td>{{p.new_product?.Rate}}</td>
-                                <td>{{p.new_product?.SubTotal}}</td>
+                                <td>{{p.new_product?.Rate}} &#8377;</td>
+                                <td>{{p.new_product?.SubTotal}} &#8377;</td>
                             </tr>
                         </table>
                     </div>

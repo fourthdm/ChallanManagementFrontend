@@ -7,8 +7,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class RestService {
 
-  // ApiUrl = 'http://localhost:3000';
-  ApiUrl = 'https://ysurveillance.com/ChallanServer'; 
+  ApiUrl = 'http://localhost:3000';
+  // ApiUrl = 'https://ysurveillance.com/ChallanServer'; 
 
   constructor(private _State: StateService, private _http: HttpClient) { }
 
@@ -235,11 +235,29 @@ export class RestService {
     return this._http.put(this.ApiUrl + "/UpdateVendorChallan/" + VendorChallan_id, data, { headers });
   }
 
-  DeleteVendorChallan(VendorChallan_id: number, Password: string) {
+  // DeleteVendorChallan(VendorChallan_id: number, Password: string, Deletion_Reason: string) {
+  //   this._State.CheckToken();
+  //   const headers = new HttpHeaders({ 'x-access-token': this._State.token });
+  //   const body = {
+  //     Password: Password,
+  //     Deletion_Reason: Deletion_Reason
+  //   };
+  //   return this._http.post(`${this.ApiUrl}/DeletevendorchallanbyDelationReason/${VendorChallan_id}`,
+  //     body, { headers }
+  //   );
+  // }
+
+  DeleteVendorChallan(VendorChallan_id: number, Password: string, Deletion_Reason: string) {
     this._State.CheckToken();
     const headers = new HttpHeaders({ 'x-access-token': this._State.token });
-    return this._http.post(this.ApiUrl + "/DeleteVendorChallan/" + VendorChallan_id, { Password }, { headers });
+    return this._http.post(this.ApiUrl + "/DeletevendorchallanbyDelationReason/" + VendorChallan_id, { Password, Deletion_Reason }, { headers });
   }
+
+  // DeleteVendorChallan(VendorChallan_id: number, Password: string, Deletion_Reason: string) {
+  //   this._State.CheckToken();
+  //   const headers = new HttpHeaders({ 'x-access-token': this._State.token });
+  //   return this._http.post(this.ApiUrl + "/DeleteVendorChallan/" + VendorChallan_id, { Password, Deletion_Reason }, { headers });
+  // }
 
   VendorChallanDatabyCompanyName(data: any) {
     return this._http.post(this.ApiUrl + '/VendorChallanbyCompanyName', data);
@@ -267,6 +285,12 @@ export class RestService {
 
   GetVendorHistory(VendorChallan_id: any) {
     return this._http.get<any>(this.ApiUrl + "/GetVendorChallanHistory/" + VendorChallan_id);
+  }
+
+  VendorChallanDeletionHistory() {
+    this._State.CheckToken();
+    const headers = new HttpHeaders({ 'x-access-token': this._State.token });
+    return this._http.get<any>(this.ApiUrl + "/GetVendorChallanDeletionHistory/", { headers });
   }
 
   Dashboardvendorchallan() {
