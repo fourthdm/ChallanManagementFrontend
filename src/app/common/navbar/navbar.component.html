@@ -1,107 +1,117 @@
 <div class="laptopview">
     <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #4746B6;">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#"><i class="fa-solid fa-house-medical-flag"></i> Manufacturing Application</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#" [routerLink]="['/Home/Dashboard']"><i
-                            class="fa-solid fa-house"></i>
-                        Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" [routerLink]="['/Home/Admin']"><i class="fa-solid fa-user-shield"></i>
-                        Admin</a>
-                </li>
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><i class="fa-solid fa-house-medical-flag"></i> Manufacturing
+                Application</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#" [routerLink]="['/Home/Dashboard']"><i
+                                class="fa-solid fa-house"></i>
+                            Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" [routerLink]="['/Home/Admin']"><i
+                                class="fa-solid fa-user-shield"></i>
+                            Admin</a>
+                    </li>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <i class="fa-solid fa-user-group"></i> User
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" [routerLink]="['/Home/Customer']">Customer</a></li>
-                        <li><a class="dropdown-item" [routerLink]="['/Home/Vendor']" href="#">Vendor</a></li>
-                    </ul>
-                </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="fa-solid fa-user-group"></i> User
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" [routerLink]="['/Home/Customer']">Customer</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/Home/Vendor']" href="#">Vendor</a></li>
+                        </ul>
+                    </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/Home/Challan']"><i class="fa-solid fa-file-pen"></i>
-                        Challan</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/Home/Challan']"><i class="fa-solid fa-file-pen"></i>
+                            Challan</a>
+                    </li>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <i class="fa-regular fa-newspaper"></i> Report
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" [routerLink]="['/Home/Inletchallan']">Inlet Challan List</a></li>
-                        <li><a class="dropdown-item" [routerLink]="['/Home/OutwardChallan']">Outward Challan List</a>
-                        </li>
-                    </ul>
-                </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="fa-regular fa-newspaper"></i> Report
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" [routerLink]="['/Home/Inletchallan']">Inlet Challan List</a>
+                            </li>
+                            <li><a class="dropdown-item" [routerLink]="['/Home/OutwardChallan']">Outward Challan
+                                    List</a>
+                            </li>
+                        </ul>
+                    </li>
 
-            </ul>
-            <span class="navbar-text" style="margin-right: 10%;">
-                <li class="nav-item dropdown" style="list-style: none;">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <i class="fa-regular fa-circle-user fa-xl"></i>
-                        {{Employeedata?.Role}}
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#employeeOffcanvas"
-                                role="button" title="View Employee Details">
-                                <i class="fa-regular fa-circle-user fa-xl"></i>
-                                {{Employeedata?.Name}}
-                            </a>
-                        </li>
-                        <li><a class="dropdown-item" href="#" (click)="Logout()"><i class="fa-solid fa-power-off fa-xl"></i> Logout</a></li>
+                </ul>
+                <span class="navbar-text" style="margin-right: 10%;">
+                    <li class="nav-item dropdown" style="list-style: none;">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="fa-regular fa-circle-user fa-xl"></i>
+                            {{Employeedata?.Role}}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#employeeOffcanvas"
+                                    role="button" title="View Employee Details">
+                                    <i class="fa-regular fa-circle-user fa-xl"></i>
+                                    {{Employeedata?.Name}}
+                                </a>
+                            </li>
+                            <li> <a class="dropdown-item" href="#" [routerLink]="['/Home/Deleteddata']"><i
+                                        class="fa-solid fa-trash-can-arrow-up fa-xl"></i> Deleted Data</a>
+                            </li>
+                            <li><a class="dropdown-item" href="#" (click)="Logout()"><i
+                                        class="fa-solid fa-power-off fa-xl"></i> Logout</a></li>
 
-                    </ul>
-                </li>
-            </span>
+                        </ul>
+                    </li>
+                </span>
 
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="employeeOffcanvas" aria-labelledby="employeeOffcanvasLabel">
+
+        <div class="offcanvas-header">
+            <h5 id="employeeOffcanvasLabel">Details</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+        </div>
+
+        <div class="offcanvas-body">
+
+            <div class="text-center mb-3">
+                <!-- <i class="fa-regular fa-circle-user fa-4x"></i> -->
+                <h5 class="mt-2">{{ Employeedata?.Name }}</h5>
+                <span class="badge bg-primary"> <b>{{ Employeedata?.Role }}</b> </span>
+            </div>
+
+            <hr>
+            <!-- <p> Employee Name : <b>{{Employeedata?.Name}}</b> </p> -->
+            <p> Phone No : <b>{{Employeedata?.PhoneNo}}</b> </p>
+            <p> Email : <b>{{Employeedata?.Email}}</b> </p>
+            <p> Username : <b>{{Employeedata?.Username}}</b> </p>
+            <p> Password : <b>{{Employeedata?.Password}}</b> </p>
+            <!-- <p> Role : <b>{{Employeedata?.Role}}</b> </p> -->
+            <p> Address : <b>{{Employeedata?.Address}}</b> </p>
+            <p> Added Date : <b>{{Employeedata?.Added_Date | date}}</b> <br> Added Time : {{Employeedata?.Added_Date |
+                date :'hh:mm:ss a'}}
+            </p>
+            <p> Updated Date : <b>{{Employeedata?.Updated_Date | date}}</b> <br> Updated Time :
+                {{Employeedata?.Updated_Date | date
+                :'hh:mm:ss a'}}</p>
+            <p> Employee Status : <b>{{Employeedata?.Status}}</b> </p>
+            <hr>
         </div>
     </div>
-</nav>
-
-
-<div class="offcanvas offcanvas-end" tabindex="-1" id="employeeOffcanvas" aria-labelledby="employeeOffcanvasLabel">
-
-    <div class="offcanvas-header">
-        <h5 id="employeeOffcanvasLabel">Details</h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
-    </div>
-
-    <div class="offcanvas-body">
-
-        <div class="text-center mb-3">
-            <!-- <i class="fa-regular fa-circle-user fa-4x"></i> -->
-            <h5 class="mt-2">{{ Employeedata?.Name }}</h5>
-            <span class="badge bg-primary"> <b>{{ Employeedata?.Role }}</b> </span>
-        </div>
-
-        <hr>
-        <!-- <p> Employee Name : <b>{{Employeedata?.Name}}</b> </p> -->
-        <p> Phone No : <b>{{Employeedata?.PhoneNo}}</b> </p>
-        <p> Email : <b>{{Employeedata?.Email}}</b> </p>
-        <p> Username : <b>{{Employeedata?.Username}}</b> </p>
-        <p> Password : <b>{{Employeedata?.Password}}</b> </p>
-        <!-- <p> Role : <b>{{Employeedata?.Role}}</b> </p> -->
-        <p> Address : <b>{{Employeedata?.Address}}</b> </p>
-        <p> Added Date : <b>{{Employeedata?.Added_Date | date}}</b> <br> Added Time : {{Employeedata?.Added_Date | date :'hh:mm:ss a'}}
-        </p>
-        <p> Updated Date : <b>{{Employeedata?.Updated_Date | date}}</b> <br> Updated Time : {{Employeedata?.Updated_Date | date
-            :'hh:mm:ss a'}}</p>
-        <p> Employee Status : <b>{{Employeedata?.Status}}</b> </p>
-        <hr>
-    </div>
-</div>
 </div>

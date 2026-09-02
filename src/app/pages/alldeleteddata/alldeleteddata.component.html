@@ -45,10 +45,10 @@
                                 </td>
 
                                 <td>
-                                    {{ history.VendorChallan_id }} 
+                                    {{ history.VendorChallan_id }}
                                     <i class="fa-regular fa-eye i"
-                                [routerLink]="['/Home/DeletedOutwardChallanHistory', history.DeletionHistory_id]"
-                                title="View a Vendor Challan Deleted Details"></i>
+                                        [routerLink]="['/Home/DeletedOutwardChallanHistory', history.DeletionHistory_id]"
+                                        title="View a Vendor Challan Deleted Details"></i>
                                 </td>
 
                                 <td>
@@ -66,26 +66,16 @@
                                 <td>
                                     {{ history.Deleted_Date | date :'dd-MM-yyyy hh:mm a' }}
                                 </td>
-
-
-
                             </tr>
-
 
                             <tr *ngIf="AllDeletionHistory.length === 0">
 
                                 <td colspan="7" class="text-center">
-
                                     No deletion history found.
-
                                 </td>
-
                             </tr>
-
                         </tbody>
-
                     </table>
-
                 </div>
 
             </div>

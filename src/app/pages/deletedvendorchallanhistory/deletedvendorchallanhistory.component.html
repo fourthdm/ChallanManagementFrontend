@@ -1,1 +1,88 @@
-<p>deletedvendorchallanhistory works!</p>
+<div class="container">
+    <div *ngFor="let h of AllDeletionHistory">
+
+        <h4>
+            Deleted Challan Details
+        </h4>
+
+
+        <p>
+            <strong>Challan Number:</strong>
+            {{ h.Challan_Number }}
+        </p>
+
+
+        <p>
+            <strong>Deleted By:</strong>
+            {{ h.Deleted_By_Admin_Name }}
+        </p>
+
+
+        <p>
+            <strong>Deleted Date:</strong>
+            {{ h.Deleted_Date | date:'dd-MM-yyyy hh:mm a' }}
+        </p>
+
+
+        <p>
+            <strong>Reason:</strong>
+            {{ h.Deletion_Reason }}
+        </p>
+
+
+        <hr>
+
+        <h5>Deleted Vendor Challan Data</h5>
+        <div *ngFor="let c of h.Challan_Data">
+
+            <b>Challan Code : </b> {{c.VendorChallan_Code}}
+            <br>
+            <b>Customer Name : </b> {{c.Vendor_Name}}
+            <br>
+            <b>Company Name : </b> {{c.Vendor_CompanyName}} <br>
+            <b>GST No. :</b> {{c.VendorGST_No}} <br>
+            <b>Company Address :</b> {{c.Vendor_CompanyAddress}}
+        </div>
+
+        <h5>Deleted Products</h5>
+        <table class="table table-bordered">
+
+            <thead>
+
+                <tr>
+                    <th>Product ID</th>
+                    <th>Product Name</th>
+                    <th>HSN Code</th>
+                    <th>Quantity</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <tr *ngFor="let product of h.Product_Data">
+
+                    <td>
+                        {{ product.VendorProduct_id }}
+                    </td>
+
+                    <td>
+                        {{ product.Product_Name }}
+                    </td>
+                    <td>
+                        {{ product.HSN_Code }}
+                    </td>
+
+                    <td>
+                        {{ product.Product_Quantity }}
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+</div>

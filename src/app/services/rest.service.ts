@@ -293,6 +293,12 @@ export class RestService {
     return this._http.get<any>(this.ApiUrl + "/GetVendorChallanDeletionHistory/", { headers });
   }
 
+  ViewVendorChallanDeletionHistory(DeletionHistory_id: any) {
+    this._State.CheckToken();
+    const headers = new HttpHeaders({ 'x-access-token': this._State.token });
+    return this._http.get<any>(this.ApiUrl + "/GetVendorChallanDeletionHistorybyid/" + DeletionHistory_id, { headers });
+  }
+
   Dashboardvendorchallan() {
     return this._http.get(this.ApiUrl + '/LimitedVendorChallan');
   }
