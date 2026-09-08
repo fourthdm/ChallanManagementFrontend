@@ -7,39 +7,39 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./alldeleteddata.component.css']
 })
 export class AlldeleteddataComponent {
-
   constructor(private _rest: RestService) { }
-
   AllDeletionHistory: any[] = [];
+  AllInletDeletionHistory: any[] = [];
 
   ngOnInit(): void {
-
     this.GetDeletionHistory();
-
+    this.GetInletDeletionHistory();
   }
 
   GetDeletionHistory() {
-
-    this._rest.VendorChallanDeletionHistory()
-      .subscribe({
-
-        next: (res: any) => {
-
-          if (res.success) {
-
-            this.AllDeletionHistory = res.data;
-
-          }
-
-        },
-
-        error: (err) => {
-
-          console.log(err);
-
+    this._rest.VendorChallanDeletionHistory().subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          this.AllDeletionHistory = res.data;
         }
-
-      });
-
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
   }
+
+  GetInletDeletionHistory() {
+    this._rest.InletChallanDeletionHistory().subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          this.AllInletDeletionHistory = res.data;
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  }
+
 }

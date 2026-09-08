@@ -563,7 +563,71 @@
 
 <div class="modal fade" id="deleteVendorModal">
     <div class="modal-dialog">
+
         <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Delete Challan
+                </h5>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <!-- Warning -->
+                <div class="alert alert-warning">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <!-- This action cannot be undone. -->
+                    Please enter the admin password and deletion reason.
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                    <label class="form-label">
+                        Admin Password <span class="text-danger">*</span>
+                    </label>
+
+                    <div class="input-group">
+                        <input [type]="liked ? 'text' : 'password'" class="form-control" [(ngModel)]="adminPassword"
+                            placeholder="Enter Admin Password" autocomplete="off">
+                        <button type="button" class="btn btn-outline-secondary" (click)="Show()">
+                            <i class="fa-solid" [ngClass]="liked ? 'fa-eye' : 'fa-eye-slash'">
+                            </i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Deletion Reason -->
+                <div class="mb-3">
+                    <label class="form-label">
+                        Reason for Deletion
+                        <span class="text-danger">*</span>
+                    </label>
+                    <textarea class="form-control" rows="4" [(ngModel)]="deletionReason"
+                        placeholder="Enter reason for deleting this challan" maxlength="500">
+                    </textarea>
+                    <small class="text-muted">
+                        {{ deletionReason.length || 0 }}/500 characters
+                    </small>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                <button type="button" class="btn btn-danger" (click)="DeleteChallan()" [disabled]="isDeleting">
+                    <span *ngIf="isDeleting" class="spinner-border spinner-border-sm me-2">
+                    </span>
+                    {{ isDeleting ? 'Deleting...' : 'Delete Challan' }}
+                </button>
+            </div>
+        </div>
+
+        <!-- <div class="modal-content">
 
             <div class="modal-header">
                 <h5>Delete Challan</h5>
@@ -580,7 +644,6 @@
                             class="fa-solid fa-eye-slash"></i>
                     </span>
                 </div>
-                <!-- <input type="password" class="form-control" [(ngModel)]="adminPassword"> -->
             </div>
 
             <div class="modal-footer">
@@ -594,6 +657,6 @@
 
             </div>
 
-        </div>
+        </div> -->
     </div>
 </div>

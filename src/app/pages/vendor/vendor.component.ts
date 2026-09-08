@@ -83,30 +83,110 @@ export class VendorComponent  {
     });
   }
 
-  selectedVendorId = 0;
-  adminPassword = '';
+selectedVendorId: number = 0;
+
+adminPassword: string = '';
+
+deletionReason: string = '';
+
 
   openDeleteModal(id: number) {
     this.selectedVendorId = id;
   }
 
   DeleteVendor() {
+
+    if (!this.adminPassword ||
+        this.adminPassword.trim() === '') {
+
+        alert('Please enter Admin Password');
+
+        return;
+
+    }
+
+
+    if (!this.deletionReason ||
+        this.deletionReason.trim() === '') {
+
+        alert('Please enter deletion reason');
+
+        return;
+
+    }
+
+
+    if (this.deletionReason.trim().length < 5) {
+
+        alert('Please enter a valid deletion reason');
+
+        return;
+
+    }
+
+
     this._Rest.DeleteVendor(
-      this.selectedVendorId,
-      this.adminPassword
-    ).subscribe({
-      next: (res: any) => {
-        alert(res.message);
-        if (res.success) {
-          this.Vendors();
-          this.adminPassword = '';
+
+        this.selectedVendorId,
+
+        this.adminPassword,
+
+        this.deletionReason.trim()
+
+    )
+    .subscribe({
+
+        next: (res: any) => {
+
+            alert(res.message);
+
+
+            if (res.success) {
+
+                this.adminPassword = '';
+
+                this.deletionReason = '';
+
+                this.selectedVendorId = 0;
+
+                this.Vendors();
+
+            }
+
+        },
+
+        error: (err) => {
+
+            console.log(err);
+
+            alert(
+                err.error?.message ||
+                'Something went wrong'
+            );
+
         }
-      },
-      error: (err) => {
-        console.log(err);
-      }
+
     });
-  }
+
+}
+
+  // DeleteVendor() {
+  //   this._Rest.DeleteVendor(
+  //     this.selectedVendorId,
+  //     this.adminPassword
+  //   ).subscribe({
+  //     next: (res: any) => {
+  //       alert(res.message);
+  //       if (res.success) {
+  //         this.Vendors();
+  //         this.adminPassword = '';
+  //       }
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //     }
+  //   });
+  // }
 
   editVendor(Vendor_id: any) {
     const selectVendor = this.AllVendor.find(vendor => vendor.Vendor_id === Vendor_id)

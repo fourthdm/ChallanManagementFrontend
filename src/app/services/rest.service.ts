@@ -109,12 +109,18 @@ export class RestService {
     return this._http.put(this.ApiUrl + '/UpdateVendor/' + data.Vendor_id, data);
   }
 
-  DeleteVendor(Vendor_id: number, Password: string) {
+  // DeleteVendor(Vendor_id: number, Password: string) {
+  //   this._State.CheckToken();
+  //   const headers = new HttpHeaders({ 'x-access-token': this._State.token });
+  //   return this._http.post(this.ApiUrl + "/Deletevendor/" + Vendor_id, { Password }, { headers });
+  // }
+
+  DeleteVendor(Vendor_id: number, Password: string, Deletion_Reason: string) {
     this._State.CheckToken();
     const headers = new HttpHeaders({ 'x-access-token': this._State.token });
-    return this._http.post(this.ApiUrl + "/Deletevendor/" + Vendor_id, { Password }, { headers });
+    return this._http.post(this.ApiUrl + "/DeletevendorwithReason/" + Vendor_id, { Password, Deletion_Reason }, { headers });
   }
-
+ 
   SearchVendorname(data: any) {
     return this._http.post(this.ApiUrl + '/SearchbyvendorName', data);
   }
@@ -166,10 +172,16 @@ export class RestService {
     return this._http.put(this.ApiUrl + "/UpdateaChallan/" + Challan_id, data, { headers });
   }
 
-  DeleteChallan(Challan_id: number, Password: string) {
+  // DeleteChallan(Challan_id: number, Password: string) {
+  //   this._State.CheckToken();
+  //   const headers = new HttpHeaders({ 'x-access-token': this._State.token });
+  //   return this._http.post(this.ApiUrl + "/DeleteChallan/" + Challan_id, { Password }, { headers });
+  // }
+
+  DeleteChallan(Challan_id: number, Password: string, Deletion_Reason: string) {
     this._State.CheckToken();
     const headers = new HttpHeaders({ 'x-access-token': this._State.token });
-    return this._http.post(this.ApiUrl + "/DeleteChallan/" + Challan_id, { Password }, { headers });
+    return this._http.post(this.ApiUrl + "/DeleteInletChallanbyDelationReason/" + Challan_id, { Password, Deletion_Reason }, { headers });
   }
 
   DatabyCompanyName(data: any) {
@@ -303,4 +315,15 @@ export class RestService {
     return this._http.get(this.ApiUrl + '/LimitedVendorChallan');
   }
 
+  InletChallanDeletionHistory() {
+    this._State.CheckToken();
+    const headers = new HttpHeaders({ 'x-access-token': this._State.token });
+    return this._http.get<any>(this.ApiUrl + "/GetInletChallanDeletionHistory/", { headers });
+  }
+
+  ViewInletChallanDeletionHistory(Deletionchallan_id: any) {
+    this._State.CheckToken();
+    const headers = new HttpHeaders({ 'x-access-token': this._State.token });
+    return this._http.get<any>(this.ApiUrl + "/GetInletChallanDeletionHistorybyid/" + Deletionchallan_id, { headers });
+  }
 }

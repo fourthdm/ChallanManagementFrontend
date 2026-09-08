@@ -22,6 +22,7 @@ import { OutwardchallanviewComponent } from './views/outwardchallanview/outwardc
 import { AlldeleteddataComponent } from './pages/alldeleteddata/alldeleteddata.component';
 import { DeletedvendorchallanhistoryComponent } from './pages/deletedvendorchallanhistory/deletedvendorchallanhistory.component';
 import { DeletedvendorchallandataComponent } from './pages/deletedvendorchallandata/deletedvendorchallandata.component';
+import { InletchallandeletedhistoryComponent } from './views/inletchallandeletedhistory/inletchallandeletedhistory.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { DeletedvendorchallandataComponent } from './pages/deletedvendorchalland
     OutwardchallanviewComponent,
     AlldeleteddataComponent,
     DeletedvendorchallanhistoryComponent,
-    DeletedvendorchallandataComponent
+    DeletedvendorchallandataComponent,
+    InletchallandeletedhistoryComponent
   ],
   imports: [
     BrowserModule,

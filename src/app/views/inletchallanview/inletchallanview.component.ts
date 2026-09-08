@@ -309,23 +309,23 @@ export class InletchallanviewComponent {
     this.selectedchallanId = id;
   }
 
-  DeleteChallan() {
-    this._rest.DeleteChallan(
-      this.selectedchallanId,
-      this.adminPassword
-    ).subscribe({
-      next: (res: any) => {
-        alert(res.message);
-        if (res.success) {
-          this.ByChallanid();
-          this.adminPassword = '';
-        }
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    });
-  }
+  // DeleteChallan() {
+  //   this._rest.DeleteChallan(
+  //     this.selectedchallanId,
+  //     this.adminPassword
+  //   ).subscribe({
+  //     next: (res: any) => {
+  //       alert(res.message);
+  //       if (res.success) {
+  //         this.ByChallanid();
+  //         this.adminPassword = '';
+  //       }
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //     }
+  //   });
+  // }
 
 
 

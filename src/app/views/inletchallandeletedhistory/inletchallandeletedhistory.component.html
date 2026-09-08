@@ -4,39 +4,48 @@
     <div *ngFor="let h of AllDeletionHistory">
 
         <h4>
-            Deleted Vendor Challan Details
+            Deleted Challan Details
         </h4>
+
+
         <p>
             <strong>Challan Number:</strong>
-            {{ h.Challan_Number }}
+            {{ h.Challan_Code }}
         </p>
-       <p>
+
+
+        <p>
             <strong>Deleted By:</strong>
             {{ h.Deleted_By_Admin_Name }}
         </p>
+
 
         <p>
             <strong>Deleted Date:</strong>
             {{ h.Deleted_Date | date:'dd-MM-yyyy hh:mm a' }}
         </p>
 
+
         <p>
             <strong>Reason:</strong>
             {{ h.Deletion_Reason }}
         </p>
+
+
         <hr>
-        <h5>Deleted Vendor Challan Data</h5>
+
+        <h5>Deleted Inlet Challan Data</h5>
         <div *ngIf="h.Challan_Data">
 
             <div class="row">
                 <div class="col-md-6">
                     <b>Challan Code : </b>
-                    {{ h.Challan_Data.VendorChallan_Code }}
+                    {{ h.Challan_Data.Challan_Code }}
 
                     <br>
 
-                    <b>Vendor Name : </b>
-                    {{ h.Challan_Data.Vendor_Name }}
+                    <b>Customer Name : </b>
+                    {{ h.Challan_Data.Customer_Name }}
                     <br>
 
                     <b>Vendor Phone No. : </b>
@@ -48,15 +57,15 @@
                     <br>
 
                     <b>Company Name : </b>
-                    {{ h.Challan_Data.Vendor_CompanyName }}
+                    {{ h.Challan_Data.Company_Name }}
                     <br>
 
                     <b>Company Address : </b>
-                    {{ h.Challan_Data.Vendor_CompanyAddress }}
+                    {{ h.Challan_Data.Company_Address }}
                     <br>
 
                     <b>Company GST No. : </b>
-                    {{ h.Challan_Data.VendorGST_No }}
+                    {{ h.Challan_Data.GST_No }}
                     <br>
 
                     <b>Sub Total :</b>
@@ -65,6 +74,10 @@
 
                     <b>Total Amount :</b>
                     {{ h.Challan_Data.Total_Amount }} &#8377;.
+                    <br>
+
+                    <b>Discount Amount :</b>
+                    {{ h.Challan_Data.Discount_Amount }} &#8377;.
                     <br>
 
                     <b>CGST amount :</b>
@@ -91,8 +104,8 @@
                     {{ h.Challan_Data.Remark }}
                     <br>
 
-                    <b>Product Status :</b>
-                    {{ h.Challan_Data.Product_Status }}
+                    <b>Work Status :</b>
+                    {{ h.Challan_Data.Work_Status }}
                     <br>
                     <b>Delivery Status :</b>
                     {{ h.Challan_Data.Delivery_Status }}
@@ -137,34 +150,25 @@
             <tbody>
                 <tr *ngFor="let product of h.Product_Data">
                     <td>
-                        {{ product.VendorProduct_id }}
+                        {{ product.InletProduct_id }}
                     </td>
-
                     <td>
                         {{ product.Product_Name }}
                     </td>
-
                     <td>
                         {{ product.HSN_Code }}
                     </td>
-
                     <td>
                         {{ product.Product_Quantity }}
                     </td>
-
                     <td>
                         {{ product.Rate }} &#8377;
                     </td>
-
                     <td>
                         {{ product.SubTotal }} &#8377;
                     </td>
-
                 </tr>
-
             </tbody>
-
         </table>
-
     </div>
 </div>
