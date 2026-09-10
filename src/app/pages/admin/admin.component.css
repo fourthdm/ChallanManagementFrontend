@@ -45,6 +45,7 @@ button {
 
 sup {
     color: #e40e23;
+    font-size: 18px;
 }
 
 .modal-body, .modal-header, .modal-footer{

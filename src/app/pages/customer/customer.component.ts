@@ -8,7 +8,7 @@ declare var bootstrap: any;
   templateUrl: './customer.component.html',
   styleUrls: ['./customer.component.css']
 })
-export class CustomerComponent  {
+export class CustomerComponent {
 
   @Input() Customer_Status: any;
   @Input() Company_Name: any;
@@ -93,30 +93,81 @@ export class CustomerComponent  {
     });
   }
 
-  selectedCustomerId = 0;
-  adminPassword = '';
+  selectedCutomerId: number = 0;
+
+  adminPassword: string = '';
+
+  deletionReason: string = '';
+
 
   openDeleteModal(id: number) {
-    this.selectedCustomerId = id;
+    this.selectedCutomerId = id;
   }
 
   DeleteCustomer() {
+    if (!this.adminPassword ||
+      this.adminPassword.trim() === '') {
+      alert('Please enter Admin Password');
+      return;
+    }
+    if (!this.deletionReason ||
+      this.deletionReason.trim() === '') {
+      alert('Please enter deletion reason');
+      return;
+    }
+    if (this.deletionReason.trim().length < 5) {
+      alert('Please enter a valid deletion reason');
+      return;
+    }
     this._Rest.DeleteCustomer(
-      this.selectedCustomerId,
-      this.adminPassword
-    ).subscribe({
-      next: (res: any) => {
-        alert(res.message);
-        if (res.success) {
-          this.Allcustomer();
-          this.adminPassword = '';
+      this.selectedCutomerId,
+      this.adminPassword,
+      this.deletionReason.trim()
+    )
+      .subscribe({
+        next: (res: any) => {
+          alert(res.message);
+          if (res.success) {
+            this.adminPassword = '';
+            this.deletionReason = '';
+            this.selectedCutomerId = 0;
+            this.Allcustomer();
+          }
+        },
+        error: (err) => {
+          console.log(err);
+          alert(
+            err.error?.message ||
+            'Something went wrong'
+          );
         }
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    });
+      });
   }
+
+  // selectedCustomerId = 0;
+  // adminPassword = '';
+
+  // openDeleteModal(id: number) {
+  //   this.selectedCustomerId = id;
+  // }
+
+  // DeleteCustomer() {
+  //   this._Rest.DeleteCustomer(
+  //     this.selectedCustomerId,
+  //     this.adminPassword
+  //   ).subscribe({
+  //     next: (res: any) => {
+  //       alert(res.message);
+  //       if (res.success) {
+  //         this.Allcustomer();
+  //         this.adminPassword = '';
+  //       }
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //     }
+  //   });
+  // }
 
   editCustomer(Customer_id: any) {
     const selectCustomer = this.AllCustomers.find(customer => customer.Customer_id === Customer_id)

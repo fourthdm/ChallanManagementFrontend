@@ -10,10 +10,16 @@ export class AlldeleteddataComponent {
   constructor(private _rest: RestService) { }
   AllDeletionHistory: any[] = [];
   AllInletDeletionHistory: any[] = [];
+  AllVendorDeletionHistory: any[] = [];
+  AllCustomerDeletionHistory: any[] = [];
+  AllAdminDeletionHistory: any[] = [];
 
   ngOnInit(): void {
     this.GetDeletionHistory();
     this.GetInletDeletionHistory();
+    this.GetVendorDeletionHistory();
+    this.GetCustomerDeletionhistory();
+    this.GetAdminDeletionhistory();
   }
 
   GetDeletionHistory() {
@@ -40,6 +46,45 @@ export class AlldeleteddataComponent {
         console.log(err);
       }
     });
+  }
+
+  GetVendorDeletionHistory() {
+    this._rest.VendorDeletionHistory().subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          this.AllVendorDeletionHistory = res.data;
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  GetCustomerDeletionhistory() {
+    this._rest.CustomerDeletionHistory().subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          this.AllCustomerDeletionHistory = res.data;
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  GetAdminDeletionhistory() {
+    this._rest.AdminDeletionHistory().subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          this.AllAdminDeletionHistory = res.data;
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 
 }

@@ -30,11 +30,11 @@ export class RestService {
     return this._http.get(this.ApiUrl + '/AllAdminData');
   }
 
-  DeleteAdmin(Admin_id: number, Password: string) {
-    this._State.CheckToken();
-    const headers = new HttpHeaders({ 'x-access-token': this._State.token });
-    return this._http.post(this.ApiUrl + "/DeleteAdmin/" + Admin_id, { Password }, { headers });
-  }
+  // DeleteAdmin(Admin_id: number, Password: string) {
+  //   this._State.CheckToken();
+  //   const headers = new HttpHeaders({ 'x-access-token': this._State.token });
+  //   return this._http.post(this.ApiUrl + "/DeleteAdmin/" + Admin_id, { Password }, { headers });
+  // }
 
   TotalNumberofAdmin() {
     return this._http.get(this.ApiUrl + '/NumberofAdmin');
@@ -47,6 +47,25 @@ export class RestService {
   Admindatabystatus(data: any) {
     return this._http.post(this.ApiUrl + '/AdmindatabyStatus', data);
   }
+
+  DeleteAdmin(Admin_id: number, Password: string, Deletion_Reason: string) {
+    this._State.CheckToken();
+    const headers = new HttpHeaders({ 'x-access-token': this._State.token });
+    return this._http.post(this.ApiUrl + "/DeleteAdminwithReason/" + Admin_id, { Password, Deletion_Reason }, { headers });
+  }
+  // DeleteCustomer(Customer_id: number, Password: string) {
+  //   this._State.CheckToken();
+  //   const headers = new HttpHeaders({ 'x-access-token': this._State.token });
+  //   return this._http.post(this.ApiUrl + "/Deletecustomer/" + Customer_id, { Password }, { headers });
+  // }
+
+
+  AdminDeletionHistory() {
+    this._State.CheckToken();
+    const headers = new HttpHeaders({ 'x-access-token': this._State.token });
+    return this._http.get<any>(this.ApiUrl + "/GetAdminDeletionHistory", { headers });
+  }
+  //Admin API End
 
   //Customer Details
   AddCustomer(data: any) {
@@ -64,12 +83,24 @@ export class RestService {
   UpdateCustomer(data: any) {
     return this._http.put(this.ApiUrl + '/UpdateCustomer/' + data.Customer_id, data);
   }
-
-  DeleteCustomer(Customer_id: number, Password: string) {
+  DeleteCustomer(Customer_id: number, Password: string, Deletion_Reason: string) {
     this._State.CheckToken();
     const headers = new HttpHeaders({ 'x-access-token': this._State.token });
-    return this._http.post(this.ApiUrl + "/Deletecustomer/" + Customer_id, { Password }, { headers });
+    return this._http.post(this.ApiUrl + "/DeleteCustomerwithReason/" + Customer_id, { Password, Deletion_Reason }, { headers });
   }
+  // DeleteCustomer(Customer_id: number, Password: string) {
+  //   this._State.CheckToken();
+  //   const headers = new HttpHeaders({ 'x-access-token': this._State.token });
+  //   return this._http.post(this.ApiUrl + "/Deletecustomer/" + Customer_id, { Password }, { headers });
+  // }
+
+
+  CustomerDeletionHistory() {
+    this._State.CheckToken();
+    const headers = new HttpHeaders({ 'x-access-token': this._State.token });
+    return this._http.get<any>(this.ApiUrl + "/GetCustomerDeletionHistory", { headers });
+  }
+
 
   SearchCustomername(data: any) {
     return this._http.post(this.ApiUrl + '/SearchbyCustomerName', data);
@@ -120,7 +151,7 @@ export class RestService {
     const headers = new HttpHeaders({ 'x-access-token': this._State.token });
     return this._http.post(this.ApiUrl + "/DeletevendorwithReason/" + Vendor_id, { Password, Deletion_Reason }, { headers });
   }
- 
+
   SearchVendorname(data: any) {
     return this._http.post(this.ApiUrl + '/SearchbyvendorName', data);
   }
@@ -318,7 +349,13 @@ export class RestService {
   InletChallanDeletionHistory() {
     this._State.CheckToken();
     const headers = new HttpHeaders({ 'x-access-token': this._State.token });
-    return this._http.get<any>(this.ApiUrl + "/GetInletChallanDeletionHistory/", { headers });
+    return this._http.get<any>(this.ApiUrl + "/GetInletChallanDeletionHistory", { headers });
+  }
+
+  VendorDeletionHistory() {
+    this._State.CheckToken();
+    const headers = new HttpHeaders({ 'x-access-token': this._State.token });
+    return this._http.get<any>(this.ApiUrl + "/GetVendorDeletionHistory", { headers });
   }
 
   ViewInletChallanDeletionHistory(Deletionchallan_id: any) {
@@ -326,4 +363,6 @@ export class RestService {
     const headers = new HttpHeaders({ 'x-access-token': this._State.token });
     return this._http.get<any>(this.ApiUrl + "/GetInletChallanDeletionHistorybyid/" + Deletionchallan_id, { headers });
   }
+
+
 }

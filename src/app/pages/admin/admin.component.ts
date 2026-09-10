@@ -176,35 +176,124 @@ export class AdminComponent {
     });
   }
 
+
+  // adminPassword = '';
+
+  // openDeleteModal(id: number) {
+  //   this.selectedAdminId = id;
+  //   const modal = new bootstrap.Modal(
+  //     document.getElementById('deleteModal')!
+  //   );
+  //   modal.show();
+  // }
+
+  
+// selectedVendorId: number = 0;
   selectedAdminId: number = 0;
-  adminPassword = '';
+adminPassword: string = '';
+
+deletionReason: string = '';
+
 
   openDeleteModal(id: number) {
     this.selectedAdminId = id;
-    const modal = new bootstrap.Modal(
-      document.getElementById('deleteModal')!
-    );
-    modal.show();
   }
 
   DeleteAdmin() {
+
+    if (!this.adminPassword ||
+        this.adminPassword.trim() === '') {
+
+        alert('Please enter Admin Password');
+
+        return;
+
+    }
+
+
+    if (!this.deletionReason ||
+        this.deletionReason.trim() === '') {
+
+        alert('Please enter deletion reason');
+
+        return;
+
+    }
+
+
+    if (this.deletionReason.trim().length < 5) {
+
+        alert('Please enter a valid deletion reason');
+
+        return;
+
+    }
+
+
     this._Rest.DeleteAdmin(
-      this.selectedAdminId,
-      this.adminPassword
-    ).subscribe((res: any) => {
-      alert(res.message);
-      if (res.success) {
-        this.AllAdmin();
-        this.adminPassword = '';
-        const modal = bootstrap.Modal.getInstance(
-          document.getElementById('deleteModal')!
-        );
-        modal?.hide();
-      }
-    }, err => {
-      console.log(err);
+
+        this.selectedAdminId,
+
+        this.adminPassword,
+
+        this.deletionReason.trim()
+
+    )
+    .subscribe({
+
+        next: (res: any) => {
+
+            alert(res.message);
+
+
+            if (res.success) {
+
+                this.adminPassword = '';
+
+                this.deletionReason = '';
+
+                this.selectedAdminId = 0;
+
+                this.AllAdmin();
+
+            }
+
+        },
+
+        error: (err) => {
+
+            console.log(err);
+
+            alert(
+                err.error?.message ||
+                'Something went wrong'
+            );
+
+        }
+
     });
-  }
+
+}
+
+
+  // DeleteAdmin() {
+  //   this._Rest.DeleteAdmin(
+  //     this.selectedAdminId,
+  //     this.adminPassword
+  //   ).subscribe((res: any) => {
+  //     alert(res.message);
+  //     if (res.success) {
+  //       this.AllAdmin();
+  //       this.adminPassword = '';
+  //       const modal = bootstrap.Modal.getInstance(
+  //         document.getElementById('deleteModal')!
+  //       );
+  //       modal?.hide();
+  //     }
+  //   }, err => {
+  //     console.log(err);
+  //   });
+  // }
 
   DatabyDate() {
     this._Rest.AdminDatabyDate({ Added_Date: this.Added_Date }).subscribe((data: any) => {

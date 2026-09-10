@@ -349,41 +349,97 @@
     </div>
 </div>
 
-
 <div class="modal fade" id="deleteCustomerModal">
     <div class="modal-dialog">
         <div class="modal-content">
-
             <div class="modal-header">
-                <h5>Delete Customer</h5>
+                <h5 class="modal-title">
+                    Delete Vendor
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
             </div>
 
             <div class="modal-body">
-                <!-- <label>Enter Admin Password</label>
-                <input type="password" class="form-control" [(ngModel)]="adminPassword"> -->
-                <label>Enter Admin Password</label>
-                <div class="input-group mb-3">
-                    <input [type]="liked ? 'password' : 'adminPassword'" type="Password" class="form-control"
-                        [(ngModel)]="adminPassword" placeholder="Enter Password" required>
-                    <span class="btn btn-outline-secondary" type="" [ngClass]="{
-                                                        'fa-eye-slash': !liked,
-                                                        'fa-eye': liked }" (click)="Show()" id="button-addon2"><i
-                            class="fa-solid fa-eye-slash"></i>
-                    </span>
+                <div class="alert alert-warning">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    This action cannot be undone.
                 </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Admin Password
+                        <span class="text-danger">*</span>
+                    </label>
+
+                    <div class="input-group">
+
+                        <input [type]="liked ? 'text' : 'password'" class="form-control" [(ngModel)]="adminPassword"
+                            placeholder="Enter Admin Password">
+
+                        <button type="button" class="btn btn-outline-secondary" (click)="Show()">
+
+                            <i class="fa-solid" [ngClass]="
+                                    liked
+                                    ? 'fa-eye'
+                                    : 'fa-eye-slash'
+                                ">
+                            </i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Reason for Deletion
+
+                        <span class="text-danger">
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <textarea class="form-control" rows="4" [(ngModel)]="deletionReason"
+                        placeholder="Enter reason for deleting this vendor" maxlength="500">
+                    </textarea>
+
+
+                    <small class="text-muted">
+
+                        {{ deletionReason || 0 }}/500
+
+                    </small>
+
+                </div>
+
             </div>
 
+
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-bs-dismiss="modal">
+
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+
                     Cancel
+
                 </button>
 
-                <button class="btn btn-danger" (click)="DeleteCustomer()">
-                    Delete
+
+                <button type="button" class="btn btn-danger" (click)="DeleteCustomer()">
+
+                    Delete Vendor
+
                 </button>
 
             </div>
 
         </div>
+
     </div>
+
 </div>

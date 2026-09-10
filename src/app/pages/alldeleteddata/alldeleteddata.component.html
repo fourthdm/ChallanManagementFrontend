@@ -88,9 +88,132 @@
                 </div>
             </div><br>
             <br>
-        </div>
 
+            <div class="col-md-6"><br>
+                <div class="card">
+                    <div class="card-body">
+                        <h3>
+                            Vendor Deletion History
+                        </h3>
+                        <div class="table-responsive mt-3">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>Vendor ID</th>
+                                        <th>Vendor Code</th>
+                                        <th>Deleted By</th>
+                                        <th>Reason</th>
+                                        <th>Deleted Date</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr *ngFor=" let Vendorhistory of AllVendorDeletionHistory; let i = index ">
+                                        <td> {{ i + 1 }} </td>
+                                        <td> {{ Vendorhistory.VendorDeletion_id }}</td>
+                                        <!-- <i class="fa-regular fa-eye i"
+                                                [routerLink]="['/Home/DeletedInletChallanHistory', Vendorhistory.Deletionchallan_id]"
+                                                title="View a Challan Deleted Details"></i> -->
+                                        <td> {{ Vendorhistory.Vendor_Code }} </td>
+                                        <td> {{ Vendorhistory.Deleted_By_Admin_Name }} </td>
+                                        <td> {{ Vendorhistory.Deletion_Reason }} </td>
+                                        <td> {{ Vendorhistory.Deleted_Date | date :'dd-MM-yyyy hh:mm a' }} </td>
+                                    </tr>
+                                    <tr *ngIf="AllVendorDeletionHistory.length === 0">
+                                        <td colspan="7" class="text-center"> No deletion history found. </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div><br>
+
+            <div class="col-md-6"><br>
+                <div class="card">
+                    <div class="card-body">
+                        <h3>
+                            Customer Deletion History
+                        </h3>
+                        <div class="table-responsive mt-3">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>Customer ID</th>
+                                        <th>Customer Code</th>
+                                        <th>Deleted By</th>
+                                        <th>Reason</th>
+                                        <th>Deleted Date</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr *ngFor=" let CustomerHistory of AllCustomerDeletionHistory; let i = index ">
+                                        <td> {{ i + 1 }} </td>
+                                        <td> {{ CustomerHistory.CustomerDeletion_id }}</td>
+                                        <!-- <i class="fa-regular fa-eye i"
+                                                [routerLink]="['/Home/DeletedInletChallanHistory', Vendorhistory.Deletionchallan_id]"
+                                                title="View a Challan Deleted Details"></i> -->
+                                        <td> {{ CustomerHistory.Customer_Code }} </td>
+                                        <td> {{ CustomerHistory.Deleted_By_Admin_Name }} </td>
+                                        <td> {{ CustomerHistory.Deletion_Reason }} </td>
+                                        <td> {{ CustomerHistory.Deleted_Date | date :'dd-MM-yyyy hh:mm a' }} </td>
+                                    </tr>
+                                    <tr *ngIf="AllCustomerDeletionHistory.length === 0">
+                                        <td colspan="7" class="text-center"> No deletion history found. </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div><br>
+            <br>
+
+            <div class="col-md-6"><br>
+                <div class="card">
+                    <div class="card-body">
+                        <h3>
+                            Admin Deletion History
+                        </h3>
+                        <div class="table-responsive mt-3">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>Admin ID</th>
+                                        <th>Admin Code</th>
+                                        <th>Deleted By</th>
+                                        <th>Reason</th>
+                                        <th>Deleted Date</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr *ngFor=" let adminHistory of AllAdminDeletionHistory; let i = index ">
+                                        <td> {{ i + 1 }} </td>
+                                        <td> {{ adminHistory.AdminDeletion_id }}</td>
+                                        <!-- <i class="fa-regular fa-eye i"
+                                                [routerLink]="['/Home/DeletedInletChallanHistory', Vendorhistory.Deletionchallan_id]"
+                                                title="View a Challan Deleted Details"></i> -->
+                                        <td> {{ adminHistory.Code }} </td>
+                                        <td> {{ adminHistory.Deleted_By_Admin_Name }} </td>
+                                        <td> {{ adminHistory.Deletion_Reason }} </td>
+                                        <td> {{ adminHistory.Deleted_Date | date :'dd-MM-yyyy hh:mm a' }} </td>
+                                    </tr>
+                                    <tr *ngIf="AllAdminDeletionHistory.length === 0">
+                                        <td colspan="7" class="text-center"> No deletion history found. </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div><br>
+            <br>
+        </div>
     </div>
 </div>
-
 <br><br>
