@@ -14,6 +14,8 @@ import { OutwardchallanComponent } from './pages/outwardchallan/outwardchallan.c
 import { AlldeleteddataComponent } from './pages/alldeleteddata/alldeleteddata.component';
 import { DeletedvendorchallanhistoryComponent } from './pages/deletedvendorchallanhistory/deletedvendorchallanhistory.component';
 import { InletchallandeletedhistoryComponent } from './views/inletchallandeletedhistory/inletchallandeletedhistory.component';
+import { SalesorderComponent } from './pages/salesorder/salesorder.component';
+import { SalesorderviewComponent } from './views/salesorderview/salesorderview.component';
 
 const routes: Routes = [
   { path: ' ', redirectTo: 'login', pathMatch: "full" },
@@ -26,6 +28,8 @@ const routes: Routes = [
       { path: 'Customer', component: CustomerComponent },
       { path: 'Vendor', component: VendorComponent },
       { path: 'Challan', component: ChallanComponent },
+      { path: 'Salesorder', component: SalesorderComponent },
+      { path: 'SalesorderData/:SalesOrder_id', component:SalesorderviewComponent },
       { path: 'Inletchallan', component: InletchallanComponent },
       { path: 'InletchallanData/:Challan_id', component: InletchallanviewComponent },
       { path: 'OutwardChallan', component: OutwardchallanComponent },

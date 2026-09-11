@@ -1,0 +1,294 @@
+<br><br><br>
+<div class="container">
+    <div class="row">
+        <div class="card externalcard">
+            <div class="card-body">
+
+                <div class="row" *ngIf="AllSaleorders.length == 0">
+                    <div class="text-center">
+                        <h2>Sales Order Data Not Found</h2>
+                        <p>Please remove your filters to view all Sales Order.</p> <br>
+                        <button class="btn btn-success" (click)="AllSalesOrderDetails()">All Sales Order Data</button>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="AllSaleorders.length > 0">
+                    <div class="col-md-4"
+                        *ngFor="let Ch of AllSaleorders | paginate:{itemsPerPage :6 ,currentPage:pro}">
+                        <div class="card carddata">
+                            <div class="card-body">
+                                <!-- <a data-bs-toggle="modal" data-bs-target="#deleteVendorModal"
+                                (click)="openDeleteModal(Ch.Challan_id)" title="Delete a Challan">
+                                <i class="fa-solid fa-trash-can text-danger i"></i>
+                            </a>
+                            <i class="fa-solid fa-pencil i" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                title="Edit a Challan" (click)="editRequirement(Ch.Challan_id)" title="Update a Challan"></i>
+
+                            <i class="fa-solid fa-print i" (click)="printPdf(Ch.Challan_id)"  title="Print a Challan"></i> -->
+
+                                <i class="fa-regular fa-eye i" [routerLink]="['/Home/SalesorderData', Ch.SalesOrder_id]"
+                                    title="View a Challan Details"></i>
+                                <br>
+                                <br>
+                                <p>
+                                    <b>Sales Order Number :</b> {{Ch.Sales_Order_Number}} <br>
+                                    <b>Customer Name :</b> {{Ch.Customer_Name}} <br>
+                                    <b>Company Name :</b> {{Ch.Company_Name}} <br>
+
+                                    <span class="status-line" [ngClass]="{
+        'status-breakdown': Ch.Sales_Order_Status === 'Cancelled',
+        'status-completed': Ch.Sales_Order_Status === 'Confirm',
+        'status-processing': Ch.Sales_Order_Status === 'Processing',
+        'status-hold': Ch.Sales_Order_Status === 'Status Pending',
+        'status-queue': Ch.Sales_Order_Status === 'Generate'
+      }">
+                                        <b>Sales Order Status : </b>
+                                        <span *ngIf="Ch.Sales_Order_Status === 'Generate'">
+                                            <i class="fa-solid fa-clock fa-lg text-primary"></i>
+                                        </span>
+
+                                        <span *ngIf="Ch.Sales_Order_Status === 'Confirm'">
+                                            <i class="fa-solid fa-circle-check fa-lg text-success"></i>
+                                        </span>
+
+                                        <span *ngIf="Ch.Sales_Order_Status === 'Status Pending'">
+                                            <i class="fa-solid fa-circle-pause fa-lg text-warning"></i>
+                                        </span>
+
+                                        <span *ngIf="Ch.Sales_Order_Status === 'Processing'">
+                                            <i class="fa-solid fa-arrows-spin fa-lg text-success"></i>
+                                        </span>
+
+                                        <span *ngIf="Ch.Sales_Order_Status === 'Cancelled'"
+                                            class="animate__animated animate__flash animate__infinite">
+                                            <i class="fa-solid fa-triangle-exclamation fa-lg"></i>
+                                        </span>
+
+                                        {{ Ch.Sales_Order_Status }}
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+
+                    <br>
+                    <div class="text-center">
+                        <br><pagination-controls (pageChange)=" pro = $event "
+                            style="background-color: #252847 !important; z-index: -2 !important;"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br><br>
+
+<div class="container">
+    <div class="row">
+        <div class="card">
+            <form [formGroup]="AddSalesaOrderform">
+                <br>
+                <div class="card">
+                    <div class="card-body">
+                        <h4><b> Customer Details</b></h4>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="Customer_Name">Customer Name <sup>*</sup></label>
+                                <br>
+                                <select class="form-control" formControlName="Customer_Name" [ngClass]="{'is-invalid': (submitted || AddSalesaOrderform.get('Customer_Name')?.touched) &&
+                  AddSalesaOrderform.get('Customer_Name')?.invalid }">
+                                    <option value="">-- Select Customer Name --</option>
+                                    <option *ngFor="let Cust of AllCustomerData" [value]="Cust.Customer_Name">
+                                        {{Cust.Customer_Name}}</option>
+                                </select>
+                                <div class="invalid-feedback" *ngIf="(submitted || AddSalesaOrderform.get('Customer_Name')?.touched) &&
+            AddSalesaOrderform.get('Customer_Name')?.errors?.['required']">
+                                    Customer Name is required
+                                </div>
+                                <br>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>Company Name <sup>*</sup></label>
+                                <input class="form-control" formControlName="Company_Name" [ngClass]="{'is-invalid': (submitted || AddSalesaOrderform.get('Company_Name')?.touched) &&
+                  AddSalesaOrderform.get('Company_Name')?.invalid }">
+                                <div class="invalid-feedback" *ngIf="(submitted || AddSalesaOrderform.get('Company_Name')?.touched) &&
+            AddSalesaOrderform.get('Company_Name')?.errors?.['required']">
+                                    Company Name is required
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>Company Address<sup>*</sup></label>
+                                <input class="form-control" formControlName="Company_Address" [ngClass]="{'is-invalid': (submitted || AddSalesaOrderform.get('Company_Address')?.touched) &&
+                  AddSalesaOrderform.get('Company_Address')?.invalid }">
+                                <div class="invalid-feedback" *ngIf="(submitted || AddSalesaOrderform.get('Company_Address')?.touched) &&
+            AddSalesaOrderform.get('Company_Address')?.errors?.['required']">
+                                    Company Address is required
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>Company GST No.<sup>*</sup></label>
+                                <input class="form-control" formControlName="GST_No" [ngClass]="{'is-invalid': (submitted || AddSalesaOrderform.get('GST_No')?.touched) &&
+                  AddSalesaOrderform.get('GST_No')?.invalid }">
+                                <div class="invalid-feedback" *ngIf="(submitted || AddSalesaOrderform.get('GST_No')?.touched) &&
+            AddSalesaOrderform.get('GST_No')?.errors?.['required']">
+                                    Company GST_NO is required
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>Delivery Address</label>
+                                <input class="form-control" formControlName="Delivery_Address">
+                            </div>
+
+                        </div>
+                        <br>
+                    </div>
+                    <br>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-body">
+                        <h4><b> Products</b></h4>
+
+                        <div formArrayName="items">
+
+                            <div *ngFor="let product of items.controls; let i=index" [formGroupName]="i">
+
+                                <div class="row">
+
+                                    <div class="col-md-4">
+                                        <label for="Product_Name">Product Name<sup>*</sup></label>
+                                        <input class="form-control" placeholder="Product" formControlName="Product_Name"
+                                            [ngClass]="{'is-invalid': (submitted || product.get('Product_Name')?.touched) &&
+                                                 product.get('Product_Name')?.invalid }">
+
+                                        <div class="invalid-feedback"
+                                            *ngIf="(submitted || product.get('Product_Name')?.touched) && product.get('Product_Name')?.errors?.['required']">
+                                            Product Name is required
+                                        </div>
+                                        <br>
+                                    </div>
+
+                                    <br>
+                                    <div class="col-md-4">
+                                        <label for="HSN_Code">HSN Code<sup>*</sup></label>
+                                        <input class="form-control" placeholder="HSN" formControlName="HSN_Code"
+                                            [ngClass]="{'is-invalid': (submitted || product.get('HSN_Code')?.touched) &&
+                                                 product.get('HSN_Code')?.invalid }">
+
+                                        <div class="invalid-feedback"
+                                            *ngIf="(submitted || product.get('HSN_Code')?.touched) && product.get('HSN_Code')?.errors?.['required']">
+                                            HSN Code is required
+                                        </div>
+
+                                    </div>
+                                    <br>
+                                    <div class="col-md-4">
+                                        <label for="Ordered_Quantity">Product Quantity<sup>*</sup></label>
+                                        <input type="number" class="form-control" placeholder="Qty"
+                                            formControlName="Ordered_Quantity" [ngClass]="{'is-invalid': (submitted || product.get('Ordered_Quantity')?.touched) &&
+                                                 product.get('Ordered_Quantity')?.invalid }">
+
+                                        <div class="invalid-feedback"
+                                            *ngIf="(submitted || product.get('Ordered_Quantity')?.touched) && product.get('Ordered_Quantity')?.errors?.['required']">
+                                            Ordered Quantity is required
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="col-md-4">
+                                        <label for="Rate">Rate<sup>*</sup></label>
+                                        <input type="number" class="form-control" placeholder="Rate"
+                                            formControlName="Rate" (input)="calculateItem(i)" [ngClass]="{'is-invalid': (submitted || product.get('Rate')?.touched) &&
+                                                 product.get('Rate')?.invalid }">
+
+                                        <div class="invalid-feedback"
+                                            *ngIf="(submitted || product.get('Rate')?.touched) && product.get('Rate')?.errors?.['required']">
+                                            Rate is required
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="col-md-4">
+                                        <label for="SubTotal">Total</label>
+                                        <input type="number" class="form-control" placeholder=""
+                                            formControlName="SubTotal" readonly>
+                                    </div>
+                                    <br>
+                                    <div class="col-md-4">
+                                        <br>
+                                        <button class="btn btn-danger" type="button" (click)="removeProduct(i)">
+                                            Remove
+                                        </button>
+                                    </div>
+                                </div>
+                                <br>
+                                <hr>
+                            </div>
+                        </div>
+                        <button class="btn btn-success" type="button" (click)="addProduct()">
+                            Add Product
+                        </button>
+
+                        <div class="Discount">
+                            <div class="">
+                                <label for="Discount_Amount">Discount Amount</label>
+                                <input type="number" class="form-control" placeholder="Discount_Amount"
+                                    formControlName="Discount_Amount">
+                            </div>
+                        </div>
+
+                        <div class="Discount">
+                            <div class="">
+                                <label for="Sub_Total">SubTotal Amount</label>
+                                <input type="number" class="form-control" placeholder="" formControlName="Sub_Total"
+                                    readonly>
+                            </div>
+                        </div>
+
+                    </div>
+                    <br>
+                </div>
+                <br>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h4><b>Details </b></h4>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Remark</label>
+                                <textarea class="form-control" formControlName="Remark"></textarea>
+                                <br>
+                            </div><br>
+
+                            <div class="col-md-6">
+                                <label>Sales Order Status</label>
+                                <select class="form-control" formControlName="Sales_Order_Status">
+                                    <option value="">-- Select Mode of Transport --</option>
+                                    <option value="Generate">Generate</option>
+                                    <option value="Processing">Processing</option>
+                                    <option value="Status Pending">Status Pending</option>
+                                    <option value="Confirmed">Confirmed</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select> <br>
+                                <br>
+                            </div><br>
+                        </div>
+                    </div> <br>
+                </div>
+                <br>
+
+                <div class="text-end">
+                    <button class="btn btn-primary btn-lg" type="button" (click)="saveChallan()">
+                        Create Sales Order
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

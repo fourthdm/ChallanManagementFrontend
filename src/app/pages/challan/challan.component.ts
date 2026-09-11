@@ -184,7 +184,6 @@ export class ChallanComponent {
   }
 
   calculateProduct(productIndex: number) {
-
     const product = this.vendoritems.at(productIndex);
     const operations = this.getOperations(productIndex);
     let totalRate = 0;

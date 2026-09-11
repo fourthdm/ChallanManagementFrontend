@@ -172,6 +172,23 @@ export class RestService {
     return this._http.post(this.ApiUrl + '/VendorDatabetweenDate', data);
   }
 
+  // SalesOrder API
+  AddSalesorder(data: any) {
+    return this._http.post(this.ApiUrl + '/AddSalesOrder', data);
+  }
+
+  AllSalesOrders() {
+    return this._http.get(this.ApiUrl + '/AllSalesOrder');
+  }
+
+  SalesOrderbyId(SalesOrder_id: any) {
+    return this._http.get(this.ApiUrl + '/SalesOrderbyId/' + SalesOrder_id);
+  }
+  
+  TotalNumberofSalesOrder() {
+    return this._http.get(this.ApiUrl + '/TotalNumberofSalesorder');
+  }
+
   //InletChallan API
   AddInletchallan(data: any) {
     return this._http.post(this.ApiUrl + '/AddInletchallan', data);
@@ -363,6 +380,8 @@ export class RestService {
     const headers = new HttpHeaders({ 'x-access-token': this._State.token });
     return this._http.get<any>(this.ApiUrl + "/GetInletChallanDeletionHistorybyid/" + Deletionchallan_id, { headers });
   }
+
+
 
 
 }
