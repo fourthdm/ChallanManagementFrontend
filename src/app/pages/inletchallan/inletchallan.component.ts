@@ -192,7 +192,6 @@ export class InletchallanComponent {
     this.items.removeAt(index);
   }
 
-
   Update() {
 
     if (this.Updateinletchallanfrom.invalid) {
@@ -289,9 +288,7 @@ export class InletchallanComponent {
       return;
     }
 
-
     this.isDeleting = true;
-
 
     this._rest.DeleteChallan(
       this.selectedchallanId,
@@ -332,36 +329,23 @@ export class InletchallanComponent {
               const modal =
                 (window as any).bootstrap.Modal
                   .getInstance(modalElement);
-
               if (modal) {
                 modal.hide();
               }
             }
-
           }
-
         },
 
         error: (err) => {
-
           this.isDeleting = false;
-
           console.log(err);
-
           if (err.error && err.error.message) {
-
             alert(err.error.message);
-
           } else {
-
             alert('Something went wrong while deleting challan');
-
           }
-
         }
-
       });
-
   }
 
   // DeleteChallan() {
@@ -390,9 +374,7 @@ export class InletchallanComponent {
       } else {
         this.AllChallan = [];
       }
-
       this.Added_Date = '';
-
     }, (err: any) => {
       console.log(err);
     });
@@ -469,9 +451,7 @@ export class InletchallanComponent {
   }
 
   exportexcel(): void {
-
     const data: any[][] = [];
-
     // Header
     data.push([
       'Sr No',
@@ -571,111 +551,6 @@ export class InletchallanComponent {
     XLSX.utils.book_append_sheet(workbook, worksheet, 'All Challan');
 
     XLSX.writeFile(workbook, 'AllChallan.xlsx');
-
-    //   const excelData = this.AllChallan.map((challan: any, index: number) => ({
-
-    //     'Sr No': index + 1,
-    //     'Challan_Code': challan.Challan_Code,
-    //     'Customer_Name': challan.Customer_Name,
-    //     'Company_Name': challan.Company_Name,
-    //     'Company_Address': challan.Company_Address,
-    //     'GST_No': challan.GST_No,
-    //     'Delivery_Address': challan.Delivery_Address,
-
-    //     'Products': challan.items.map((p: any) =>
-    //       `Product : ${p.Product_Name}
-    // HSN : ${p.HSN_Code}
-    // Qty : ${p.Product_Quantity}
-    // Rate : ${p.Rate}
-    // Subtotal : ${p.SubTotal}`
-    //     ).join('\n\n'),
-
-    // 'Sub_Total': challan.Sub_Total,
-    // 'Total_Amount': challan.Total_Amount,
-    // 'Discount_Amount': challan.Discount_Amount,
-    // 'CGST_amount': challan.CGST_amount,
-    // 'SGST_amount': challan.SGST_amount,
-    // 'Grand_Total': challan.Grand_Total,
-    // 'Mode_of_Transport': challan.Mode_of_Transport,
-    // 'Transporter_Name': challan.Transporter_Name,
-    // 'Vehicle_Number': challan.Vehicle_Number,
-    // 'Remark': challan.Remark,
-    // 'Work_Status': challan.Work_Status,
-    // 'Delivery_Status': challan.Delivery_Status,
-    // 'Challan_Status': challan.Challan_Status,
-    // 'Added_Date': challan.Added_Date,
-    // 'Updated_Date': challan.Updated_Date
-
-    //   }));
-
-    //   const worksheet = XLSX.utils.json_to_sheet(excelData);
-
-    //   const workbook = XLSX.utils.book_new();
-    //   XLSX.utils.book_append_sheet(workbook, worksheet, 'AllChallan');
-
-    //   XLSX.writeFile(workbook, 'AllChallan.xlsx');
   }
-
-  // exportexcel(): void {
-  //   const excelData: any[] = [];
-
-  //   this.AllChallan.forEach((challan: any, index: number) => {
-
-  //     challan.items.forEach((item: any, itemIndex: number) => {
-  //       // STEP 4.1 – Create a new array for Excel
-  //       // const excelData = this.AllChallan.map((w: any, index: number) => {
-  //       excelData.push({
-  //         'Sr No':  index + 1 ,
-  //         'Challan_Code': challan.Challan_Code,
-  //         'Customer_Name': challan.Customer_Name,
-  //         'Company_Name': challan.Company_Name,
-  //         'Company_Address': challan.Company_Address,
-  //         'GST_No': challan.GST_No,
-  //         'Delivery_Address': challan.Delivery_Address,
-
-  //         'Products': challan.items
-  //           .map((p: any) =>
-  //             `${p.Product_Name} ${p.HSN_Code}  ${p.Product_Quantity} ${p.Rate} (${p.SubTotal})`
-  //           )
-  //           .join('\n'),
-
-  //         // 'Product_Name': item.Product_Name,
-  //         // 'HSN_Code': item.HSN_Code,
-  //         // 'Product_Quantity': item.Product_Quantity,
-  //         // 'Rate': item.Rate,
-  //         // 'SubTotal': item.SubTotal,
-
-  //         'Sub_Total': challan.Sub_Total,
-  //         'Total_Amount': challan.Total_Amount,
-  //         'Discount_Amount': challan.Discount_Amount,
-  //         'CGST_amount': challan.CGST_amount,
-  //         'SGST_amount': challan.SGST_amount,
-  //         'Grand_Total': challan.Grand_Total,
-  //         'Mode_of_Transport': challan.Mode_of_Transport,
-  //         'Transporter_Name': challan.Transporter_Name,
-  //         'Vehicle_Number': challan.Vehicle_Number,
-  //         'Remark': challan.Remark,
-  //         'Work_Status': challan.Work_Status,
-  //         'Delivery_Status': challan.Delivery_Status,
-  //         'Challan_Status': challan.Challan_Status,
-  //         'Added_Date': challan.Added_Date,
-  //         'Updated_Date': challan.Updated_Date
-  //       });
-  //     });
-  //   });
-  //   // STEP 4.2 – Convert JSON data to worksheet
-  //   const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(excelData);
-
-  //   // STEP 4.3 – Create workbook
-  //   const workbook: XLSX.WorkBook = XLSX.utils.book_new();
-
-  //   // STEP 4.4 – Add worksheet to workbook
-  //   XLSX.utils.book_append_sheet(workbook, worksheet, 'AllChallan');
-
-  //   // STEP 4.5 – Download Excel file
-  //   XLSX.writeFile(workbook, 'AllChallan.xlsx');
-
-  // }
-
 
 }

@@ -177,6 +177,12 @@ export class RestService {
     return this._http.post(this.ApiUrl + '/AddSalesOrder', data);
   }
 
+  UpdateaSaleOrder(SalesOrder_id: number, data: any) {
+    this._State.CheckToken();
+    const headers = new HttpHeaders({ 'x-access-token': this._State.token });
+    return this._http.put(this.ApiUrl + '/UpdateaSalesOrder/' + SalesOrder_id, data, { headers });
+  }
+
   AllSalesOrders() {
     return this._http.get(this.ApiUrl + '/AllSalesOrder');
   }
@@ -184,9 +190,19 @@ export class RestService {
   SalesOrderbyId(SalesOrder_id: any) {
     return this._http.get(this.ApiUrl + '/SalesOrderbyId/' + SalesOrder_id);
   }
-  
+
   TotalNumberofSalesOrder() {
     return this._http.get(this.ApiUrl + '/TotalNumberofSalesorder');
+  }
+
+  GetSalesOrderPdf(SalesOrder_id: any) {
+    return this._http.get(this.ApiUrl + '/PrintSalesOrder/' + SalesOrder_id, { responseType: 'blob' });
+  }
+
+  DeleteSalesOrder(SalesOrder_id: number, Password: string, Deletion_Reason: string) {
+    this._State.CheckToken();
+    const headers = new HttpHeaders({ 'x-access-token': this._State.token });
+    return this._http.post(this.ApiUrl + "/DeletesalesorderbyDelationReason/" + SalesOrder_id, { Password, Deletion_Reason }, { headers });
   }
 
   //InletChallan API

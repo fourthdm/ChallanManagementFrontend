@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { distinctUntilChanged } from 'rxjs';
 import { RestService } from 'src/app/services/rest.service';
 import { StateService } from 'src/app/services/state.service';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-salesorder',
@@ -14,9 +15,10 @@ export class SalesorderComponent implements OnInit {
   AllSaleorders: any[] = [];
   AllCustomerData: any[] = [];
   AddSalesaOrderform: FormGroup;
+  UpdateSalesOrderform: FormGroup;
   submitted = false;
 
-  pro:any;
+  pro: any;
 
   constructor(private _rest: RestService, private fb: FormBuilder) {
     this.AddSalesaOrderform = this.fb.group({
@@ -35,11 +37,32 @@ export class SalesorderComponent implements OnInit {
         // this.createProduct()
       ])  // 🔥 REQUIRED
     })
+
+    this.UpdateSalesOrderform = this.fb.group({
+      SalesOrder_id: [''],
+      Customer_Name: [''],
+      Company_Name: [''],
+      Company_Address: [''],
+      GST_No: [''],
+      Delivery_Address: [''],
+
+      SubTotal: [''],
+      Total_Amount: [''],
+      Discount_Amount: [''],
+      CGST_amount: [''],
+      SGST_amount: [''],
+      Grand_Total: [''],
+
+      Remark: [''],
+      Sales_Order_Status: [''],
+
+      itemsupdate: this.fb.array([])
+    })
+
   }
 
 
   ngOnInit(): void {
-
     this.AddSalesaOrderform.get('Customer_Name')!
       .valueChanges
       .pipe(distinctUntilChanged())
@@ -125,36 +148,26 @@ export class SalesorderComponent implements OnInit {
 
   calculateItem(index: number) {
     const item = this.items.at(index);
-
     const Rate = +item.get('Rate')!.value || 0;
     const Quantity = +item.get('Ordered_Quantity')!.value || 0;
-
     const SubTotal = Rate * Quantity;
-
     item.patchValue({
       SubTotal: SubTotal
     }, { emitEvent: false })
-
     this.calculateGrandTotal();
   }
 
   calculateGrandTotal() {
-
     let subTotal = 0;
     this.items.controls.forEach((item: any) => {
       subTotal += Number(item.get('SubTotal')?.value) || 0;
     });
-
     const discount =
       Number(this.AddSalesaOrderform.get('Discount_Amount')?.value) || 0;
-
     const totalAmount = subTotal - discount;
-
     this.AddSalesaOrderform.patchValue({
-
       Sub_Total: subTotal,
       Total_Amount: totalAmount
-
     }, { emitEvent: false });
 
   }
@@ -168,13 +181,219 @@ export class SalesorderComponent implements OnInit {
     })
   }
 
-
   AllSalesOrderDetails() {
     this._rest.AllSalesOrders().subscribe((data: any) => {
       console.log(data);
       this.AllSaleorders = data.data;
     }, (err: any) => {
       console.log(err);
+    });
+  }
+
+
+  liked: boolean = false;
+
+  Show() {
+    this.liked = !this.liked;
+  }
+
+  selectedSalesorderId = 0;
+  adminPassword = '';
+  deletionReason = '';
+  isDeleting: boolean = false;
+
+  openDeleteModal(id: number) {
+    this.selectedSalesorderId = id;
+  }
+
+  DeleteSalesorder() {
+
+    if (!this.adminPassword || this.adminPassword.trim() === '') {
+      alert('Please enter Admin Password');
+      return;
+    }
+
+
+    if (!this.deletionReason || this.deletionReason.trim() === '') {
+      alert('Please enter the reason for deletion');
+      return;
+    }
+
+
+    if (this.deletionReason.trim().length < 5) {
+      alert('Please enter a valid deletion reason');
+      return;
+    }
+
+
+    if (!this.selectedSalesorderId) {
+      alert('Invalid SalesOrder');
+      return;
+    }
+
+    this.isDeleting = true;
+
+    this._rest.DeleteChallan(
+      this.selectedSalesorderId,
+      this.adminPassword,
+      this.deletionReason.trim()
+    )
+      .subscribe({
+
+        next: (res: any) => {
+
+          this.isDeleting = false;
+
+          alert(res.message);
+          if (res.success) {
+
+            // Refresh challan list
+            this.AllSalesOrderDetails();
+
+            // Clear values
+            this.adminPassword = '';
+
+            this.deletionReason = '';
+
+            this.selectedSalesorderId = 0;
+
+            this.liked = false;
+
+
+            // Close modal
+            const modalElement =
+              document.getElementById('deleteVendorModal');
+
+            if (modalElement) {
+
+              const modal =
+                (window as any).bootstrap.Modal
+                  .getInstance(modalElement);
+
+              if (modal) {
+                modal.hide();
+              }
+            }
+          }
+        },
+
+        error: (err) => {
+          this.isDeleting = false;
+          console.log(err);
+          if (err.error && err.error.message) {
+            alert(err.error.message);
+          } else {
+            alert('Something went wrong while deleting Salesorder');
+          }
+        }
+      });
+  }
+
+  printPdf(SalesOrder_id: any) {
+    this._rest.GetSalesOrderPdf(SalesOrder_id).subscribe((file: Blob) => {
+      const url = window.URL.createObjectURL(file);
+      window.open(url, '_blank')
+    });
+  }
+
+  addUpdatedProduct() {
+    this.itemsupdate.push(
+      this.createUpdatedProduct()
+    );
+  }
+
+  createUpdatedProduct(): FormGroup {
+    return this.fb.group({
+      SalesOrderItem_id: [],
+      Product_Name: ['', Validators.required],
+      HSN_Code: [''],
+      Ordered_Quantity: [1, Validators.required],
+      Rate: [0, Validators.required],
+      SubTotal: [{ value: 0, disabled: true }]
+    });
+  }
+
+  calculateSubtotal(index: number) {
+    const product = this.itemsupdate.at(index);
+    const qty = Number(product.get('Ordered_Quantity')?.value) || 0;
+    const rate = Number(product.get('Rate')?.value) || 0;
+    const subtotal = qty * rate;
+    product.get('SubTotal')?.setValue(subtotal);
+  }
+
+  get itemsupdate(): FormArray {
+    return this.UpdateSalesOrderform.get('itemsupdate') as FormArray;
+  }
+
+  SelectedSaleorder: any = null;
+
+  editRequirement(SalesOrder_id: any) {
+    const data = this.AllSaleorders.find(r => r.SalesOrder_id === SalesOrder_id);
+    if (!data) return;
+
+    this.SelectedSaleorder = 1;
+
+    this.UpdateSalesOrderform.patchValue({
+      SalesOrder_id: data.SalesOrder_id,
+      Customer_Name: data.Customer_Name,
+      Company_Name: data.Company_Name,
+      Company_Address: data.Company_Address,
+      Delivery_Address: data.Delivery_Address,
+      GST_No: data.GST_No,
+      Discount_Amount: data.Discount_Amount,
+      Remark: data.Remark,
+      Sales_Order_Status: data.Sales_Order_Status,
+    });
+
+    // ✅ CLEAR OLD ITEMS
+    this.itemsupdate.clear();
+    data.itemsupdate.forEach((s: any) => {
+      this.itemsupdate.push(
+        this.fb.group({
+          SalesOrderItem_id: [s.SalesOrderItem_id],
+          Product_Name: [s.Product_Name],
+          HSN_Code: [s.HSN_Code],
+          Ordered_Quantity: [s.Ordered_Quantity],
+          Rate: [s.Rate],
+          SubTotal: [{
+            value: s.Ordered_Quantity * s.Rate,
+            disabled: true
+          }]
+        })
+      );
+    });
+  }
+
+  removeUpdateProduct(index: number) {
+    this.itemsupdate.removeAt(index);
+  }
+
+  Update() {
+    if (this.UpdateSalesOrderform.invalid) {
+      this.UpdateSalesOrderform.markAllAsTouched();
+      return;
+    }
+    const SalesOrder_id = this.UpdateSalesOrderform.value.SalesOrder_id;
+    const formData = this.UpdateSalesOrderform.value;
+    this._rest.UpdateaSaleOrder(SalesOrder_id, formData).subscribe({
+      next: (res: any) => {
+        alert(res.message);
+        this.AllSalesOrderDetails();
+        if (res.success) {
+          // Close modal
+          const modalElement = document.getElementById('exampleModal');
+          if (modalElement) {
+            const modal = bootstrap.Modal.getInstance(modalElement);
+            if (modal) {
+              modal.hide();
+            }
+          }
+          console.log('SalesOrder Updated Successfully');
+        }
+      },
+      error: (error) => {
+        console.error('Update failed:', error);
+      }
     });
   }
 
