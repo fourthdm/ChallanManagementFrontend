@@ -399,5 +399,20 @@ export class RestService {
 
 
 
+  SalesOrderDeletionHistory() {
+    this._State.CheckToken();
+    const headers = new HttpHeaders({ 'x-access-token': this._State.token });
+    return this._http.get<any>(this.ApiUrl + "/GetSalesOrderDeletionHistory/", { headers });
+  }
+
+  ViewSalesOrderDeletionHistory(SalesorderDeleted_id: any) {
+    this._State.CheckToken();
+    const headers = new HttpHeaders({ 'x-access-token': this._State.token });
+    return this._http.get<any>(this.ApiUrl + "/GetSalesorderDeletionHistoryById/" + SalesorderDeleted_id, { headers });
+  }
+
+  DashboardSalesOrder() {
+    return this._http.get(this.ApiUrl + '/LimitedSalesOrder');
+  }
 
 }

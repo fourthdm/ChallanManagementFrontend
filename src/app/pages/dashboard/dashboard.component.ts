@@ -10,6 +10,7 @@ export class DashboardComponent {
 
   Inletchallans: any[] = [];
   VendorChallandata: any[] = [];
+  SalesOrder: any[] = [];
 
   TotalAdmin: any[] = [];
   TotalCustomer: any[] = [];
@@ -30,6 +31,8 @@ export class DashboardComponent {
     this.TotalNumberofOutwardChallan();
     this.TotalNumberofSalesorder();
     this.Delivered();
+
+    this.AllSalesorders();
     this.Allinletchallan();
     this.AllvendorChallan();
   }
@@ -88,6 +91,15 @@ export class DashboardComponent {
     }, (err: any) => {
       console.log(err);
     })
+  }
+
+  AllSalesorders() {
+    this._Rest.DashboardSalesOrder().subscribe((data: any) => {
+      this.SalesOrder = data.data;
+      console.log(data);
+    }, (err: any) => {
+      console.log(err);
+    });
   }
 
   Allinletchallan() {

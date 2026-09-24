@@ -25,6 +25,8 @@ import { DeletedvendorchallandataComponent } from './pages/deletedvendorchalland
 import { InletchallandeletedhistoryComponent } from './views/inletchallandeletedhistory/inletchallandeletedhistory.component';
 import { SalesorderComponent } from './pages/salesorder/salesorder.component';
 import { SalesorderviewComponent } from './views/salesorderview/salesorderview.component';
+import { SaleorderlistComponent } from './pages/saleorderlist/saleorderlist.component';
+import { SalesorderdeletedhistoryComponent } from './views/salesorderdeletedhistory/salesorderdeletedhistory.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import { SalesorderviewComponent } from './views/salesorderview/salesorderview.c
     DeletedvendorchallandataComponent,
     InletchallandeletedhistoryComponent,
     SalesorderComponent,
-    SalesorderviewComponent
+    SalesorderviewComponent,
+    SaleorderlistComponent,
+    SalesorderdeletedhistoryComponent
   ],
   imports: [
     BrowserModule,

@@ -2,6 +2,11 @@
     <br><br><br>
     <div class="container">
 
+        <div class="text-center">
+            <h1>All Deleted Data</h1>
+        </div>
+
+        <br>
         <div class="row">
             <div class="col-md-6">
                 <div class="card">
@@ -43,6 +48,7 @@
                         </div>
                     </div>
                 </div>
+                <br>
             </div><br>
             <br>
 
@@ -89,7 +95,50 @@
             </div><br>
             <br>
 
-            <div class="col-md-6"><br>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>
+                            Sales Order Deletion History
+                        </h3>
+                        <div class="table-responsive mt-3">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>Sales Order ID</th>
+                                        <th>Sales Order Code</th>
+                                        <th>Deleted By</th>
+                                        <th>Reason</th>
+                                        <th>Deleted Date</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr *ngFor=" let salesorder of AllSalesOrder; let i = index ">
+                                        <td> {{ i + 1 }} </td>
+                                        <td> {{ salesorder.Challan_id }}
+                                            <i class="fa-regular fa-eye i"
+                                                [routerLink]="['/Home/DeletedSalesOrderHistory', salesorder.SalesorderDeleted_id]"
+                                                title="View a SalesOrder Deleted Details"></i>
+                                        </td>
+                                        <td> {{ salesorder.Sales_Order_Number }} </td>
+                                        <td> {{ salesorder.Deleted_By_Admin_Name }} </td>
+                                        <td> {{ salesorder.Deletion_Reason }} </td>
+                                        <td> {{ salesorder.Deleted_Date | date :'dd-MM-yyyy hh:mm a' }} </td>
+                                    </tr>
+                                    <tr *ngIf="AllSalesOrder.length === 0">
+                                        <td colspan="7" class="text-center"> No deletion history found. </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div><br>
+            </div><br>
+            <br>
+
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <h3>
@@ -127,10 +176,10 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div> <br>
             </div><br>
 
-            <div class="col-md-6"><br>
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <h3>
@@ -168,11 +217,11 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div><br>
             </div><br>
             <br>
 
-            <div class="col-md-6"><br>
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <h3>
@@ -210,7 +259,7 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div><br>
             </div><br>
             <br>
         </div>

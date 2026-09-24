@@ -380,19 +380,14 @@ export class ChallanComponent {
   }
 
   calculateGrandTotal() {
-
     let subTotal = 0;
     this.items.controls.forEach((item: any) => {
       subTotal += Number(item.get('SubTotal')?.value) || 0;
     });
-
     const discount =
       Number(this.Addinletchallanform.get('Discount_Amount')?.value) || 0;
-
     const totalAmount = subTotal - discount;
-
     this.Addinletchallanform.patchValue({
-
       Sub_Total: subTotal,
       Total_Amount: totalAmount
 

@@ -13,6 +13,7 @@ export class AlldeleteddataComponent {
   AllVendorDeletionHistory: any[] = [];
   AllCustomerDeletionHistory: any[] = [];
   AllAdminDeletionHistory: any[] = [];
+  AllSalesOrder: any[] = [];
 
   ngOnInit(): void {
     this.GetDeletionHistory();
@@ -20,6 +21,7 @@ export class AlldeleteddataComponent {
     this.GetVendorDeletionHistory();
     this.GetCustomerDeletionhistory();
     this.GetAdminDeletionhistory();
+    this.GetSalesOrderDeletionHistory();
   }
 
   GetDeletionHistory() {
@@ -79,6 +81,19 @@ export class AlldeleteddataComponent {
       next: (res: any) => {
         if (res.success) {
           this.AllAdminDeletionHistory = res.data;
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  GetSalesOrderDeletionHistory() {
+    this._rest.SalesOrderDeletionHistory().subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          this.AllSalesOrder = res.data;
         }
       },
       error: (err) => {

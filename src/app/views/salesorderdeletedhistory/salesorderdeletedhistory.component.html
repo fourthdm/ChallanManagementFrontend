@@ -1,0 +1,150 @@
+<br><br>
+<br> <br>
+<div class="container">
+    <div *ngFor="let h of AllDeletionHistory">
+
+        <h4>
+            Deleted SalesOrder Details
+        </h4>
+
+
+        <p>
+            <strong>SalesOrder Number:</strong>
+            {{ h.Sales_Order_Number }}
+        </p>
+
+
+        <p>
+            <strong>Deleted By:</strong>
+            {{ h.Deleted_By_Admin_Name }}
+        </p>
+
+
+        <p>
+            <strong>Deleted Date:</strong>
+            {{ h.Deleted_Date | date:'dd-MM-yyyy hh:mm a' }}
+        </p>
+
+
+        <p>
+            <strong>Reason:</strong>
+            {{ h.Deletion_Reason }}
+        </p>
+
+
+        <hr>
+
+        <h5>Deleted Sales Order Data</h5>
+        <div *ngIf="h.SalesOrder_Data">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <b>Sales Order Code : </b>
+                    {{ h.SalesOrder_Data.Sales_Order_Number }}
+
+                    <br>
+
+                    <b>Customer Name : </b>
+                    {{ h.SalesOrder_Data.Customer_Name }}
+                    <br>
+
+                    <b>Company Name : </b>
+                    {{ h.SalesOrder_Data.Company_Name }}
+                    <br>
+
+                    <b>Company Address : </b>
+                    {{ h.SalesOrder_Data.Company_Address }}
+                    <br>
+
+                    <b>Company GST No. : </b>
+                    {{ h.SalesOrder_Data.GST_No }}
+                    <br>
+
+                    <b>Sub Total :</b>
+                    {{ h.SalesOrder_Data.Sub_Total }} &#8377;.
+                    <br>
+
+                    <b>Total Amount :</b>
+                    {{ h.SalesOrder_Data.Total_Amount }} &#8377;.
+                    <br>
+
+                    <b>Discount Amount :</b>
+                    {{ h.SalesOrder_Data.Discount_Amount }} &#8377;.
+                    <br>
+
+                    <b>CGST amount :</b>
+                    {{ h.SalesOrder_Data.CGST_amount }} &#8377;.
+                    <br>
+
+                    <b>Grand Total :</b>
+                    {{ h.SalesOrder_Data.Grand_Total }} &#8377;.
+                    <br>
+                </div>
+
+                <div class="col-md-6">
+
+                    <b>Remark :</b>
+                    {{ h.SalesOrder_Data.Remark }}
+                    <br>
+
+                    <b>Sales Order Status :</b>
+                    {{ h.SalesOrder_Data.Sales_Order_Status }}
+                    <br>
+
+                    <b>Added Date :</b>
+                    {{ h.SalesOrder_Data.Added_Date | date }}
+                    <br>
+
+                    <b>Updated Date :</b>
+                    {{ h.SalesOrder_Data.Updated_Date | date}}
+                    <br>
+
+                    <br>
+                </div>
+            </div>
+
+        </div>
+
+        <br>
+
+        <h5>Deleted Products</h5>
+        <table class="table table-bordered">
+
+            <thead>
+
+                <tr>
+                    <th>Product ID</th>
+                    <th>Product Name</th>
+                    <th>HSN Code</th>
+                    <th>Quantity</th>
+                    <th>Rate</th>
+                    <th>SubTotal</th>
+                </tr>
+            </thead>
+
+
+            <tbody>
+                <tr *ngFor="let product of h.SalesOrderProduct_Data">
+                    <td>
+                        {{ product.SalesOrderItem_id }}
+                    </td>
+                    <td>
+                        {{ product.Product_Name }}
+                    </td>
+                    <td>
+                        {{ product.HSN_Code }}
+                    </td>
+                    <td>
+                        {{ product.Ordered_Quantity }}
+                    </td>
+                    <td>
+                        {{ product.Rate }} &#8377;
+                    </td>
+                    <td>
+                        {{ product.SubTotal }} &#8377;
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
