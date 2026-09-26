@@ -1,0 +1,202 @@
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Sr.No</th>
+            <th>Sales Order No</th>
+            <th>Customer</th>
+            <th>Company</th>
+            <th>Order Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let order of AllSalesOrders; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td> {{ order.Sales_Order_Number }}</td>
+            <td> {{ order.Customer_Name }}</td>
+            <td>{{ order.Company_Name }}</td>
+            <td> {{ order.Added_Date | date:'dd-MM-yyyy' }} </td>
+            <td><span class="badge bg-warning" *ngIf="order.Sales_Order_Status === 'Draft'">Draft </span>
+                <span class="badge bg-success" *ngIf="order.Sales_Order_Status === 'Confirm'">Confirm </span>
+                <span class="badge bg-primary" *ngIf="order.Sales_Order_Status === 'In Production'">In Production</span>
+                <span class="badge bg-secondary" *ngIf="order.Sales_Order_Status === 'Completed'">Completed </span>
+            </td>
+            <td><button *ngIf="order.Sales_Order_Status === 'Generate'" class="btn btn-success btn-sm me-2"
+                    (click)="ConfirmSalesOrder(order.SalesOrder_id)">
+                    <i class="fa fa-check"></i> Confirm </button>
+                <button *ngIf="order.Sales_Order_Status === 'Confirm'" class="btn btn-primary btn-sm"
+                    (click)="CreateInletChallan(order.SalesOrder_id)">
+                    <i class="fa fa-file"></i> Create Inlet Challan</button>
+                <button *ngIf="order.Sales_Order_Status === 'In Production'" class="btn btn-info btn-sm"
+                    (click)="ViewInletChallan(order.Sales_Order_Number)">
+                    <i class="fa fa-eye"></i> View Challan
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+<!-- =====================================================
+     CREATE INLET CHALLAN MODAL
+===================================================== -->
+
+<div class="modal fade" id="createInletChallanModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> Create Inlet Challan </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="InletChallanForm">
+                    <!-- SALES ORDER -->
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label"> Sales Order Number </label>
+                            <input type="text" class="form-control" formControlName="Sales_Order_Number" readonly>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label"> Customer Name</label>
+                            <input type="text" class="form-control" formControlName="Customer_Name" readonly>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Company Name</label>
+                            <input type="text" class="form-control" formControlName="Company_Name" readonly>
+                        </div>
+                    </div>
+                    <!-- COMPANY DETAILS -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Company Address</label>
+                            <textarea class="form-control" rows="2" formControlName="Company_Address"
+                                readonly> </textarea>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label"> GST No</label>
+                            <input type="text" class="form-control" formControlName="GST_No" readonly>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Delivery Address</label>
+                            <input type="text" class="form-control" formControlName="Delivery_Address">
+                        </div>
+                    </div>
+                    <!-- PRODUCTS -->
+                    <h5 class="mt-4 mb-3">Products</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th> Product Name </th>
+                                    <th>HSN </th>
+                                    <th>Quantity</th>
+                                    <th>Challan Rate</th>
+                                    <th>Sub Total</th>
+                                </tr>
+                            </thead>
+                            <tbody formArrayName="items">
+                                <tr *ngFor=" let item of items.controls;let i = index" [formGroupName]="i">
+                                    <td>{{ i + 1 }}</td>
+                                    <td><input type="text" class="form-control" formControlName="Product_Name" readonly>
+                                    </td>
+                                    <td> <input type="text" class="form-control" formControlName="HSN_Code" readonly>
+                                    </td>
+                                    <td><input type="number" class="form-control" formControlName="Product_Quantity">
+                                    </td>
+                                    <td><input type="number" class="form-control" formControlName="Rate"></td>
+                                    <td> ₹ {{GetItemTotal(i)| number:'1.2-2'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h5 class="mt-4 mb-3">Transport Details</h5>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label"> Mode of Transport </label>
+                            <input type="text" class="form-control" formControlName="Mode_of_Transport">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label"> Transporter Name</label>
+                            <input type="text" class="form-control" formControlName="Transporter_Name">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Vehicle Number </label>
+                            <input type="text" class="form-control" formControlName="Vehicle_Number">
+                        </div>
+                    </div>
+                    <h5 class="mt-3 mb-3"> Status</h5>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label"> Work Status </label>
+                            <select class="form-select" formControlName="Work_Status">
+                                <option value="In Queue"> In Queue </option>
+                                <option value="In Processing"> In Processing </option>
+                                <option value="Hold"> Hold </option>
+                                <option value="Breakdown"> Breakdown </option>
+                                <option value="Completed">Completed</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label"> Delivery Status </label>
+                            <select class="form-select" formControlName="Delivery_Status">
+                                <option value="Not Delivered">Not Delivered </option>
+                                <option value="Dispatched">Dispatched </option>
+                                <option value="Delivered"> Delivered </option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label"> Challan Status </label>
+                            <select class="form-select" formControlName="Challan_Status">
+                                <option value="Open">Open</option>
+                                <option value="Closed">Closed</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- REMARK -->
+                    <div class="mt-3"> <label class="form-label"> Remark </label>
+                        <textarea class="form-control" rows="2" formControlName="Remark"> </textarea>
+                    </div>
+                    <!-- AMOUNT -->
+                    <div class="row justify-content-end mt-4">
+                        <div class="col-md-5">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>Sub Total</th>
+                                    <td class="text-end"> ₹ {{GetSubTotal() | number:'1.2-2' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Discount</th>
+                                    <td><input type="number" class="form-control text-end"
+                                            formControlName="Discount_Amount"></td>
+                                </tr>
+                                <tr>
+                                    <th>Total Amount</th>
+                                    <td class="text-end">₹{{ GetTotalAmount()| number:'1.2-2'}}</td>
+                                </tr>
+                                <tr>
+                                    <th> CGST 9% </th>
+                                    <td class="text-end"> ₹{{GetCGST()| number:'1.2-2'}} </td>
+                                </tr>
+                                <tr>
+                                    <th> SGST 9%</th>
+                                    <td class="text-end"> ₹{{GetSGST() | number:'1.2-2'}}</td>
+                                </tr>
+                                <tr class="table-primary">
+                                    <th> Grand Total</th>
+                                    <th class="text-end"> ₹ {{ GetGrandTotal() | number:'1.2-2' }}</th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel </button>
+                <button type="button" class="btn btn-primary" (click)="SubmitInletChallan()" [disabled]="loading">
+                    <i class="fa fa-save"></i> Create Inlet Challan</button>
+            </div>
+        </div>
+    </div>
+</div>

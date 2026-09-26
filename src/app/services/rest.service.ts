@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { StateService } from './state.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { state } from '@angular/animations';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -413,6 +415,30 @@ export class RestService {
 
   DashboardSalesOrder() {
     return this._http.get(this.ApiUrl + '/LimitedSalesOrder');
+  }
+
+  CreateInletChallanFromSalesOrder(Sales_Order_id: number, data: any): Observable<any> {
+    this._State.CheckToken();
+    const headers = new HttpHeaders({ 'x-access-token': this._State.token });
+
+    return this._http.post(
+      `${this.ApiUrl}/CreateInletChallanFromSalesOrder/${Sales_Order_id}`,
+      data,
+      { headers }
+    );
+  }
+
+  ConfirmSalesOrder(
+    Sales_Order_id: number
+  ): Observable<any> {
+    this._State.CheckToken();
+    const headers = new HttpHeaders({ 'x-access-token': this._State.token });
+
+    return this._http.put(
+      `${this.ApiUrl}/ConfirmSalesOrder/${Sales_Order_id}`,
+      {},
+      { headers }
+    );
   }
 
 }
