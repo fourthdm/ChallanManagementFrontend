@@ -36,6 +36,7 @@ const routes: Routes = [
       { path: 'DeletedSalesOrderHistory/:SalesorderDeleted_id', component:SalesorderdeletedhistoryComponent },
       { path: 'Inletchallan', component: InletchallanComponent },
       { path: 'InletchallanData/:Challan_id', component: InletchallanviewComponent },
+      { path: 'InletchallanData/:Sales_Order_Number', component: InletchallanviewComponent },
       { path: 'OutwardChallan', component: OutwardchallanComponent },
       { path: 'OutwardChallanData/:VendorChallan_id', component: OutwardchallanviewComponent },
       { path: 'Deleteddata', component: AlldeleteddataComponent },
