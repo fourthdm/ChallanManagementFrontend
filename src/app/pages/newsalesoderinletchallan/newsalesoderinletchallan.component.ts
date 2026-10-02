@@ -115,124 +115,124 @@ export class NewsalesoderinletchallanComponent {
 
   // }
 
-CreateInletChallan(SalesOrder_id: number): void {
+  CreateInletChallan(SalesOrder_id: number): void {
 
-  console.log('Create Inlet Challan SalesOrder_id:', SalesOrder_id);
+    console.log('Create Inlet Challan SalesOrder_id:', SalesOrder_id);
 
-  this._rest.SalesOrderbyId(SalesOrder_id).subscribe({
+    this._rest.SalesOrderbyId(SalesOrder_id).subscribe({
 
-    next: (res: any) => {
+      next: (res: any) => {
 
-      console.log('Sales Order Response:', res);
+        console.log('Sales Order Response:', res);
 
-      if (!res || !res.success) {
-        console.error('Sales Order API failed:', res);
-        return;
-      }
+        if (!res || !res.success) {
+          console.error('Sales Order API failed:', res);
+          return;
+        }
 
-      // -----------------------------------------
-      // API is returning data as ARRAY
-      // -----------------------------------------
-      if (!res.data || !Array.isArray(res.data) || res.data.length === 0) {
+        // -----------------------------------------
+        // API is returning data as ARRAY
+        // -----------------------------------------
+        if (!res.data || !Array.isArray(res.data) || res.data.length === 0) {
 
-        console.error(
-          'Sales Order not found. API returned:',
-          res.data
-        );
+          console.error(
+            'Sales Order not found. API returned:',
+            res.data
+          );
 
-        alert('Sales Order details not found.');
+          alert('Sales Order details not found.');
 
-        return;
-      }
+          return;
+        }
 
-      // -----------------------------------------
-      // Get first Sales Order object
-      // -----------------------------------------
-      const order = res.data[0];
+        // -----------------------------------------
+        // Get first Sales Order object
+        // -----------------------------------------
+        const order = res.data[0];
 
-      console.log('Selected Sales Order:', order);
+        console.log('Selected Sales Order:', order);
 
-      // IMPORTANT
-      this.SelectedSalesOrder = order;
+        // IMPORTANT
+        this.SelectedSalesOrder = order;
 
-      console.log(
-        'Sales Order Status:',
-        order.Sales_Order_Status
-      );
-
-      // -----------------------------------------
-      // Check status
-      // -----------------------------------------
-      if (
-        order.Sales_Order_Status !== 'Confirm' &&
-        order.Sales_Order_Status !== 'Confirmed'
-      ) {
-
-        console.error(
-          'Invalid status:',
+        console.log(
+          'Sales Order Status:',
           order.Sales_Order_Status
         );
 
-        alert(
-          'Inlet Challan can be created only after Sales Order is confirmed.'
-        );
+        // -----------------------------------------
+        // Check status
+        // -----------------------------------------
+        if (
+          order.Sales_Order_Status !== 'Confirm' &&
+          order.Sales_Order_Status !== 'Confirmed'
+        ) {
 
-        return;
-      }
+          console.error(
+            'Invalid status:',
+            order.Sales_Order_Status
+          );
 
-      // -----------------------------------------
-      // Fill Form
-      // -----------------------------------------
-      this.FillInletChallanForm(order);
+          alert(
+            'Inlet Challan can be created only after Sales Order is confirmed.'
+          );
 
-      // -----------------------------------------
-      // Open Bootstrap Modal
-      // -----------------------------------------
-      const modalElement =
-        document.getElementById('createInletChallanModal');
+          return;
+        }
 
-      if (!modalElement) {
+        // -----------------------------------------
+        // Fill Form
+        // -----------------------------------------
+        this.FillInletChallanForm(order);
+
+        // -----------------------------------------
+        // Open Bootstrap Modal
+        // -----------------------------------------
+        const modalElement =
+          document.getElementById('createInletChallanModal');
+
+        if (!modalElement) {
+
+          console.error(
+            'createInletChallanModal element not found.'
+          );
+
+          return;
+        }
+
+        const bootstrap = (window as any).bootstrap;
+
+        if (!bootstrap) {
+
+          console.error(
+            'Bootstrap JavaScript is not loaded.'
+          );
+
+          return;
+        }
+
+        const modal =
+          bootstrap.Modal.getOrCreateInstance(modalElement);
+
+        modal.show();
+
+      },
+
+      error: (err: any) => {
 
         console.error(
-          'createInletChallanModal element not found.'
+          'Sales Order API Error:',
+          err
         );
 
-        return;
+        alert('Unable to load Sales Order details.');
+
       }
 
-      const bootstrap = (window as any).bootstrap;
+    });
 
-      if (!bootstrap) {
+  }
 
-        console.error(
-          'Bootstrap JavaScript is not loaded.'
-        );
-
-        return;
-      }
-
-      const modal =
-        bootstrap.Modal.getOrCreateInstance(modalElement);
-
-      modal.show();
-
-    },
-
-    error: (err: any) => {
-
-      console.error(
-        'Sales Order API Error:',
-        err
-      );
-
-      alert('Unable to load Sales Order details.');
-
-    }
-
-  });
-
-}
-  
   // CreateInletChallan(SalesOrder_id: number): void {
   //   this._rest.SalesOrderbyId(SalesOrder_id).subscribe({
   //     next: (res: any) => {
@@ -371,8 +371,6 @@ CreateInletChallan(SalesOrder_id: number): void {
   GetCGST(): number {
     return this.GetTotalAmount() * 0.09;
   }
-
-
   // =====================================================
   // SGST
   // =====================================================
@@ -380,8 +378,6 @@ CreateInletChallan(SalesOrder_id: number): void {
   GetSGST(): number {
     return this.GetTotalAmount() * 0.09;
   }
-
-
   // =====================================================
   // GRAND TOTAL
   // =====================================================
@@ -394,107 +390,11 @@ CreateInletChallan(SalesOrder_id: number): void {
     );
   }
 
-
   // =====================================================
   // SUBMIT
   // =====================================================
 
   SubmitInletChallan(): void {
-
-    // if (
-    //   this.InletChallanForm.invalid
-    // ) {
-
-    //   this.InletChallanForm.markAllAsTouched();
-    //   return;
-
-    // }
-
-
-    // const formValue =
-    //   this.InletChallanForm.value;
-
-
-    // const payload = {
-
-    //   Sales_Order_Number:
-    //     formValue.Sales_Order_Number,
-
-    //   Customer_Name:
-    //     formValue.Customer_Name,
-
-    //   Company_Name:
-    //     formValue.Company_Name,
-
-    //   Company_Address:
-    //     formValue.Company_Address,
-
-    //   GST_No:
-    //     formValue.GST_No,
-
-    //   Delivery_Address:
-    //     formValue.Delivery_Address,
-
-    //   Mode_of_Transport:
-    //     formValue.Mode_of_Transport,
-
-    //   Transporter_Name:
-    //     formValue.Transporter_Name,
-
-    //   Vehicle_Number:
-    //     formValue.Vehicle_Number,
-
-    //   Remark:
-    //     formValue.Remark,
-
-    //   Work_Status:
-    //     formValue.Work_Status,
-
-    //   Delivery_Status:
-    //     formValue.Delivery_Status,
-
-    //   Challan_Status:
-    //     formValue.Challan_Status,
-
-    //   Discount_Amount:
-    //     Number(
-    //       formValue.Discount_Amount
-    //     ) || 0,
-
-    //   items:
-    //     formValue.items.map(
-    //       (item: any) => ({
-
-    //         SalesOrderItem_id:
-    //           item.SalesOrderItem_id,
-
-    //         Product_Name:
-    //           item.Product_Name,
-
-    //         HSN_Code:
-    //           item.HSN_Code,
-
-    //         Product_Quantity:
-    //           Number(
-    //             item.Product_Quantity
-    //           ),
-
-    //         Rate:
-    //           Number(
-    //             item.Rate
-    //           )
-
-    //       })
-    //     )
-
-    // };
-
-
-    // console.log(
-    //   'Inlet Challan Payload:',
-    //   payload
-    // );
-
     if (this.InletChallanForm.invalid) { this.InletChallanForm.markAllAsTouched(); return; }
     const formValue = this.InletChallanForm.value;
     const payload = {
@@ -548,8 +448,63 @@ CreateInletChallan(SalesOrder_id: number): void {
   // VIEW CHALLAN
   // =====================================================
 
+  // ViewInletChallan(Sales_Order_Number: string): void {
+  //   this.router.navigate( ['/InletchallanDataSaleOrder', Sales_Order_Number]  );
+  // }
+
+
   ViewInletChallan(Sales_Order_Number: string): void {
-    this.router.navigate( ['/InletchallanData', Sales_Order_Number]  );
+
+    if (!Sales_Order_Number) {
+      console.error('Sales Order Number is missing');
+      return;
+    }
+
+    const encodedNumber =
+      encodeURIComponent(Sales_Order_Number);
+
+    console.log(
+      'Navigating to:',
+      '/Home/InletchallanDataSaleOrder/' + encodedNumber
+    );
+
+    this.router.navigate([
+      '/Home/InletchallanDataSaleOrder',
+      encodedNumber
+    ]);
   }
 
+
+
+  // ViewInletChallan(Sales_Order_Number: string): void {
+
+  //   console.log(
+  //     'Sales Order Number being sent:',
+  //     Sales_Order_Number
+  //   );
+
+  //   this._rest.InletchallanbySaleorderNumber(
+  //     Sales_Order_Number
+  //   ).subscribe({
+
+  //     next: (res: any) => {
+
+  //       console.log(
+  //         'Inlet Challan Response:',
+  //         res
+  //       );
+
+  //     },
+
+  //     error: (err) => {
+
+  //       console.error(
+  //         'Inlet Challan Error:',
+  //         err
+  //       );
+
+  //     }
+
+  //   });
+  // }
 }

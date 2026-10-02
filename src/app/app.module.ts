@@ -28,6 +28,7 @@ import { SalesorderviewComponent } from './views/salesorderview/salesorderview.c
 import { SaleorderlistComponent } from './pages/saleorderlist/saleorderlist.component';
 import { SalesorderdeletedhistoryComponent } from './views/salesorderdeletedhistory/salesorderdeletedhistory.component';
 import { NewsalesoderinletchallanComponent } from './pages/newsalesoderinletchallan/newsalesoderinletchallan.component';
+import { InletchallansalesorderComponent } from './views/inletchallansalesorder/inletchallansalesorder.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { NewsalesoderinletchallanComponent } from './pages/newsalesoderinletchal
     SalesorderviewComponent,
     SaleorderlistComponent,
     SalesorderdeletedhistoryComponent,
-    NewsalesoderinletchallanComponent
+    NewsalesoderinletchallanComponent,
+    InletchallansalesorderComponent
   ],
   imports: [
     BrowserModule,

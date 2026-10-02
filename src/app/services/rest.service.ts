@@ -3,6 +3,7 @@ import { StateService } from './state.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { state } from '@angular/animations';
 import { Observable } from 'rxjs';
+import { tick } from '@angular/core/testing';
 
 @Injectable({
   providedIn: 'root'
@@ -226,6 +227,10 @@ export class RestService {
 
   InletchallanbyId(Challan_id: any) {
     return this._http.get(this.ApiUrl + '/ChallanbyChallanid/' + Challan_id);
+  }
+
+  InletchallanbySaleorderNumber(Sales_Order_Number:string) {
+    return this._http.get(this.ApiUrl + '/InletChallanbySalesorderNumber/' +encodeURIComponent(Sales_Order_Number))
   }
 
   GetChallanPDF(Challan_id: any) {

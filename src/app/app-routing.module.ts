@@ -18,6 +18,7 @@ import { SalesorderComponent } from './pages/salesorder/salesorder.component';
 import { SalesorderviewComponent } from './views/salesorderview/salesorderview.component';
 import { SaleorderlistComponent } from './pages/saleorderlist/saleorderlist.component';
 import { SalesorderdeletedhistoryComponent } from './views/salesorderdeletedhistory/salesorderdeletedhistory.component';
+import { InletchallansalesorderComponent } from './views/inletchallansalesorder/inletchallansalesorder.component';
 
 const routes: Routes = [
   { path: ' ', redirectTo: 'login', pathMatch: "full" },
@@ -36,7 +37,7 @@ const routes: Routes = [
       { path: 'DeletedSalesOrderHistory/:SalesorderDeleted_id', component:SalesorderdeletedhistoryComponent },
       { path: 'Inletchallan', component: InletchallanComponent },
       { path: 'InletchallanData/:Challan_id', component: InletchallanviewComponent },
-      { path: 'InletchallanData/:Sales_Order_Number', component: InletchallanviewComponent },
+      { path: 'InletchallanDataSaleOrder/:Sales_Order_Number', component: InletchallansalesorderComponent },
       { path: 'OutwardChallan', component: OutwardchallanComponent },
       { path: 'OutwardChallanData/:VendorChallan_id', component: OutwardchallanviewComponent },
       { path: 'Deleteddata', component: AlldeleteddataComponent },

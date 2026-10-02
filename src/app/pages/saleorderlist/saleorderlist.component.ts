@@ -261,7 +261,7 @@ export class SaleorderlistComponent implements OnInit {
         GST_No: data.GST_No,
   
         SubTotal: data.SubTotal || 0,
-        Total_Amount: data.Total_Amount || 0,
+        // Total_Amount: data.Total_Amount || 0,
         Discount_Amount: data.Discount_Amount || 0,
         CGST_amount: data.CGST_amount || 0,
         SGST_amount: data.SGST_amount || 0,

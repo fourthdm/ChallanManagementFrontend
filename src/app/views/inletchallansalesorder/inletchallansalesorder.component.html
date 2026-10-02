@@ -1,0 +1,97 @@
+<div class="container">
+    <br><br> <br>
+    <h3> Inlet Challan By SaleOrder Number </h3>
+    <br>
+    <div class="card maincard">
+        <div class="card-bodys">
+            <div class="text-end"><!-- Button trigger modal -->
+                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalhistory"
+                    title="View Intel Challan History">
+                    <b class="historytext"> History</b>
+                </button>
+                <!-- <a data-bs-toggle="modal" data-bs-target="#exampleModalhistory">
+                    <b class="historytext"> History</b>
+                </a> -->
+            </div> <br>
+            <div class="card cards" *ngFor="let c of AllChallans">
+                <div class="card-header">
+                    <span> <b>Added Date :</b> {{c.Added_Date| date}} </span> <span class="Updatedate"> <b>Updated Date
+                            :</b>
+                        {{c.Updated_Date|
+                        date}}</span>
+
+                    <span class="times"><b> Time : </b>{{c.Added_Date | date:'hh:mm a'}}</span>
+                </div>
+                <div class="card-body">
+                    <p> <b>Sales Order Number: </b> {{c.Sales_Order_Number}}
+                        <br>
+                        <b>Challan Code : </b> {{c.Challan_Code}}
+                        <br>
+                        <b>Customer Name : </b> {{c.Customer_Name}}
+                        <br>
+                        <b>Company Name : </b> {{c.Company_Name}} <br>
+                        <b>GST No. :</b> {{c.GST_No}} <br>
+                        <b>Company Address :</b> {{c.Company_Address}} <br> <b>Delivery Address :</b>
+                        {{c.Delivery_Address}}
+                    </p>
+                    <br>
+                    <br>
+                    <b>Products Details :</b>
+                    <!-- 🔹 Product loop -->
+                    <div class="container">
+                        <table class="table table-responsive table-striped table-bordered custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Sr No</th>
+                                    <th>Product Name</th>
+                                    <th>HSN Code</th>
+                                    <th>Product Quantity</th>
+                                    <th>Rate</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr *ngFor="let item of c.items; let j = index">
+                                    <td>{{ j + 1 }}</td>
+                                    <td>{{ item.Product_Name }}</td>
+                                    <td>{{ item.HSN_Code }}</td>
+                                    <td>{{ item.Product_Quantity }}</td>
+                                    <td>{{ item.Rate }} &#8377;</td>
+                                    <td>{{ item.SubTotal }} &#8377;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-5">
+                            <p>
+                                <b>Mode of Transport : </b> {{c.Mode_of_Transport}} <br>
+                                <b>Transporter Name : </b> {{c.Transporter_Name}} <br>
+                                <b>Vehicle Number : </b> {{c.Vehicle_Number}} <br>
+                                <b>Work Status : </b> {{c.Work_Status}} <br>
+                                <b>Delivery Status : </b> {{c.Delivery_Status}} <br>
+                                <b>Challan Status : </b> {{c.Challan_Status}} <br>
+                                <b>Remark : </b> {{c.Remark}} <br>
+                            </p>
+                        </div>
+                        <div class="col-md-5">
+                            <p>
+                                <b>SubTotal :</b> {{c.Sub_Total}} &#8377; <br>
+                                <b>Discount Amount :</b> {{c.Discount_Amount}} &#8377; <br>
+                                <b>Total Amount :</b> {{c.Total_Amount}} &#8377;<br>
+                                <b>CGST Amount :</b> {{c.CGST_amount}} &#8377; <br>
+                                <b>SGST Amount :</b> {{c.SGST_amount}} &#8377; <br>
+                                <b>Grand Total :</b> {{c.Grand_Total}} &#8377; <br>
+                            </p>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br>
+</div>
