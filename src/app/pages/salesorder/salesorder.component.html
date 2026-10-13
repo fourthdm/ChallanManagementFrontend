@@ -15,13 +15,13 @@
                                 <label for="Customer_Name">Customer Name <sup>*</sup></label>
                                 <br>
                                 <select class="form-control" formControlName="Customer_Name" [ngClass]="{'is-invalid': (submitted || AddSalesaOrderform.get('Customer_Name')?.touched) &&
-                  AddSalesaOrderform.get('Customer_Name')?.invalid }">
+                    AddSalesaOrderform.get('Customer_Name')?.invalid }">
                                     <option value="">-- Select Customer Name --</option>
                                     <option *ngFor="let Cust of AllCustomerData" [value]="Cust.Customer_Name">
                                         {{Cust.Customer_Name}}</option>
                                 </select>
                                 <div class="invalid-feedback" *ngIf="(submitted || AddSalesaOrderform.get('Customer_Name')?.touched) &&
-            AddSalesaOrderform.get('Customer_Name')?.errors?.['required']">
+                    AddSalesaOrderform.get('Customer_Name')?.errors?.['required']">
                                     Customer Name is required
                                 </div>
                                 <br>
@@ -30,9 +30,9 @@
                             <div class="col-md-4">
                                 <label>Company Name <sup>*</sup></label>
                                 <input class="form-control" formControlName="Company_Name" [ngClass]="{'is-invalid': (submitted || AddSalesaOrderform.get('Company_Name')?.touched) &&
-                  AddSalesaOrderform.get('Company_Name')?.invalid }">
+                    AddSalesaOrderform.get('Company_Name')?.invalid }">
                                 <div class="invalid-feedback" *ngIf="(submitted || AddSalesaOrderform.get('Company_Name')?.touched) &&
-            AddSalesaOrderform.get('Company_Name')?.errors?.['required']">
+                    AddSalesaOrderform.get('Company_Name')?.errors?.['required']">
                                     Company Name is required
                                 </div>
                             </div>
@@ -40,9 +40,9 @@
                             <div class="col-md-4">
                                 <label>Company Address<sup>*</sup></label>
                                 <input class="form-control" formControlName="Company_Address" [ngClass]="{'is-invalid': (submitted || AddSalesaOrderform.get('Company_Address')?.touched) &&
-                  AddSalesaOrderform.get('Company_Address')?.invalid }">
+                    AddSalesaOrderform.get('Company_Address')?.invalid }">
                                 <div class="invalid-feedback" *ngIf="(submitted || AddSalesaOrderform.get('Company_Address')?.touched) &&
-            AddSalesaOrderform.get('Company_Address')?.errors?.['required']">
+                    AddSalesaOrderform.get('Company_Address')?.errors?.['required']">
                                     Company Address is required
                                 </div>
                             </div>
@@ -50,9 +50,9 @@
                             <div class="col-md-4">
                                 <label>Company GST No.<sup>*</sup></label>
                                 <input class="form-control" formControlName="GST_No" [ngClass]="{'is-invalid': (submitted || AddSalesaOrderform.get('GST_No')?.touched) &&
-                  AddSalesaOrderform.get('GST_No')?.invalid }">
+                    AddSalesaOrderform.get('GST_No')?.invalid }">
                                 <div class="invalid-feedback" *ngIf="(submitted || AddSalesaOrderform.get('GST_No')?.touched) &&
-            AddSalesaOrderform.get('GST_No')?.errors?.['required']">
+                    AddSalesaOrderform.get('GST_No')?.errors?.['required']">
                                     Company GST_NO is required
                                 </div>
                             </div>
@@ -180,7 +180,7 @@
                             <div class="col-md-6">
                                 <label>Sales Order Status</label>
                                 <select class="form-control" formControlName="Sales_Order_Status">
-                                    <option value="">-- Select Mode of Transport --</option>
+                                    <option value="">-- Select Sales Order Status --</option>
                                     <option value="Generate">Generate</option>
                                     <option value="Processing">Processing</option>
                                     <option value="Status Pending">Status Pending</option>

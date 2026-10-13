@@ -25,6 +25,7 @@ export class NewsalesoderinletchallanComponent {
       Company_Address: [''],
       GST_No: [''],
       Delivery_Address: [''],
+       Discount_Amount: [0],
       Mode_of_Transport: [''],
       Transporter_Name: [''],
       Vehicle_Number: [''],
@@ -32,7 +33,7 @@ export class NewsalesoderinletchallanComponent {
       Work_Status: ['In Queue'],
       Delivery_Status: ['Not Delivered'],
       Challan_Status: ['Open'],
-      Discount_Amount: [0],
+     
       items: this.fb.array([])
     });
   }
@@ -298,6 +299,7 @@ export class NewsalesoderinletchallanComponent {
       Company_Address: order.Company_Address,
       GST_No: order.GST_No,
       Delivery_Address: order.Delivery_Address,
+      Discount_Amount: order.Discount_Amount,
       Mode_of_Transport: '',
       Transporter_Name: '',
       Vehicle_Number: '',
@@ -305,7 +307,7 @@ export class NewsalesoderinletchallanComponent {
       Work_Status: 'In Queue',
       Delivery_Status: 'Not Delivered',
       Challan_Status: 'Open',
-      Discount_Amount: 0
+
     });
     // ADD SALES ORDER PRODUCTS
     if (
@@ -318,12 +320,8 @@ export class NewsalesoderinletchallanComponent {
             SalesOrderItem_id: [item.SalesOrderItem_id],
             Product_Name: [item.Product_Name],
             HSN_Code: [item.HSN_Code],
-            Product_Quantity: [item.Ordered_Quantity,
-            [Validators.required,
-            Validators.min(1)]],
-            Rate: [item.Rate,
-            [Validators.required,
-            Validators.min(0)]]
+            Product_Quantity: [item.Ordered_Quantity, [Validators.required, Validators.min(1)]],
+            Rate: [item.Rate, [Validators.required, Validators.min(0)]]
           }));
       });
     }
@@ -404,6 +402,7 @@ export class NewsalesoderinletchallanComponent {
       Company_Address: formValue.Company_Address,
       GST_No: formValue.GST_No,
       Delivery_Address: formValue.Delivery_Address,
+      Discount_Amount: formValue.Discount_Amount,
       Mode_of_Transport: formValue.Mode_of_Transport,
       Transporter_Name: formValue.Transporter_Name,
       Vehicle_Number: formValue.Vehicle_Number,
@@ -411,7 +410,8 @@ export class NewsalesoderinletchallanComponent {
       Work_Status: formValue.Work_Status,
       Delivery_Status: formValue.Delivery_Status,
       Challan_Status: formValue.Challan_Status,
-      Discount_Amount: Number(formValue.Discount_Amount) || 0,
+
+      // Discount_Amount: Number(formValue.Discount_Amount) || 0,
       items: formValue.items.map(
         (item: any) => ({
           SalesOrderItem_id: item.SalesOrderItem_id,

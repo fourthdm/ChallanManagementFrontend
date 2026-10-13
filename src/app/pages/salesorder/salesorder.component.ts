@@ -27,8 +27,8 @@ export class SalesorderComponent implements OnInit {
       Company_Address: ['', [Validators.required]],
       GST_No: ['', [Validators.required]],
       Sub_Total: [''],
-      Total_Amount: [''],
       Discount_Amount: [''],
+      Total_Amount: [''],
       Delivery_Address: [''],
       Remark: [''],
       Sales_Order_Status: [''],
@@ -47,8 +47,8 @@ export class SalesorderComponent implements OnInit {
       Delivery_Address: [''],
 
       SubTotal: [''],
-      Total_Amount: [''],
       Discount_Amount: [''],
+      Total_Amount: [''],
       CGST_amount: [''],
       SGST_amount: [''],
       Grand_Total: [''],
@@ -205,69 +205,46 @@ export class SalesorderComponent implements OnInit {
   }
 
   DeleteSalesorder() {
-
     if (!this.adminPassword || this.adminPassword.trim() === '') {
       alert('Please enter Admin Password');
       return;
     }
-
-
     if (!this.deletionReason || this.deletionReason.trim() === '') {
       alert('Please enter the reason for deletion');
       return;
     }
-
-
     if (this.deletionReason.trim().length < 5) {
       alert('Please enter a valid deletion reason');
       return;
     }
-
-
     if (!this.selectedSalesorderId) {
       alert('Invalid SalesOrder');
       return;
     }
-
     this.isDeleting = true;
-
     this._rest.DeleteChallan(
       this.selectedSalesorderId,
       this.adminPassword,
       this.deletionReason.trim()
     )
       .subscribe({
-
         next: (res: any) => {
-
           this.isDeleting = false;
-
           alert(res.message);
           if (res.success) {
-
             // Refresh challan list
             this.AllSalesOrderDetails();
-
             // Clear values
             this.adminPassword = '';
-
             this.deletionReason = '';
-
             this.selectedSalesorderId = 0;
-
             this.liked = false;
-
-
             // Close modal
             const modalElement =
               document.getElementById('deleteVendorModal');
-
             if (modalElement) {
-
               const modal =
-                (window as any).bootstrap.Modal
-                  .getInstance(modalElement);
-
+                (window as any).bootstrap.Modal.getInstance(modalElement);
               if (modal) {
                 modal.hide();
               }

@@ -229,8 +229,8 @@ export class RestService {
     return this._http.get(this.ApiUrl + '/ChallanbyChallanid/' + Challan_id);
   }
 
-  InletchallanbySaleorderNumber(Sales_Order_Number:string) {
-    return this._http.get(this.ApiUrl + '/InletChallanbySalesorderNumber/' +encodeURIComponent(Sales_Order_Number))
+  InletchallanbySaleorderNumber(Sales_Order_Number: string) {
+    return this._http.get(this.ApiUrl + '/InletChallanbySalesorderNumber/' + encodeURIComponent(Sales_Order_Number))
   }
 
   GetChallanPDF(Challan_id: any) {
@@ -425,12 +425,7 @@ export class RestService {
   CreateInletChallanFromSalesOrder(Sales_Order_id: number, data: any): Observable<any> {
     this._State.CheckToken();
     const headers = new HttpHeaders({ 'x-access-token': this._State.token });
-
-    return this._http.post(
-      `${this.ApiUrl}/CreateInletChallanFromSalesOrder/${Sales_Order_id}`,
-      data,
-      { headers }
-    );
+    return this._http.post(`${this.ApiUrl}/CreateInletChallanFromSalesOrder/${Sales_Order_id}`,data,{ headers });
   }
 
   ConfirmSalesOrder(

@@ -236,6 +236,7 @@
                                         <th>Admin Code</th>
                                         <th>Deleted By</th>
                                         <th>Reason</th>
+                                        <th>Data</th>
                                         <th>Deleted Date</th>
                                     </tr>
                                 </thead>
@@ -250,6 +251,7 @@
                                         <td> {{ adminHistory.Code }} </td>
                                         <td> {{ adminHistory.Deleted_By_Admin_Name }} </td>
                                         <td> {{ adminHistory.Deletion_Reason }} </td>
+                                        <td> {{ adminHistory.Admin_Data }} </td>
                                         <td> {{ adminHistory.Deleted_Date | date :'dd-MM-yyyy hh:mm a' }} </td>
                                     </tr>
                                     <tr *ngIf="AllAdminDeletionHistory.length === 0">
