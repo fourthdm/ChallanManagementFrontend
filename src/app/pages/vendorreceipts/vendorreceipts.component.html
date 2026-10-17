@@ -1,0 +1,221 @@
+<div class="container">
+    <br><br><br>
+    <div class="container-fluid py-4">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h3>Vendor Product Receipt</h3>
+                <p class="text-muted mb-0">
+                    Record partial or complete material received from vendor.
+                </p>
+            </div>
+
+            <button class="btn btn-outline-secondary" routerLink="/Home/OutwardChallan">
+                Back to Vendor Challans
+            </button>
+        </div>
+
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <small class="text-muted">Total Sent</small>
+                        <h4>{{ totalSent }}</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <small class="text-muted">Previously Received</small>
+                        <h4 class="text-success">{{ totalReceived }}</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <small class="text-muted">Currently Pending</small>
+                        <h4 class="text-danger">{{ totalPending }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">Products</h5>
+            </div>
+
+            <div class="card-body">
+
+                <div *ngIf="loading" class="text-center py-4">
+                    Loading products...
+                </div>
+
+                <div class="table-responsive" *ngIf="!loading">
+                    <table class="table table-bordered table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Product</th>
+                                <th>HSN</th>
+                                <th>Sent</th>
+                                <th>Previously Received</th>
+                                <th>Pending Before Receipt</th>
+                                <th>Receiving Now</th>
+                                <th>Short Closed</th>
+                                <th>Pending After Receipt</th>
+                                <th>Receipt Remark</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let p of products">
+                                <td>{{ p.Product_Name }}</td>
+                                <td>{{ p.HSN_Code }}</td>
+                                <td>{{ p.Sent_Quantity }}</td>
+                                <td>{{ p.Total_Received_Quantity }}</td>
+
+                                <td>
+                                    <span class="badge bg-warning text-dark">
+                                        {{ p.Pending_Quantity }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <input type="number" class="form-control" min="0" [max]="p.Pending_Quantity"
+                                        [(ngModel)]="p.Received_Quantity" [disabled]="p.Pending_Quantity === 0">
+                                </td>
+
+                                <td>
+                                    <input type="number" class="form-control" min="0" [max]="p.Pending_Quantity"
+                                        [(ngModel)]="p.Short_Quantity" [disabled]="p.Pending_Quantity === 0">
+                                </td>
+
+                                <td>{{ getWillRemain(p) }}</td>
+
+                                <td>
+                                    <input type="text" class="form-control" [(ngModel)]="p.Receipt_Remark"
+                                        placeholder="Optional remark">
+                                </td>
+                            </tr>
+
+                            <tr *ngIf="!products.length">
+                                <td colspan="9" class="text-center">
+                                    No products found for this challan.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <small class="text-muted">
+                    Short Closed is only for quantities the vendor confirms
+                    will not be supplied. Normal pending quantities should
+                    remain pending.
+                </small>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">Receipt Details</h5>
+            </div>
+
+            <div class="card-body">
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+                        <label class="form-label">Received Date</label>
+                        <input type="date" class="form-control" [(ngModel)]="formData.Received_Date" required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Mode of Transport</label>
+                        <input type="text" class="form-control" [(ngModel)]="formData.Mode_of_Transport">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Transporter Name</label>
+                        <input type="text" class="form-control" [(ngModel)]="formData.Transporter_Name">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Vehicle Number</label>
+                        <input type="text" class="form-control" [(ngModel)]="formData.Vehicle_Number">
+                    </div>
+
+                    <div class="col-md-8">
+                        <label class="form-label">Vendor Note</label>
+                        <textarea class="form-control" rows="3" [(ngModel)]="formData.Vendor_Note"
+                            placeholder="Why are some products pending?"></textarea>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Internal Remark</label>
+                        <textarea class="form-control" rows="2" [(ngModel)]="formData.Internal_Remark"
+                            placeholder="Internal follow-up notes"></textarea>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card-footer bg-white text-end">
+                <button class="btn btn-primary" [disabled]="saving || loading || !products.length"
+                    (click)="saveReceipt()">
+                    {{ saving ? 'Saving...' : 'Save Receipt' }}
+                </button>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">Previous Receipt History</h5>
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Receipt Number</th>
+                                <th>Date</th>
+                                <th>Received Products</th>
+                                <th>Vendor Note</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let receipt of receipts">
+                                <td>{{ receipt.Receipt_Number }}</td>
+                                <td>{{ receipt.Received_Date | date:'dd-MM-yyyy' }}</td>
+                                <td>{{ receipt.items?.length || 0 }}</td>
+                                <td>{{ receipt.Vendor_Note || '-' }}</td>
+                                <td>
+                                    <span class="badge" [ngClass]="{
+                        'bg-success': receipt.Receipt_Status === 'Completed',
+                        'bg-warning text-dark': receipt.Receipt_Status === 'Partial',
+                        'bg-secondary': receipt.Receipt_Status === 'Short Closed'
+                      }">
+                                        {{ receipt.Receipt_Status }}
+                                    </span>
+                                </td>
+                            </tr>
+
+                            <tr *ngIf="!receipts.length">
+                                <td colspan="5" class="text-center text-muted">
+                                    No receipt history available.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

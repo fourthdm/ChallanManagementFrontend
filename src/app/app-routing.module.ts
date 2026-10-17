@@ -19,6 +19,7 @@ import { SalesorderviewComponent } from './views/salesorderview/salesorderview.c
 import { SaleorderlistComponent } from './pages/saleorderlist/saleorderlist.component';
 import { SalesorderdeletedhistoryComponent } from './views/salesorderdeletedhistory/salesorderdeletedhistory.component';
 import { InletchallansalesorderComponent } from './views/inletchallansalesorder/inletchallansalesorder.component';
+import { VendorreceiptsComponent } from './pages/vendorreceipts/vendorreceipts.component';
 
 const routes: Routes = [
   { path: ' ', redirectTo: 'login', pathMatch: "full" },
@@ -33,13 +34,16 @@ const routes: Routes = [
       { path: 'Challan', component: ChallanComponent },
       { path: 'Salesorder', component: SalesorderComponent },
       { path: 'SalesOrderList', component: SaleorderlistComponent },
-      { path: 'SalesorderData/:SalesOrder_id', component:SalesorderviewComponent },
-      { path: 'DeletedSalesOrderHistory/:SalesorderDeleted_id', component:SalesorderdeletedhistoryComponent },
+      { path: 'SalesorderData/:SalesOrder_id', component: SalesorderviewComponent },
+      { path: 'DeletedSalesOrderHistory/:SalesorderDeleted_id', component: SalesorderdeletedhistoryComponent },
       { path: 'Inletchallan', component: InletchallanComponent },
       { path: 'InletchallanData/:Challan_id', component: InletchallanviewComponent },
       { path: 'InletchallanDataSaleOrder/:Sales_Order_Number', component: InletchallansalesorderComponent },
       { path: 'OutwardChallan', component: OutwardchallanComponent },
       { path: 'OutwardChallanData/:VendorChallan_id', component: OutwardchallanviewComponent },
+
+      { path: 'Vendorreceipts/:VendorChallan_id',component:VendorreceiptsComponent},
+
       { path: 'Deleteddata', component: AlldeleteddataComponent },
       { path: 'DeletedOutwardChallanHistory/:DeletionHistory_id', component: DeletedvendorchallanhistoryComponent },
       { path: 'DeletedInletChallanHistory/:Deletionchallan_id', component: InletchallandeletedhistoryComponent },

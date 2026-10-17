@@ -25,15 +25,14 @@ export class NewsalesoderinletchallanComponent {
       Company_Address: [''],
       GST_No: [''],
       Delivery_Address: [''],
-       Discount_Amount: [0],
+      Discount_Amount: [''],
       Mode_of_Transport: [''],
       Transporter_Name: [''],
-      Vehicle_Number: [''],
+      Vehicle_Number: ['', Validators.minLength(10)],
       Remark: [''],
       Work_Status: ['In Queue'],
       Delivery_Status: ['Not Delivered'],
       Challan_Status: ['Open'],
-     
       items: this.fb.array([])
     });
   }
@@ -58,11 +57,7 @@ export class NewsalesoderinletchallanComponent {
         }
       });
   }
-
-  // =====================================================
   // CONFIRM SALES ORDER
-  // =====================================================
-
   ConfirmSalesOrder(SalesOrder_id: number): void {
     if (!confirm('Are you sure you want to confirm this Sales Order?')
     ) {
@@ -81,214 +76,68 @@ export class NewsalesoderinletchallanComponent {
   // CREATE INLET CHALLAN BUTTON
   // =====================================================
 
-  // CreateInletChallan( SalesOrder_id: number): void {
-  //   this._rest .SalesOrderbyId(SalesOrder_id)
-  //     .subscribe({
-  //       next: (res: any) => {
-  //         if (!res.success) {
-  //           return;
-  //         }
-  //         this.SelectedSalesOrder =
-  //           res.data;
-  //         this.FillInletChallanForm(
-  //           res.data
-  //         );
-
-  //         const modalElement =
-  //           document.getElementById(
-  //             'createInletChallanModal'
-  //           );
-
-  //         if (modalElement) {
-  //           const modal =
-  //             new (window as any).bootstrap.Modal(
-  //               modalElement
-  //             );
-  //           modal.show();
-  //         }
-  //       },
-
-  //       error: (err) => {
-  //         console.error(err);
-  //       }
-
-  //     });
-
-  // }
-
   CreateInletChallan(SalesOrder_id: number): void {
-
     console.log('Create Inlet Challan SalesOrder_id:', SalesOrder_id);
-
     this._rest.SalesOrderbyId(SalesOrder_id).subscribe({
-
       next: (res: any) => {
-
         console.log('Sales Order Response:', res);
-
         if (!res || !res.success) {
           console.error('Sales Order API failed:', res);
           return;
         }
-
-        // -----------------------------------------
         // API is returning data as ARRAY
-        // -----------------------------------------
         if (!res.data || !Array.isArray(res.data) || res.data.length === 0) {
-
-          console.error(
-            'Sales Order not found. API returned:',
-            res.data
-          );
-
+          console.error('Sales Order not found. API returned:', res.data);
           alert('Sales Order details not found.');
-
           return;
         }
-
-        // -----------------------------------------
         // Get first Sales Order object
-        // -----------------------------------------
         const order = res.data[0];
-
         console.log('Selected Sales Order:', order);
-
         // IMPORTANT
         this.SelectedSalesOrder = order;
-
-        console.log(
-          'Sales Order Status:',
-          order.Sales_Order_Status
-        );
-
-        // -----------------------------------------
+        console.log('Sales Order Status:', order.Sales_Order_Status);
         // Check status
-        // -----------------------------------------
         if (
           order.Sales_Order_Status !== 'Confirm' &&
           order.Sales_Order_Status !== 'Confirmed'
         ) {
-
           console.error(
             'Invalid status:',
             order.Sales_Order_Status
           );
-
-          alert(
-            'Inlet Challan can be created only after Sales Order is confirmed.'
-          );
-
+          alert('Inlet Challan can be created only after Sales Order is confirmed.');
           return;
         }
-
-        // -----------------------------------------
         // Fill Form
-        // -----------------------------------------
         this.FillInletChallanForm(order);
-
-        // -----------------------------------------
         // Open Bootstrap Modal
-        // -----------------------------------------
         const modalElement =
           document.getElementById('createInletChallanModal');
-
         if (!modalElement) {
-
           console.error(
             'createInletChallanModal element not found.'
           );
-
           return;
         }
-
         const bootstrap = (window as any).bootstrap;
-
         if (!bootstrap) {
-
           console.error(
             'Bootstrap JavaScript is not loaded.'
-          );
-
-          return;
+          ); return;
         }
-
-        const modal =
-          bootstrap.Modal.getOrCreateInstance(modalElement);
-
+        const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
         modal.show();
-
       },
-
       error: (err: any) => {
-
-        console.error(
-          'Sales Order API Error:',
-          err
-        );
-
+        console.error('Sales Order API Error:', err);
         alert('Unable to load Sales Order details.');
-
       }
-
     });
-
   }
-
-  // CreateInletChallan(SalesOrder_id: number): void {
-  //   this._rest.SalesOrderbyId(SalesOrder_id).subscribe({
-  //     next: (res: any) => {
-  //       if (!res.success) {
-  //         return;
-  //       } const order = res.data;
-  //       if (
-  //         order.Sales_Order_Status !== 'Confirm'
-  //       ) { return; }
-  //       this.items.clear();
-  //       this.InletChallanForm.patchValue({
-  //         Sales_Order_Number: order.Sales_Order_Number,
-  //         Customer_Name: order.Customer_Name,
-  //         Company_Name: order.Company_Name,
-  //         Company_Address: order.Company_Address,
-  //         GST_No: order.GST_No,
-  //         Delivery_Address: order.Delivery_Address,
-  //         Mode_of_Transport: '',
-  //         Transporter_Name: '',
-  //         Vehicle_Number: '',
-  //         Remark: '',
-  //         Work_Status: 'In Queue',
-  //         Delivery_Status: 'Not Delivered',
-  //         Challan_Status: 'Open',
-  //         Discount_Amount: 0
-  //       });
-  //       if (order.items && order.items.length > 0
-  //       ) {
-  //         order.items.forEach(
-  //           (product: any) => {
-  //             const productGroup = this.fb.group({
-  //               SalesOrderItem_id: [product.SalesOrderItem_id],
-  //               Product_Name: [product.Product_Name],
-  //               HSN_Code: [product.HSN_Code],
-  //               Product_Quantity: [product.Ordered_Quantity],
-  //               Rate: [product.Rate]
-  //             });
-  //             this.items.push(productGroup);
-  //           });
-  //       }
-  //       const modalElement = document.getElementById('createInletChallanModal');
-  //       if (modalElement) {
-  //         const modal = new (window as any).bootstrap.Modal(modalElement);
-  //         modal.show();
-  //       }
-  //     },
-  //     error: (err) => {
-  //       console.error(err);
-  //     }
-  //   });
-  // }
 
   // =====================================================
   // FILL INLET CHALLAN FORM
-  // =====================================================
 
   FillInletChallanForm(order: any): void {
     this.items.clear();
@@ -307,12 +156,10 @@ export class NewsalesoderinletchallanComponent {
       Work_Status: 'In Queue',
       Delivery_Status: 'Not Delivered',
       Challan_Status: 'Open',
-
     });
     // ADD SALES ORDER PRODUCTS
     if (
-      order.items &&
-      order.items.length
+      order.items && order.items.length
     ) {
       order.items.forEach((item: any) => {
         this.items.push(
@@ -336,11 +183,7 @@ export class NewsalesoderinletchallanComponent {
     const rate = Number(item.get('Rate')?.value) || 0;
     return quantity * rate;
   }
-
-  // =====================================================
   // SUB TOTAL
-  // =====================================================
-
   GetSubTotal(): number {
     let total = 0;
     this.items.controls.forEach((item) => {
@@ -350,36 +193,21 @@ export class NewsalesoderinletchallanComponent {
     });
     return total;
   }
-
-
-  // =====================================================
   // TOTAL AFTER DISCOUNT
-  // =====================================================
-
   GetTotalAmount(): number {
     const subtotal = this.GetSubTotal();
     const discount = Number(this.InletChallanForm.get('Discount_Amount')?.value) || 0;
     return Math.max(subtotal - discount, 0);
   }
-
-  // =====================================================
   // CGST
-  // =====================================================
-
   GetCGST(): number {
     return this.GetTotalAmount() * 0.09;
   }
-  // =====================================================
   // SGST
-  // =====================================================
-
   GetSGST(): number {
     return this.GetTotalAmount() * 0.09;
   }
-  // =====================================================
   // GRAND TOTAL
-  // =====================================================
-
   GetGrandTotal(): number {
     return (
       this.GetTotalAmount() +
@@ -387,11 +215,7 @@ export class NewsalesoderinletchallanComponent {
       this.GetSGST()
     );
   }
-
-  // =====================================================
   // SUBMIT
-  // =====================================================
-
   SubmitInletChallan(): void {
     if (this.InletChallanForm.invalid) { this.InletChallanForm.markAllAsTouched(); return; }
     const formValue = this.InletChallanForm.value;
@@ -421,6 +245,7 @@ export class NewsalesoderinletchallanComponent {
           Rate: Number(item.Rate)
         }))
     };
+
     console.log('Create Inlet Challan:', payload);
     this._rest.CreateInletChallanFromSalesOrder(this.SelectedSalesOrder.SalesOrder_id,
       payload).subscribe({
@@ -442,39 +267,21 @@ export class NewsalesoderinletchallanComponent {
         }
       });
   }
-
-
-  // =====================================================
   // VIEW CHALLAN
-  // =====================================================
 
   // ViewInletChallan(Sales_Order_Number: string): void {
   //   this.router.navigate( ['/InletchallanDataSaleOrder', Sales_Order_Number]  );
   // }
 
-
   ViewInletChallan(Sales_Order_Number: string): void {
-
     if (!Sales_Order_Number) {
       console.error('Sales Order Number is missing');
       return;
     }
-
-    const encodedNumber =
-      encodeURIComponent(Sales_Order_Number);
-
-    console.log(
-      'Navigating to:',
-      '/Home/InletchallanDataSaleOrder/' + encodedNumber
-    );
-
-    this.router.navigate([
-      '/Home/InletchallanDataSaleOrder',
-      encodedNumber
-    ]);
+    const encodedNumber = encodeURIComponent(Sales_Order_Number);
+    console.log('Navigating to:', '/Home/InletchallanDataSaleOrder/' + encodedNumber);
+    this.router.navigate(['/Home/InletchallanDataSaleOrder', encodedNumber]);
   }
-
-
 
   // ViewInletChallan(Sales_Order_Number: string): void {
 

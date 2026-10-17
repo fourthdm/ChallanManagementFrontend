@@ -98,7 +98,7 @@
     <div class="card externalcard">
 
         <div class="text-end">
-              <button class="btn btn-success" [routerLink]="['/Home/Deleteddata']"> All Deleted Vendor Challan Data</button>
+            <button class="btn btn-success" [routerLink]="['/Home/Vendorreceipts']">Vendor Challan Receipts</button>
         </div>
         <br>
         <div class="card-body">
@@ -127,6 +127,14 @@
                             <i class="fa-regular fa-eye i"
                                 [routerLink]="['/Home/OutwardChallanData', Ch.VendorChallan_id]"
                                 title="View a Vendor Challan Details"></i>
+
+
+                            <button type="button" class="btn btn-sm btn-primary"
+                                [routerLink]="['/Home/Vendorreceipts', Ch.VendorChallan_id]">
+                                <i class="bi bi-box-seam"></i>
+                                Receive Product
+                            </button>
+
                             <br><br>
                             <p>
                                 <b>Challan Code :</b> {{Ch.VendorChallan_Code}} <br>

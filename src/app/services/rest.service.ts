@@ -428,17 +428,9 @@ export class RestService {
     return this._http.post(`${this.ApiUrl}/CreateInletChallanFromSalesOrder/${Sales_Order_id}`,data,{ headers });
   }
 
-  ConfirmSalesOrder(
-    Sales_Order_id: number
-  ): Observable<any> {
+  ConfirmSalesOrder(Sales_Order_id: number): Observable<any> {
     this._State.CheckToken();
     const headers = new HttpHeaders({ 'x-access-token': this._State.token });
-
-    return this._http.put(
-      `${this.ApiUrl}/ConfirmSalesOrder/${Sales_Order_id}`,
-      {},
-      { headers }
-    );
+    return this._http.put(`${this.ApiUrl}/ConfirmSalesOrder/${Sales_Order_id}`,{},{ headers } );
   }
-
 }
