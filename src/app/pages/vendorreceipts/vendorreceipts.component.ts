@@ -28,7 +28,7 @@ export class VendorreceiptsComponent {
   constructor(
     private route: ActivatedRoute,
     private receiptService: ReceiptserviceService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -92,8 +92,8 @@ export class VendorreceiptsComponent {
     return Math.max(
       0,
       this.getRemaining(product)
-        - Number(product.Received_Quantity || 0)
-        - Number(product.Short_Quantity || 0)
+      - Number(product.Received_Quantity || 0)
+      - Number(product.Short_Quantity || 0)
     );
   }
 
@@ -148,7 +148,7 @@ export class VendorreceiptsComponent {
         item.Received_Quantity < 0 ||
         item.Short_Quantity < 0 ||
         item.Received_Quantity + item.Short_Quantity >
-          Number(product.Pending_Quantity)
+        Number(product.Pending_Quantity)
       ) {
         alert(
           `Invalid quantity for ${product.Product_Name}.`

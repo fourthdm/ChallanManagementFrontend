@@ -62,7 +62,64 @@
                         <h4><b>2. Customer Details</b></h4>
                         <br>
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-4 mb-3">
+                                <label>Sales Order Number <sup>*</sup></label>
+                                <select class="form-control" formControlName="Sales_Order_Number" [ngClass]="{
+                        'is-invalid': submitted && Addinletchallanform.get('Sales_Order_Number')?.invalid}">
+                                    <option value="">-- Select Sales Order Number --</option>
+                                    <option *ngFor="let order of AllSaleorders" [value]="order.Sales_Order_Number">
+                                        {{ order.Sales_Order_Number }}
+                                    </option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Sales Order Number is required.
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label>Customer Name <sup>*</sup></label>
+                                <input type="text" class="form-control" formControlName="Customer_Name" readonly
+                                    [ngClass]="{
+                         'is-invalid':submitted &&  Addinletchallanform.get('Customer_Name')?.invalid }">
+                                <div class="invalid-feedback">
+                                    Customer Name is required.
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label>Company Name <sup>*</sup></label>
+                                <input type="text" class="form-control" formControlName="Company_Name" [ngClass]="{
+                        'is-invalid': submitted &&  Addinletchallanform.get('Company_Name')?.invalid }">
+                                <div class="invalid-feedback">
+                                    Company Name is required.
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label>Company Address <sup>*</sup></label>
+                                <input type="text" class="form-control" formControlName="Company_Address" [ngClass]="{
+                         'is-invalid': submitted &&  Addinletchallanform.get('Company_Address')?.invalid}">
+                                <div class="invalid-feedback">
+                                    Company Address is required.
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label>GST Number <sup>*</sup></label>
+                                <input type="text" class="form-control" formControlName="GST_No" [ngClass]="{
+                         'is-invalid':submitted && Addinletchallanform.get('GST_No')?.invalid}">
+
+                                <div class="invalid-feedback">
+                                    GST Number is required.
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label>Delivery Address</label>
+                                <input type="text" class="form-control" formControlName="Delivery_Address">
+                            </div>
+
+                            <!-- <div class="col-md-4">
                                 <label for="Sales_Order_Number">Sales Order Name <sup>*</sup></label>
                                 <br>
                                 <select class="form-control" formControlName="Sales_Order_Number" [ngClass]="{'is-invalid': (submitted || Addinletchallanform.get('Customer_Name')?.touched) &&
@@ -127,7 +184,7 @@
                             <div class="col-md-4">
                                 <label>Delivery Address</label>
                                 <input class="form-control" formControlName="Delivery_Address">
-                            </div>
+                            </div> -->
                         </div>
                         <br>
                     </div>
@@ -141,11 +198,11 @@
                             <table class="table table-bordered align-middle">
                                 <thead class="table-light">
                                     <tr>
-                                        <th>#</th>
+                                        <th>Sr. No</th>
                                         <th>Product Name </th>
                                         <th>HSN </th>
-                                        <th>Quantity</th>
-                                        <th>Challan Rate</th>
+                                        <th>Product Quantity</th>
+                                        <th>Rate</th>
                                         <th>Sub Total</th>
                                     </tr>
                                 </thead>
@@ -163,6 +220,9 @@
                                         </td>
                                         <td><input type="number" class="form-control" formControlName="Rate"></td>
                                         <td> ₹ {{GetItemTotal(i)| number:'1.2-2'}}</td>
+                                        <td> <button class="btn btn-danger" type="button" (click)="removeProduct(i)">
+                                                Remove
+                                            </button></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -235,10 +295,7 @@
                         <button class="btn btn-success" type="button" (click)="addProduct()">
                             Add Product
                         </button>
-                        <!-- <div class="Discount">
-                            <label>Total Amount</label>
-                            <input type="number" class="form-control" formControlName="Total_Amount" readonly>
-                        </div> -->
+
                         <div class="Discount">
                             <div class="">
                                 <label for="Discount_Amount">Discount Amount</label>
@@ -249,7 +306,7 @@
                         <div class="Discount">
                             <div class="">
                                 <label for="Sub_Total">SubTotal Amount</label>
-                                ₹ {{GetSubTotal() | number:'1.2-2' }}
+                                <!-- ₹ {{GetSubTotal() | number:'1.2-2' }} -->
                                 <input type="number" class="form-control" placeholder="" formControlName="Sub_Total">
                             </div>
                         </div>

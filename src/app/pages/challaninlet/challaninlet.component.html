@@ -1,0 +1,352 @@
+<div class="container">
+    <br><br><br><br>
+    <form [formGroup]="Addinletchallanform">
+        <br>
+        <div class="card">
+            <div class="card-body">
+                <h4><b>2. Customer Details</b></h4>
+                <br>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label>Sales Order Number <sup>*</sup></label>
+                        <select class="form-control" formControlName="Sales_Order_Number" [ngClass]="{
+                        'is-invalid': submitted && Addinletchallanform.get('Sales_Order_Number')?.invalid}">
+                            <option value="">-- Select Sales Order Number --</option>
+                            <option *ngFor="let order of AllSaleorders" [value]="order.Sales_Order_Number">
+                                {{ order.Sales_Order_Number }}
+                            </option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Sales Order Number is required.
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>Customer Name <sup>*</sup></label>
+                        <input type="text" class="form-control" formControlName="Customer_Name" readonly [ngClass]="{
+                         'is-invalid':submitted &&  Addinletchallanform.get('Customer_Name')?.invalid }">
+                        <div class="invalid-feedback">
+                            Customer Name is required.
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>Company Name <sup>*</sup></label>
+                        <input type="text" class="form-control" formControlName="Company_Name" [ngClass]="{
+                        'is-invalid': submitted &&  Addinletchallanform.get('Company_Name')?.invalid }">
+                        <div class="invalid-feedback">
+                            Company Name is required.
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>Company Address <sup>*</sup></label>
+                        <input type="text" class="form-control" formControlName="Company_Address" [ngClass]="{
+                         'is-invalid': submitted &&  Addinletchallanform.get('Company_Address')?.invalid}">
+                        <div class="invalid-feedback">
+                            Company Address is required.
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>GST Number <sup>*</sup></label>
+                        <input type="text" class="form-control" formControlName="GST_No" [ngClass]="{
+                         'is-invalid':submitted && Addinletchallanform.get('GST_No')?.invalid}">
+
+                        <div class="invalid-feedback">
+                            GST Number is required.
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>Delivery Address</label>
+                        <input type="text" class="form-control" formControlName="Delivery_Address">
+                    </div>
+                </div>
+                <br>
+            </div>
+            <br>
+        </div>
+        <br>
+        <div class="card">
+            <div class="card-body">
+                <h4><b>3. Products</b></h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>#</th>
+                                <th>Product Name</th>
+                                <th>HSN Code</th>
+                                <th>Quantity</th>
+                                <th>Rate</th>
+                                <th>Subtotal</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody formArrayName="items">
+                            <tr *ngFor="let item of items.controls; let i = index" [formGroupName]="i">
+                                <td>{{ i + 1 }}</td>
+                                <td><input type="text" class="form-control" formControlName="Product_Name" readonly>
+                                </td>
+                                <td><input type="text" class="form-control" formControlName="HSN_Code" readonly> </td>
+                                <td><input type="number" class="form-control" min="1" formControlName="Product_Quantity"
+                                        [ngClass]="{'is-invalid': submitted && item.get('Product_Quantity')?.invalid}">
+                                    <div class="text-danger small"
+                                        *ngIf=" submitted && item.get('Product_Quantity')?.invalid ">
+                                        Enter a quantity greater than zero.
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control" min="0" formControlName="Rate"
+                                        [ngClass]="{'is-invalid':submitted && item.get('Rate')?.invalid }">
+                                    <div class="text-danger small" *ngIf="submitted && item.get('Rate')?.invalid">
+                                        Enter a valid rate.
+                                    </div>
+                                </td>
+                                <td class="text-end">
+                                    ₹ {{ GetItemTotal(i) | number:'1.2-2' }}
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger btn-sm" (click)="removeProduct(i)">
+                                        Remove
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr *ngIf="items.length === 0">
+                                <td colspan="7" class="text-center text-muted">
+                                    Select a sales order to load its products.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <button type="button" class="btn btn-success" (click)="addProduct()">
+                    Add Product
+                </button>
+
+                <div class="row mt-4">
+                    <div class="col-md-4 mb-3">
+                        <label>Subtotal</label>
+                        <input type="number" class="form-control" formControlName="Sub_Total" readonly>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>Discount Amount</label>
+                        <input type="number" min="0" class="form-control" formControlName="Discount_Amount">
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>Total After Discount</label>
+                        <input type="number" class="form-control" formControlName="Total_Amount" readonly>
+                    </div>
+                </div>
+
+                <div class="text-end mt-3">
+                    <p>CGST (9%): ₹ {{ GetCGST() | number:'1.2-2' }}</p>
+                    <p>SGST (9%): ₹ {{ GetSGST() | number:'1.2-2' }}</p>
+
+                    <h5>
+                        <strong>
+                            Grand Total: ₹ {{ GetGrandTotal() | number:'1.2-2' }}
+                        </strong>
+                    </h5>
+                </div>
+
+            </div>
+            <br>
+        </div>
+        <br>
+
+        <div class="card">
+            <div class="card-body">
+                <h4><b>4. Transport Details </b></h4> <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Mode Of Transport</label>
+                        <select class="form-control" formControlName="Mode_of_Transport">
+                            <option value="">-- Select Mode of Transport --</option>
+                            <option value="Road Transport">Road Transport</option>
+                            <option value="Sea/Maritime Transport">Sea/Maritime Transport</option>
+                            <option value="Air Transport">Air Transport</option>
+                            <option value="Rail Transport">Rail Transport</option>
+                            <option value="Multimodal and Intermodal Transport">Multimodal and Intermodal Transport</option>
+                        </select> <br>
+                    </div><br>
+
+                    <div class="col-md-6">
+                        <label>Transporter Name</label>
+                        <input class="form-control" formControlName="Transporter_Name">
+                    </div><br>
+
+                    <div class="col-md-6">
+                        <label>Vehicle Number</label>
+                        <input class="form-control" formControlName="Vehicle_Number">
+                    </div><br>
+
+                    <div class="col-md-6">
+                        <label>Remark</label>
+                        <input class="form-control" formControlName="Remark">
+                    </div><br>
+                </div>
+            </div> <br>
+        </div>
+        <br>
+        <div class="card">
+            <div class="card-body">
+                <h4><b>5. Work Status </b></h4>
+                <br>
+                <div class="colmd">
+                    <div class="formcheckbox">
+                        <div>
+                            <input class="form-check-input" type="radio" name="Work_Status" id="inlinecheckbox1"
+                                value="In Queue" class="radio" formControlName="Work_Status" />
+                            <label class="form-check-label" for="inlinecheckbox1">
+                                <span><b>In Queue</b></span>
+                            </label>
+                            <i class="fa-solid fa-clock fa-lg text-primary"></i>
+                        </div>
+                    </div>
+
+                    <div class="formcheckbox">
+                        <div>
+                            <input type="radio" name="Work_Status" id="inlinecheckbox2" value="Hold" class="radio"
+                                formControlName="Work_Status" />
+                            <label class="form-check-label" for="inlinecheckbox2">
+                                <span><b>Hold</b></span>
+                            </label>
+                            <i class="fa-solid fa-circle-pause fa-lg text-warning"></i>
+                        </div>
+                    </div>
+
+                    <div class="formcheckbox">
+                        <div>
+                            <input type="radio" name="Work_Status" id="inlinecheckbox3" value="Processing" class="radio"
+                                formControlName="Work_Status" />
+                            <label class="form-check-label" for="inlinecheckbox3">
+                                <span><b>Processing</b></span>
+                            </label>
+                            <i class="fa-solid fa-arrows-spin fa-lg text-success"></i>
+                        </div>
+                    </div>
+
+                    <div class="formcheckbox">
+                        <div>
+                            <input type="radio" name="Work_Status" id="inlinecheckbox4" value="Breakdown" class="radio"
+                                formControlName="Work_Status" />
+                            <label class="form-check-label" for="inlinecheckbox4">
+                                <span><b>Breakdown</b></span>
+                            </label>
+                            <i class="fa-solid fa-triangle-exclamation fa-lg text-danger"></i>
+                        </div>
+                    </div>
+
+                    <div class="formcheckbox">
+                        <div>
+                            <input type="radio" name="Work_Status" id="inlinecheckbox5" value="Completed" class="radio"
+                                formControlName="Work_Status" />
+                            <label class="form-check-label" for="inlinecheckbox5">
+                                <span><b>Completed</b></span>
+                            </label>
+                            <i class="fa-solid fa-circle-check fa-lg text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>
+        <br>
+        <div class="card">
+            <div class="card-body">
+                <h4><b>6. Delivery Status </b></h4><br>
+                <div class="colmd">
+                    <div class="formcheckbox">
+                        <div>
+                            <input class="form-check-input" type="radio" name="Delivery_Status" class="radio"
+                                id="inlinecheckbox6" value="In Transport" formControlName="Delivery_Status" />
+                            <label class="form-check-label" for="inlinecheckbox6">
+                                <span><b>In Transport</b></span> <br>
+                                <span>Product has been on the way</span>
+                            </label>
+                            <i class="fa-solid fa-truck-fast fa-xl text-warning"></i>
+                        </div>
+                    </div>
+                    <div class="formcheckbox">
+                        <div>
+                            <input class="form-check-input" type="radio" name="Delivery_Status" id="inlinecheckbox7"
+                                value="Delivered" class="radio" formControlName="Delivery_Status" />
+                            <label class="form-check-label" for="inlinecheckbox7">
+                                <span><b>Delivered</b></span><br>
+                                <span>Product has been delivered</span>
+                            </label>
+                            <i class="fa-solid fa-handshake fa-xl text-success"></i>
+                        </div>
+                    </div>
+                    <div class="formcheckbox">
+                        <div>
+                            <input class="form-check-input" type="radio" name="Delivery_Status" id="inlinecheckbox8"
+                                value="Not Delivered" class="radio" formControlName="Delivery_Status" />
+                            <label class="form-check-label" for="inlinecheckbox8">
+                                <span><b>Not Delivered</b></span> <br>
+                                <span>Product not yet delivered</span>
+                            </label>
+                            <i class="fa-solid fa-truck-fast fa-xl text-danger"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>
+        <br>
+        <div class="card">
+            <div class="card-body">
+                <h4><b>7. Challan Status </b></h4>
+                <br>
+                <div class="colmd">
+                    <div class="formcheckbox">
+                        <div>
+                            <input class="form-check-input" type="radio" name="Challan_Status" id="inlinecheckbox9"
+                                value="Open" class="radio" formControlName="Challan_Status" />
+                            <label class="form-check-label" for="inlinecheckbox9">
+                                <span><b> Open</b></span><br>
+                                <span>Challan is Open</span>
+                            </label>
+                            <i class="fa-solid fa-clipboard-list fa-xl text-secondary"></i>
+                        </div>
+                    </div>
+                    <div class="formcheckbox">
+                        <div>
+                            <input class="form-check-input" type="radio" name="Challan_Status" id="inlinecheckbox10"
+                                value="Close" class="radio" formControlName="Challan_Status" />
+                            <label class="form-check-label" for="inlinecheckbox10">
+                                <span><b> Close</b></span> <br>
+                                <span>Challan is complete/ closed</span>
+                            </label>
+                            <i class="fa-regular fa-circle-check fa-xl text-success"></i>
+                        </div>
+                    </div>
+                    <div class="formcheckbox">
+                        <div>
+                            <input class="form-check-input" type="radio" name="Challan_Status" id="inlinecheckbox11"
+                                value="Not Close" class="radio" formControlName="Challan_Status" />
+                            <label class="form-check-label" for="inlinecheckbox11">
+                                <span><b> Not Close</b></span><br>
+                                <span>Challan is open/not complete</span>
+                            </label>
+                            <i class="fa-regular fa-circle-xmark fa-xl text-danger"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>
+        <br>
+        <div class="text-end">
+            <button class="btn btn-primary btn-lg" type="button" (click)="SubmitInletChallan()">
+                Create Challan
+            </button>
+        </div>
+    </form>
+</div>

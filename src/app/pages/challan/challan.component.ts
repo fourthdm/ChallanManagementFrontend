@@ -70,6 +70,331 @@ export class ChallanComponent {
     });
   }
 
+
+
+  ngOnInit(): void {
+    this.initializeForm();
+
+    this.Addinletchallanform
+      .get('Sales_Order_Number')!
+      .valueChanges
+      .pipe(distinctUntilChanged())
+      .subscribe((salesOrderNumber: string) => {
+        this.autoFillBySalesOrder(salesOrderNumber);
+      });
+
+    // Recalculate whenever quantity, rate, or discount changes.
+    this.items.valueChanges.subscribe(() => this.calculateGrandTotal());
+
+    this.Addinletchallanform
+      .get('Discount_Amount')!
+      .valueChanges.subscribe(() => this.calculateGrandTotal());
+
+    // Keep your existing API method that loads AllSaleorders.
+
+    this.GetAllSalesOrders();
+
+
+    this.AddVendorChallanform.get('Vendor_Name')!
+      .valueChanges
+      .pipe(distinctUntilChanged())
+      .subscribe(VendorName => {
+        this.autoFillbyVendor(VendorName);
+        this.calculateVendorGrandTotal();
+      });
+
+    this.AllchallanDetails();
+    this.AllVendorchallanDetails();
+    this.GetAllCustomer();
+    this.GetAllVendors();
+  }
+
+  AllchallanDetails() {
+    this._rest.AllInletChallan().subscribe((data: any) => {
+      console.log(data);
+      this.AllChallan = data.data;
+    }, (err: any) => {
+      console.log(err);
+    });
+  }
+
+  AllVendorchallanDetails() {
+    this._rest.ALlvendorChallandata().subscribe((data: any) => {
+      console.log(data);
+      this.AllVendorchallan = data.data;
+    }, (err: any) => {
+      console.log(err);
+    });
+  }
+
+  GetAllCustomer() {
+    this._rest.AllCustomer().subscribe((data: any) => {
+      console.log(data);
+      this.AllCustomerData = data.data;
+    }, (err: any) => {
+      console.log(err);
+    })
+  }
+
+  GetAllVendors() {
+    this._rest.AllVendor().subscribe((data: any) => {
+      console.log(data);
+      this.AllVendordata = data.data;
+    }, (err: any) => {
+      console.log(err);
+    });
+  }
+
+  GetAllSalesOrders(): void {
+    this._rest.AllSalesOrders()
+      .subscribe({
+        next: (res: any) => {
+          if (res.success) {
+            this.AllSaleorders = res.data || [];
+          } else { }
+        },
+        error: (err) => {
+          console.error(err);
+        }
+      });
+  }
+
+
+  initializeForm(): void {
+    this.Addinletchallanform = this.fb.group({
+      Sales_Order_Number: ['', Validators.required],
+      Customer_Name: ['', Validators.required],
+      Company_Name: ['', Validators.required],
+      Company_Address: ['', Validators.required],
+      GST_No: ['', Validators.required],
+
+      Delivery_Address: [''],
+      Sub_Total: [{ value: 0, disabled: true }],
+      Total_Amount: [{ value: 0, disabled: true }],
+      Discount_Amount: [0, [Validators.min(0)]],
+
+      Mode_of_Transport: [''],
+      Transporter_Name: [''],
+      Vehicle_Number: ['', Validators.minLength(10)],
+      Remark: [''],
+
+      Work_Status: ['In Queue'],
+      Delivery_Status: ['Not Delivered'],
+      Challan_Status: ['Open'],
+
+      items: this.fb.array([])
+    });
+  }
+
+  createProduct(item?: any): FormGroup {
+    return this.fb.group({
+      SalesOrderItem_id: [item?.SalesOrderItem_id ?? null],
+      Product_Name: [item?.Product_Name ?? '', Validators.required],
+      HSN_Code: [item?.HSN_Code ?? ''],
+      Product_Quantity: [
+        item?.Ordered_Quantity ?? item?.Product_Quantity ?? 1,
+        [Validators.required, Validators.min(1)]
+      ],
+      Rate: [
+        item?.Rate ?? 0,
+        [Validators.required, Validators.min(0)]
+      ]
+    });
+  }
+
+  get items(): FormArray {
+    return this.Addinletchallanform.get('items') as FormArray;
+  }
+
+  addProduct(): void {
+    this.items.push(this.createProduct());
+  }
+
+  removeProduct(index: number): void {
+    this.items.removeAt(index);
+    this.calculateGrandTotal();
+  }
+
+  autoFillBySalesOrder(salesOrderNumber: string): void {
+
+    // Step 1: Always clear previously loaded products
+    this.items.clear();
+
+    if (!salesOrderNumber) {
+      this.Addinletchallanform.patchValue({
+        Customer_Name: '',
+        Company_Name: '',
+        Company_Address: '',
+        GST_No: '',
+        Delivery_Address: '',
+        Discount_Amount: 0
+      });
+
+      this.calculateGrandTotal();
+      return;
+    }
+
+    // Step 2: Find the selected sales order
+    const order = this.AllSaleorders.find(
+      (item: any) =>
+        String(item.Sales_Order_Number) === String(salesOrderNumber)
+    );
+
+    if (!order) {
+      console.error('Sales order not found:', salesOrderNumber);
+      return;
+    }
+
+    // Step 3: Fill customer details
+    this.Addinletchallanform.patchValue({
+      Customer_Name: order.Customer_Name ?? '',
+      Company_Name: order.Company_Name ?? '',
+      Company_Address: order.Company_Address ?? '',
+      GST_No: order.GST_No ?? '',
+      Delivery_Address: order.Delivery_Address ?? '',
+      Discount_Amount: Number(order.Discount_Amount) || 0
+    });
+
+    // Step 4: Add products only once
+    const products = Array.isArray(order.items) ? order.items : [];
+
+    products.forEach((product: any) => {
+      this.items.push(this.createProduct(product));
+    });
+
+    // Step 5: Recalculate totals
+    this.calculateGrandTotal();
+
+    console.log('Loaded products:', this.items.value);
+  }
+  GetItemTotal(index: number): number {
+    const item = this.items.at(index);
+
+    const quantity = Number(item.get('Product_Quantity')?.value) || 0;
+    const rate = Number(item.get('Rate')?.value) || 0;
+
+    return quantity * rate;
+  }
+
+  GetSubTotal(): number {
+    return this.items.controls.reduce((total, control) => {
+      const quantity = Number(control.get('Product_Quantity')?.value) || 0;
+      const rate = Number(control.get('Rate')?.value) || 0;
+
+      return total + quantity * rate;
+    }, 0);
+  }
+
+  GetTotalAmount(): number {
+    const subtotal = this.GetSubTotal();
+    const discount =
+      Number(this.Addinletchallanform.get('Discount_Amount')?.value) || 0;
+
+    return Math.max(subtotal - discount, 0);
+  }
+
+  GetCGST(): number {
+    return this.GetTotalAmount() * 0.09;
+  }
+
+  GetSGST(): number {
+    return this.GetTotalAmount() * 0.09;
+  }
+
+  GetGrandTotal(): number {
+    return this.GetTotalAmount() + this.GetCGST() + this.GetSGST();
+  }
+
+  calculateGrandTotal(): void {
+    if (!this.Addinletchallanform) {
+      return;
+    }
+
+    this.Addinletchallanform.patchValue({
+      Sub_Total: this.GetSubTotal(),
+      Total_Amount: this.GetTotalAmount()
+    }, { emitEvent: false });
+  }
+
+  SubmitInletChallan(): void {
+    this.submitted = true;
+
+    if (this.Addinletchallanform.invalid) {
+      this.Addinletchallanform.markAllAsTouched();
+
+      console.log('Invalid form:', this.Addinletchallanform.getRawValue());
+      console.log('Form errors:', this.Addinletchallanform.errors);
+
+      alert('Please fill all required fields and check the product quantities and rates.');
+      return;
+    }
+
+    if (this.items.length === 0) {
+      alert('Please select a sales order containing products.');
+      return;
+    }
+
+    this.calculateGrandTotal();
+
+    const formData = this.Addinletchallanform.getRawValue();
+
+    const payload = {
+      ...formData,
+      Sub_Total: this.GetSubTotal(),
+      Total_Amount: this.GetTotalAmount(),
+      Discount_Amount: Number(formData.Discount_Amount) || 0,
+      CGST_amount: this.GetCGST(),
+      SGST_amount: this.GetSGST(),
+      Grand_Total: this.GetGrandTotal(),
+
+      items: formData.items.map((item: any) => ({
+        SalesOrderItem_id: item.SalesOrderItem_id,
+        Product_Name: item.Product_Name,
+        HSN_Code: item.HSN_Code,
+        Product_Quantity: Number(item.Product_Quantity),
+        Rate: Number(item.Rate)
+      }))
+    };
+
+    console.log('Submitting Challan:', payload);
+
+    this._rest.AddInletchallan(payload).subscribe({
+      next: (res: any) => {
+        alert(res.message || 'Inlet Challan created successfully.');
+
+        this.submitted = false;
+        this.items.clear();
+
+        this.Addinletchallanform.reset({
+          Sales_Order_Number: '',
+          Customer_Name: '',
+          Company_Name: '',
+          Company_Address: '',
+          GST_No: '',
+          Delivery_Address: '',
+          Sub_Total: 0,
+          Total_Amount: 0,
+          Discount_Amount: 0,
+          Mode_of_Transport: '',
+          Transporter_Name: '',
+          Vehicle_Number: '',
+          Remark: '',
+          Work_Status: 'In Queue',
+          Delivery_Status: 'Not Delivered',
+          Challan_Status: 'Open',
+          items: []
+        });
+      },
+      error: (err: any) => {
+        console.error('Create Challan Error:', err);
+        alert(err.error?.message || 'Unable to create challan.');
+      }
+    });
+  }
+
+
+  //Vendor Added Code
+
   onOperationChange(event: any, index: number) {
     const selectedOptions = Array.from(event.target.selectedOptions)
       .map((option: any) => option.value);
@@ -78,18 +403,6 @@ export class ChallanComponent {
     });
   }
 
-  // VendorcreateProduct(): FormGroup {
-  //   return this.fb.group({
-  //     Product_Name: ['', Validators.required],
-  //     HSN_Code: ['', Validators.required],
-  //     Product_Quantity: [1, Validators.required],
-  //     Rate: [0],
-  //     SubTotal: [0],
-  //     operations: this.fb.array([
-  //       this.createOperation()
-  //     ])
-  //   });
-  // }
   VendorcreateProduct(): FormGroup {
     return this.fb.group({
       Product_Name: ['', Validators.required],
@@ -110,104 +423,8 @@ export class ChallanComponent {
     });
   }
 
-  // VendorcreateProduct(): FormGroup {
-  //   return this.fb.group({
-  //     Product_Name: ['', Validators.required],
-  //     HSN_Code: ['', Validators.required],
 
-  //     Operation_Perform: [[], Validators.required], // Array
 
-  //     Product_Quantity: ['', Validators.required],
-  //     Rate: ['', Validators.required],
-  //     SubTotal: []
-  //   });
-  // }
-
-  ngOnInit(): void {
-
-    this.Addinletchallanform.get('Sales_Order_Number')!
-      .valueChanges
-      .pipe(distinctUntilChanged())
-      .subscribe(Sales_Order_Number => {
-        this.autoFillByRequirement(Sales_Order_Number);
-        this.calculateGrandTotal();
-      });
-
-    // this.Addinletchallanform.get('Customer_Name')!
-    //   .valueChanges
-    //   .pipe(distinctUntilChanged())
-    //   .subscribe(customerName => {
-    //     this.autoFillByRequirement(customerName);
-    //     this.calculateGrandTotal();
-    //   });
-
-    this.AddVendorChallanform.get('Vendor_Name')!
-      .valueChanges
-      .pipe(distinctUntilChanged())
-      .subscribe(VendorName => {
-        this.autoFillbyVendor(VendorName);
-        this.calculateVendorGrandTotal();
-      });
-
-    this.AllchallanDetails();
-    this.AllVendorchallanDetails();
-    this.GetAllCustomer();
-    this.GetAllVendors();
-    this.GetAllSalesOrders();
-  }
-
-  GetAllSalesOrders(): void {
-    this._rest.AllSalesOrders()
-      .subscribe({
-        next: (res: any) => {
-          if (res.success) {
-            this.AllSaleorders = res.data || [];
-          } else { }
-        },
-        error: (err) => {
-          console.error(err);
-        }
-      });
-  }
-
-  GetItemTotal(index: number): number {
-    const item = this.items.at(index);
-    const quantity = Number(item.get('Product_Quantity')?.value) || 0;
-    const rate = Number(item.get('Rate')?.value) || 0;
-    return quantity * rate;
-  }
-  // SUB TOTAL
-  GetSubTotal(): number {
-    let total = 0;
-    this.items.controls.forEach((item) => {
-      const quantity = Number(item.get('Product_Quantity')?.value) || 0;
-      const rate = Number(item.get('Rate')?.value) || 0;
-      total += quantity * rate;
-    });
-    return total;
-  }
-  // TOTAL AFTER DISCOUNT
-  GetTotalAmount(): number {
-    const subtotal = this.GetSubTotal();
-    const discount = Number(this.Addinletchallanform.get('Discount_Amount')?.value) || 0;
-    return Math.max(subtotal - discount, 0);
-  }
-  // CGST
-  GetCGST(): number {
-    return this.GetTotalAmount() * 0.09;
-  }
-  // SGST
-  GetSGST(): number {
-    return this.GetTotalAmount() * 0.09;
-  }
-  // GRAND TOTAL
-  GetGrandTotal(): number {
-    return (
-      this.GetTotalAmount() +
-      this.GetCGST() +
-      this.GetSGST()
-    );
-  }
   autoFillbyVendor(VendorName: string) {
     const req = this.AllVendordata.find(
       (r: any) => r.Vendor_Name === VendorName
@@ -261,24 +478,6 @@ export class ChallanComponent {
     product.get('SubTotal')?.setValue(subtotal, { emitEvent: false });
     this.calculateVendorGrandTotal();
   }
-
-  // calculateProduct(productIndex: number) {
-  //   const product = this.vendoritems.at(productIndex);
-  //   const qty = Number(product.get('Product_Quantity')?.value);
-  //   const operations = this.getOperations(productIndex).value;
-
-  //   let rate = 0;
-  //   operations.forEach((x: any) => {
-  //     rate += Number(x.Rate);
-  //   });
-  //   product.patchValue({
-  //     Rate: rate,
-  //     SubTotal: rate * qty
-  //   }, { emitEvent: false });
-
-  //   this.calculateGrandTotal();
-  // }
-
   calculateVendorGrandTotal() {
     let subtotal = 0;
     this.vendoritems.controls.forEach((p: any) => {
@@ -352,212 +551,6 @@ export class ChallanComponent {
     Vendoritem.patchValue({
       SubTotal: SubTotal
     }, { emitEvent: false });
-  }
-
-  createProduct(): FormGroup {
-    return this.fb.group({
-      Product_Name: ['', Validators.required],
-      HSN_Code: ['', Validators.required],
-      Product_Quantity: ['', Validators.required],
-      Rate: ['', Validators.required],
-      SubTotal: []
-    });
-  }
-
-  autoFillByRequirement(Sales_Order_Number: string) {
-    const req = this.AllSaleorders.find(
-      (r: any) => r.Sales_Order_Number === Sales_Order_Number
-    );
-    if (!req) return;
-    this.Addinletchallanform.patchValue({
-      Customer_Name: req.Customer_Name,
-      Company_Name: req.Company_Name,
-      Company_Address: req.Company_Address,
-      GST_No: req.GST_No,
-      Delivery_Address: req.Delivery_Address,
-
-      Discount_Amount: req.Discount_Amount,
-    },
-      { emitEvent: false })
-    if (
-      req.items && req.items.length
-    ) {
-      req.items.forEach((item: any) => {
-        this.items.push(
-          this.fb.group({
-            SalesOrderItem_id: [item.SalesOrderItem_id],
-            Product_Name: [item.Product_Name],
-            HSN_Code: [item.HSN_Code],
-            Product_Quantity: [item.Ordered_Quantity, [Validators.required, Validators.min(1)]],
-            Rate: [item.Rate, [Validators.required, Validators.min(0)]]
-          }));
-      });
-    }; // ✅ STOP LOOP
-  }
-
-  get items(): FormArray {
-    return this.Addinletchallanform.get('items') as FormArray;
-  }
-
-  addProduct() {
-    this.items.push(
-      this.createProduct()
-    );
-  }
-
-  removeProduct(index: number) {
-    this.items.removeAt(index);
-  }
-
-  saveChallan() {
-    this.submitted = true;
-    if (this.Addinletchallanform.invalid) {
-      alert('Fill all required fields');
-      return;
-    }
-
-    const formData = new FormData();
-    for (const pair of (formData as any).entries()) {
-      console.log(pair[0], pair[1]);
-    }
-    // HEADER DATA
-    formData.append('Customer_Name', this.Addinletchallanform.value.Customer_Name);
-    formData.append('Company_Name	', this.Addinletchallanform.value.Company_Name);
-    formData.append('Company_Address', this.Addinletchallanform.value.Company_Address);
-    formData.append('GST_No', this.Addinletchallanform.value.GST_No);
-    formData.append('Delivery_Address', this.Addinletchallanform.value.Delivery_Address);
-    formData.append('Discount_Amount', this.Addinletchallanform.value.Discount_Amount);
-
-    console.log(this.Addinletchallanform.value);
-    this._rest.AddInletchallan(
-      this.Addinletchallanform.value
-    ).subscribe({
-      next: (res: any) => {
-        alert(res.message);
-        console.log(res);
-        this.Addinletchallanform.reset();
-        this.submitted = false;
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    });
-  }
-
-  calculateItem(index: number) {
-    const item = this.items.at(index);
-
-    const Rate = +item.get('Rate')!.value || 0;
-    const Quantity = +item.get('Product_Quantity')!.value || 0;
-    const SubTotal = Rate * Quantity;
-    item.patchValue({
-      SubTotal: SubTotal
-    }, { emitEvent: false })
-
-    this.calculateGrandTotal();
-  }
-
-  calculateGrandTotal() {
-    let subTotal = 0;
-    this.items.controls.forEach((item: any) => {
-      subTotal += Number(item.get('SubTotal')?.value) || 0;
-    });
-    const discount =
-      Number(this.Addinletchallanform.get('Discount_Amount')?.value) || 0;
-    const totalAmount = subTotal - discount;
-    this.Addinletchallanform.patchValue({
-      Sub_Total: subTotal,
-      Total_Amount: totalAmount
-
-    }, { emitEvent: false });
-
-  }
-
-  AllchallanDetails() {
-    this._rest.AllInletChallan().subscribe((data: any) => {
-      console.log(data);
-      this.AllChallan = data.data;
-    }, (err: any) => {
-      console.log(err);
-    });
-  }
-
-  AllVendorchallanDetails() {
-    this._rest.ALlvendorChallandata().subscribe((data: any) => {
-      console.log(data);
-      this.AllVendorchallan = data.data;
-    }, (err: any) => {
-      console.log(err);
-    });
-  }
-
-  GetAllCustomer() {
-    this._rest.AllCustomer().subscribe((data: any) => {
-      console.log(data);
-      this.AllCustomerData = data.data;
-    }, (err: any) => {
-      console.log(err);
-    })
-  }
-
-  GetAllVendors() {
-    this._rest.AllVendor().subscribe((data: any) => {
-      console.log(data);
-      this.AllVendordata = data.data;
-    }, (err: any) => {
-      console.log(err);
-    });
-  }
-
-  SubmitInletChallan(): void {
-    if (this.Addinletchallanform.invalid) { this.Addinletchallanform.markAllAsTouched(); return; }
-    const formValue = this.Addinletchallanform.value;
-    const payload = {
-      Sales_Order_Number: formValue.Sales_Order_Number,
-      Customer_Name: formValue.Customer_Name,
-      Company_Name: formValue.Company_Name,
-      Company_Address: formValue.Company_Address,
-      GST_No: formValue.GST_No,
-      Delivery_Address: formValue.Delivery_Address,
-      Discount_Amount: formValue.Discount_Amount,
-      Mode_of_Transport: formValue.Mode_of_Transport,
-      Transporter_Name: formValue.Transporter_Name,
-      Vehicle_Number: formValue.Vehicle_Number,
-      Remark: formValue.Remark,
-      Work_Status: formValue.Work_Status,
-      Delivery_Status: formValue.Delivery_Status,
-      Challan_Status: formValue.Challan_Status,
-
-      // Discount_Amount: Number(formValue.Discount_Amount) || 0,
-      items: formValue.items.map(
-        (item: any) => ({
-          SalesOrderItem_id: item.SalesOrderItem_id,
-          Product_Name: item.Product_Name,
-          HSN_Code: item.HSN_Code,
-          Product_Quantity: Number(item.Product_Quantity),
-          Rate: Number(item.Rate)
-        }))
-    };
-
-    console.log('Create Inlet Challan:', payload);
-    this._rest.AddInletchallan(payload).subscribe({
-      next: (res: any) => {
-        if (res.success) { // Close modal
-          // const modalElement = document.getElementById('createInletChallanModal');
-          // if (modalElement) {
-          //   const modal = (window as any).bootstrap.Modal.getInstance(modalElement);
-          //   if (modal) {
-          //     modal.hide();
-          //   }
-          // }
-          this.GetAllSalesOrders();
-        } else {
-        }
-      },
-      error: (err: any) => {
-        console.error(err);
-      }
-    });
   }
 
 }

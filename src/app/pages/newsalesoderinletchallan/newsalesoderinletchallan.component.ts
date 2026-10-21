@@ -41,6 +41,7 @@ export class NewsalesoderinletchallanComponent {
       'items'
     ) as FormArray;
   }
+
   GetAllSalesOrders(): void {
     this.loading = true;
     this._rest.AllSalesOrders()
@@ -183,6 +184,7 @@ export class NewsalesoderinletchallanComponent {
     const rate = Number(item.get('Rate')?.value) || 0;
     return quantity * rate;
   }
+
   // SUB TOTAL
   GetSubTotal(): number {
     let total = 0;
@@ -193,20 +195,24 @@ export class NewsalesoderinletchallanComponent {
     });
     return total;
   }
+
   // TOTAL AFTER DISCOUNT
   GetTotalAmount(): number {
     const subtotal = this.GetSubTotal();
     const discount = Number(this.InletChallanForm.get('Discount_Amount')?.value) || 0;
     return Math.max(subtotal - discount, 0);
   }
+
   // CGST
   GetCGST(): number {
     return this.GetTotalAmount() * 0.09;
   }
+
   // SGST
   GetSGST(): number {
     return this.GetTotalAmount() * 0.09;
   }
+
   // GRAND TOTAL
   GetGrandTotal(): number {
     return (
@@ -215,6 +221,7 @@ export class NewsalesoderinletchallanComponent {
       this.GetSGST()
     );
   }
+  
   // SUBMIT
   SubmitInletChallan(): void {
     if (this.InletChallanForm.invalid) { this.InletChallanForm.markAllAsTouched(); return; }
@@ -264,7 +271,15 @@ export class NewsalesoderinletchallanComponent {
         },
         error: (err: any) => {
           console.error(err);
+
+          const message =
+            err.error?.message || 'Something went wrong. Please try again.';
+
+          alert(message);
         }
+        // error: (err: any) => {
+        //   console.error(err);
+        // }
       });
   }
   // VIEW CHALLAN
@@ -314,4 +329,5 @@ export class NewsalesoderinletchallanComponent {
 
   //   });
   // }
+
 }
