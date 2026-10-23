@@ -71,52 +71,73 @@
         <div class="card">
             <div class="card-body">
                 <h4><b>3. Products</b></h4>
-                <div class="table-responsive">
-                    <table class="table table-bordered align-middle">
-                        <thead class="table-light">
+                <div formArrayName="items" class="table-responsive">
+                    <table class="table table-bordered table-striped align-middle">
+
+                        <thead class="table-dark">
                             <tr>
-                                <th>#</th>
+                                <th>Sr.</th>
                                 <th>Product Name</th>
-                                <th>HSN Code</th>
-                                <th>Quantity</th>
-                                <th>Rate</th>
-                                <th>Subtotal</th>
-                                <th>Action</th>
+                                <th>HSN</th>
+                                <th>Product Qty</th>
+                                <th>Ordered Qty</th>
+                                <th>Produced Qty</th>
+                                <th>Damaged Qty</th>
+                                <th>Faulty Qty</th>
+                                <th>Good Qty</th>
+                                <th>Extra Qty</th>
+                                <th>Rate (₹)</th>
                             </tr>
                         </thead>
 
-                        <tbody formArrayName="items">
+                        <tbody>
                             <tr *ngFor="let item of items.controls; let i = index" [formGroupName]="i">
+
                                 <td>{{ i + 1 }}</td>
-                                <td><input type="text" class="form-control" formControlName="Product_Name" readonly>
-                                </td>
-                                <td><input type="text" class="form-control" formControlName="HSN_Code" readonly> </td>
-                                <td><input type="number" class="form-control" min="1" formControlName="Product_Quantity"
-                                        [ngClass]="{'is-invalid': submitted && item.get('Product_Quantity')?.invalid}">
-                                    <div class="text-danger small"
-                                        *ngIf=" submitted && item.get('Product_Quantity')?.invalid ">
-                                        Enter a quantity greater than zero.
-                                    </div>
-                                </td>
+
                                 <td>
-                                    <input type="number" class="form-control" min="0" formControlName="Rate"
-                                        [ngClass]="{'is-invalid':submitted && item.get('Rate')?.invalid }">
-                                    <div class="text-danger small" *ngIf="submitted && item.get('Rate')?.invalid">
-                                        Enter a valid rate.
-                                    </div>
+                                    <input type="text" class="form-control" formControlName="Product_Name" readonly>
                                 </td>
-                                <td class="text-end">
-                                    ₹ {{ GetItemTotal(i) | number:'1.2-2' }}
-                                </td>
+
                                 <td>
-                                    <button type="button" class="btn btn-danger btn-sm" (click)="removeProduct(i)">
-                                        Remove
-                                    </button>
+                                    <input type="text" class="form-control" formControlName="HSN_Code" readonly>
                                 </td>
-                            </tr>
-                            <tr *ngIf="items.length === 0">
-                                <td colspan="7" class="text-center text-muted">
-                                    Select a sales order to load its products.
+
+                                <td>
+                                    <input type="number" class="form-control" formControlName="Product_Quantity"
+                                        min="0">
+                                </td>
+
+                                <td>
+                                    <input type="number" class="form-control" formControlName="Ordered_Quantity"
+                                        readonly>
+                                </td>
+
+                                <td>
+                                    <input type="number" class="form-control" formControlName="Produced_Quantity"
+                                        min="0" (input)="CalculateProduction(i)">
+                                </td>
+
+                                <td>
+                                    <input type="number" class="form-control" formControlName="Damaged_Quantity" min="0"
+                                        (input)="CalculateProduction(i)">
+                                </td>
+
+                                <td>
+                                    <input type="number" class="form-control" formControlName="Faulty_Quantity" min="0"
+                                        (input)="CalculateProduction(i)">
+                                </td>
+
+                                <td>
+                                    <input type="number" class="form-control" formControlName="Good_Quantity" readonly>
+                                </td>
+
+                                <td>
+                                    <input type="number" class="form-control" formControlName="Extra_Quantity" readonly>
+                                </td>
+
+                                <td>
+                                    <input type="number" class="form-control" formControlName="Rate" min="0">
                                 </td>
                             </tr>
                         </tbody>
@@ -172,7 +193,8 @@
                             <option value="Sea/Maritime Transport">Sea/Maritime Transport</option>
                             <option value="Air Transport">Air Transport</option>
                             <option value="Rail Transport">Rail Transport</option>
-                            <option value="Multimodal and Intermodal Transport">Multimodal and Intermodal Transport</option>
+                            <option value="Multimodal and Intermodal Transport">Multimodal and Intermodal Transport
+                            </option>
                         </select> <br>
                     </div><br>
 

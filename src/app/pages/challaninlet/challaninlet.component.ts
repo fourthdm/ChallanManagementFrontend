@@ -89,6 +89,7 @@ export class ChallaninletComponent implements OnInit {
 
   createProduct(item?: any): FormGroup {
     return this.fb.group({
+      Product_id: [item?.Product_id ?? null],
       SalesOrderItem_id: [item?.SalesOrderItem_id ?? null],
       Product_Name: [item?.Product_Name ?? '', Validators.required],
       HSN_Code: [item?.HSN_Code ?? ''],
@@ -96,6 +97,15 @@ export class ChallaninletComponent implements OnInit {
         item?.Ordered_Quantity ?? item?.Product_Quantity ?? 1,
         [Validators.required, Validators.min(1)]
       ],
+      Ordered_Quantity: [
+        item?.Ordered_Quantity ?? item?.Product_Quantity ?? 0,
+        [Validators.required, Validators.min(0)]
+      ],
+      Produced_Quantity: [0, [Validators.min(0)]],
+      Damaged_Quantity: [0, [Validators.min(0)]],
+      Faulty_Quantity: [0, [Validators.min(0)]],
+      Good_Quantity: [0],
+      Extra_Quantity: [0],
       Rate: [
         item?.Rate ?? 0,
         [Validators.required, Validators.min(0)]
@@ -115,6 +125,7 @@ export class ChallaninletComponent implements OnInit {
     this.items.removeAt(index);
     this.calculateGrandTotal();
   }
+
   autoFillBySalesOrder(salesOrderNumber: string): void {
 
     // Step 1: Always clear previously loaded products
@@ -164,9 +175,9 @@ export class ChallaninletComponent implements OnInit {
 
     // Step 5: Recalculate totals
     this.calculateGrandTotal();
-
     console.log('Loaded products:', this.items.value);
   }
+
   GetItemTotal(index: number): number {
     const item = this.items.at(index);
 
@@ -246,16 +257,37 @@ export class ChallaninletComponent implements OnInit {
       CGST_amount: this.GetCGST(),
       SGST_amount: this.GetSGST(),
       Grand_Total: this.GetGrandTotal(),
-
       items: formData.items.map((item: any) => ({
-        SalesOrderItem_id: item.SalesOrderItem_id,
+        Product_id: item.Product_id || null,
+        SalesOrderItem_id: item.SalesOrderItem_id || null,
         Product_Name: item.Product_Name,
-        HSN_Code: item.HSN_Code,
-        Product_Quantity: Number(item.Product_Quantity),
-        Rate: Number(item.Rate)
+        HSN_Code: item.HSN_Code || '',
+        Product_Quantity: Number(item.Product_Quantity) || 0,
+        Ordered_Quantity: Number(item.Ordered_Quantity) || 0,
+        Produced_Quantity: Number(item.Produced_Quantity) || 0,
+        Damaged_Quantity: Number(item.Damaged_Quantity) || 0,
+        Faulty_Quantity: Number(item.Faulty_Quantity) || 0,
+        Good_Quantity: Number(item.Good_Quantity) || 0,
+        Extra_Quantity: Number(item.Extra_Quantity) || 0,
+        Rate: Number(item.Rate) || 0
       }))
+      // items: formData.items.map((item: any) => ({
+      //   SalesOrderItem_id: item.SalesOrderItem_id,
+      //   Product_Name: item.Product_Name,
+      //   HSN_Code: item.HSN_Code,
+      //   Product_Quantity: Number(item.Product_Quantity),
+      //   Rate: Number(item.Rate)
+      // }))
     };
-
+    console.table(
+      this.Addinletchallanform.value.items.map((item: any) => ({
+        Product_Name: item.Product_Name,
+        Product_id: item.Product_id,
+        SalesOrderItem_id: item.SalesOrderItem_id,
+        Ordered_Quantity: item.Ordered_Quantity,
+        Extra_Quantity: item.Extra_Quantity
+      }))
+    );
     console.log('Submitting Challan:', payload);
 
     this._rest.AddInletchallan(payload).subscribe({
@@ -290,6 +322,34 @@ export class ChallaninletComponent implements OnInit {
         alert(err.error?.message || 'Unable to create challan.');
       }
     });
+  }
+
+  CalculateProduction(index: number): void {
+    const item = this.items.at(index);
+
+    const ordered = Number(
+      item.get('Ordered_Quantity')?.value
+    ) || 0;
+
+    const produced = Number(
+      item.get('Produced_Quantity')?.value
+    ) || 0;
+
+    const damaged = Number(
+      item.get('Damaged_Quantity')?.value
+    ) || 0;
+
+    const faulty = Number(
+      item.get('Faulty_Quantity')?.value
+    ) || 0;
+
+    const good = Math.max(produced - damaged - faulty, 0);
+    const extra = Math.max(good - ordered, 0);
+
+    item.patchValue({
+      Good_Quantity: good,
+      Extra_Quantity: extra
+    }, { emitEvent: false });
   }
 
 }
