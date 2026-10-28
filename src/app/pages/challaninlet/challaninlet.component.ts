@@ -18,13 +18,10 @@ export class ChallaninletComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private _rest: RestService
-  ) {
-
-  }
+  ) { }
 
   ngOnInit(): void {
     this.initializeForm();
-
     this.Addinletchallanform
       .get('Sales_Order_Number')!
       .valueChanges
@@ -32,16 +29,12 @@ export class ChallaninletComponent implements OnInit {
       .subscribe((salesOrderNumber: string) => {
         this.autoFillBySalesOrder(salesOrderNumber);
       });
-
     // Recalculate whenever quantity, rate, or discount changes.
     this.items.valueChanges.subscribe(() => this.calculateGrandTotal());
-
     this.Addinletchallanform
       .get('Discount_Amount')!
       .valueChanges.subscribe(() => this.calculateGrandTotal());
-
     // Keep your existing API method that loads AllSaleorders.
-
     this.GetAllSalesOrders();
   }
 
@@ -126,9 +119,8 @@ export class ChallaninletComponent implements OnInit {
     this.calculateGrandTotal();
   }
 
-  autoFillBySalesOrder(salesOrderNumber: string): void {
 
-    // Step 1: Always clear previously loaded products
+  autoFillBySalesOrder(salesOrderNumber: string): void {
     this.items.clear();
 
     if (!salesOrderNumber) {
@@ -145,7 +137,6 @@ export class ChallaninletComponent implements OnInit {
       return;
     }
 
-    // Step 2: Find the selected sales order
     const order = this.AllSaleorders.find(
       (item: any) =>
         String(item.Sales_Order_Number) === String(salesOrderNumber)
@@ -156,7 +147,6 @@ export class ChallaninletComponent implements OnInit {
       return;
     }
 
-    // Step 3: Fill customer details
     this.Addinletchallanform.patchValue({
       Customer_Name: order.Customer_Name ?? '',
       Company_Name: order.Company_Name ?? '',
@@ -166,17 +156,91 @@ export class ChallaninletComponent implements OnInit {
       Discount_Amount: Number(order.Discount_Amount) || 0
     });
 
-    // Step 4: Add products only once
     const products = Array.isArray(order.items) ? order.items : [];
 
+    if (products.length === 0) {
+      console.warn('No products found for Sales Order:', salesOrderNumber);
+      this.calculateGrandTotal();
+      return;
+    }
+
     products.forEach((product: any) => {
-      this.items.push(this.createProduct(product));
+      const productId =
+        product.Product_id ?? product.product_id ?? null;
+
+      const salesOrderItemId =
+        product.SalesOrderItem_id ?? product.Sales_Order_Item_id ?? null;
+
+      this.items.push(
+        this.createProduct({
+          ...product,
+          Product_id: productId,
+          SalesOrderItem_id: salesOrderItemId
+        })
+      );
     });
 
-    // Step 5: Recalculate totals
+    console.table(
+      this.items.getRawValue().map((product: any) => ({
+        Product_Name: product.Product_Name,
+        Product_id: product.Product_id,
+        SalesOrderItem_id: product.SalesOrderItem_id
+      }))
+    );
+
     this.calculateGrandTotal();
-    console.log('Loaded products:', this.items.value);
   }
+
+  // autoFillBySalesOrder(salesOrderNumber: string): void {
+  //   // Step 1: Always clear previously loaded products
+  //   this.items.clear();
+
+  //   if (!salesOrderNumber) {
+  //     this.Addinletchallanform.patchValue({
+  //       Customer_Name: '',
+  //       Company_Name: '',
+  //       Company_Address: '',
+  //       GST_No: '',
+  //       Delivery_Address: '',
+  //       Discount_Amount: 0
+  //     });
+
+  //     this.calculateGrandTotal();
+  //     return;
+  //   }
+
+  //   // Step 2: Find the selected sales order
+  //   const order = this.AllSaleorders.find(
+  //     (item: any) =>
+  //       String(item.Sales_Order_Number) === String(salesOrderNumber)
+  //   );
+
+  //   if (!order) {
+  //     console.error('Sales order not found:', salesOrderNumber);
+  //     return;
+  //   }
+
+  //   // Step 3: Fill customer details
+  //   this.Addinletchallanform.patchValue({
+  //     Customer_Name: order.Customer_Name ?? '',
+  //     Company_Name: order.Company_Name ?? '',
+  //     Company_Address: order.Company_Address ?? '',
+  //     GST_No: order.GST_No ?? '',
+  //     Delivery_Address: order.Delivery_Address ?? '',
+  //     Discount_Amount: Number(order.Discount_Amount) || 0
+  //   });
+
+  //   // Step 4: Add products only once
+  //   const products = Array.isArray(order.items) ? order.items : [];
+
+  //   products.forEach((product: any) => {
+  //     this.items.push(this.createProduct(product));
+  //   });
+
+  //   // Step 5: Recalculate totals
+  //   this.calculateGrandTotal();
+  //   console.log('Loaded products:', this.items.value);
+  // }
 
   GetItemTotal(index: number): number {
     const item = this.items.at(index);
@@ -191,7 +255,6 @@ export class ChallaninletComponent implements OnInit {
     return this.items.controls.reduce((total, control) => {
       const quantity = Number(control.get('Product_Quantity')?.value) || 0;
       const rate = Number(control.get('Rate')?.value) || 0;
-
       return total + quantity * rate;
     }, 0);
   }
@@ -257,9 +320,25 @@ export class ChallaninletComponent implements OnInit {
       CGST_amount: this.GetCGST(),
       SGST_amount: this.GetSGST(),
       Grand_Total: this.GetGrandTotal(),
+
+      // items: formData.items.map((item: any) => ({
+      //   Product_id: item.Product_id || null,
+      //   SalesOrderItem_id: item.SalesOrderItem_id || null,
+      //   Product_Name: item.Product_Name,
+      //   HSN_Code: item.HSN_Code || '',
+      //   Product_Quantity: Number(item.Product_Quantity) || 0,
+      //   Ordered_Quantity: Number(item.Ordered_Quantity) || 0,
+      //   Produced_Quantity: Number(item.Produced_Quantity) || 0,
+      //   Damaged_Quantity: Number(item.Damaged_Quantity) || 0,
+      //   Faulty_Quantity: Number(item.Faulty_Quantity) || 0,
+      //   Good_Quantity: Number(item.Good_Quantity) || 0,
+      //   Extra_Quantity: Number(item.Extra_Quantity) || 0,
+      //   Rate: Number(item.Rate) || 0
+      // }))
+
       items: formData.items.map((item: any) => ({
-        Product_id: item.Product_id || null,
-        SalesOrderItem_id: item.SalesOrderItem_id || null,
+        Product_id: item.Product_id ?? null,
+        SalesOrderItem_id: item.SalesOrderItem_id ?? null,
         Product_Name: item.Product_Name,
         HSN_Code: item.HSN_Code || '',
         Product_Quantity: Number(item.Product_Quantity) || 0,
@@ -326,6 +405,7 @@ export class ChallaninletComponent implements OnInit {
 
   CalculateProduction(index: number): void {
     const item = this.items.at(index);
+    // const product = this.items[index];
 
     const ordered = Number(
       item.get('Ordered_Quantity')?.value

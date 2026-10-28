@@ -1,46 +1,15 @@
-.i {
-    padding-left: 2%;
-    float: right;
-}
-
-i:hover {
-    cursor: pointer;
-}
-
-.externalcard {
-    padding: 5%;
-    border: none;
-    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
-}
-
-.carddata {
-    /* background-color: rgba(237, 237, 255); */
-    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
-}
-
-button {
-    font-family: 'CustomFont';
-}
-
-p,
-h2,
-h4,
-h5 {
-    font-family: 'CustomFont';
-}
-
 label {
     font-size: 16px;
     /* font-weight: 600; */
     line-height: 28px;
     color: black;
-    font-family: 'CustomFont';
 }
 
 .colmd {
     display: grid;
     grid-template-columns: repeat(5, auto);
     gap: 5px;
+
 }
 
 .formcheckbox {
@@ -56,92 +25,139 @@ label {
 
 .Discount {
     float: right;
+    padding-left: 5%;
 }
 
-/* 
 i {
     padding-top: 5%;
     float: right;
-} */
+}
 
 .radio {
     font-size: 22px;
     margin-right: 5% !important;
 }
 
-.btn-secondary {
-    margin-left: 5px;
+.card {
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
-@font-face {
-    font-family: 'CustomFont';
-    src: url('/assets/font/centurygothic.ttf');
-    /* src: url('/assets/font/inter.regular.ttf'); */
+
+
+
+.work-tabs {
+    display: flex;
+    gap: 20px;
 }
 
-.breakdown {
-    background-color: red;
+.work-tabs .nav-item {
+    flex: 1;
 }
 
-.status-line {
-    display: inline-block;
-    padding: 2px;
-    border-radius: 5px;
+.work-tabs .nav-link {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 18px 20px;
+    color: #222;
+    transition: .3s;
+    text-align: left;
+    width: 100%;
 }
 
-.status-breakdown {
-    background: #dc3545;
-    color: #fff;
+/* .work-tabs .nav-link:hover {
+    border-color: #0d6efd;
+} */
+
+.tab-card {
+    display: flex;
+    align-items: center;
 }
 
-.status-breakdown i {
-    color: #fff;
+.radio-circle {
+    width: 28px;
+    height: 28px;
+    border: 2px solid #2d445e;
+    border-radius: 50%;
+    margin-right: 18px;
+    position: relative;
+    flex-shrink: 0;
 }
 
-.status-completed {
+/* Selected Radio */
+.nav-link.active .radio-circle::after {
+    content: "";
+    width: 14px;
+    height: 14px;
+    background: #0278ff;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+.tab-content h5 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.tab-content p {
+    margin: 3px 0 0;
+    color: #666;
+    font-size: 16px;
+}
+
+/* Active Tab */
+.work-tabs .nav-link.active {
+    background: #fff;
+    /* border: 2px solid #0d4c92; */
     color: #000;
 }
 
-.status-processing {
-    color: #000;
+/* Remove Bootstrap shadow */
+.work-tabs .nav-link:focus {
+    box-shadow: none;
 }
 
-.status-hold {
-    /* background: #ffc107; */
-    color: #000;
-}
+/* Mobile */
+@media (max-width:768px) {
 
-.status-queue {
-    /* background: #6c757d; */
-    color: #000;
-}
+    .work-tabs {
+        flex-direction: column;
+    }
 
-.iconi {
-    float: right;
-    padding-top: 5%;
-}
+    .work-tabs .nav-item {
+        width: 100% !important;
+        padding: 0 !important;
+    }
 
-.colmddelivery {
-    display: grid;
-    grid-template-columns: repeat(3, auto);
-    gap: 5px;
-}
+    .tab-content h5 {
+        font-size: 18px;
+    }
 
-.modal-body,
-.modal-header,
-.modal-footer {
-    background-color: rgba(237, 237, 255);
+    .tab-content p {
+        font-size: 14px;
+    }
 }
 
 sup{
     color: red;
 }
 
-b{
-    color: #000;
+label{
+    font-family: 'CustomFont' ;
 }
 
-.card {
-    border: none;
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+h2, h5, h4, select, option, button {
+    font-family: 'CustomFont';
+}
+
+@font-face {
+    font-family: 'CustomFont';
+    src: url('/assets/font/centurygothic.ttf');
+    /* src: url('/assets/font/inter.regular.ttf'); */
 }

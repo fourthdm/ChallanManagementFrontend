@@ -251,17 +251,6 @@ export class InletchallanviewComponent {
     this.items.removeAt(index);
   }
 
-  // Update() {
-  //   const Challan_id = this.Updateinletchallanfrom.value.Challan_id;
-  //   this._rest.UpdateChallan(Challan_id, this.Updateinletchallanfrom.value).subscribe({
-  //     next: (res: any) => {
-  //       alert(res.message);
-  //     },
-  //     error: (err) => {
-  //       console.log(err);
-  //     }
-  //   });
-  // }
 
   Update() {
 
@@ -302,6 +291,17 @@ export class InletchallanviewComponent {
     });
   }
 
+  // Update() {
+  //   const Challan_id = this.Updateinletchallanfrom.value.Challan_id;
+  //   this._rest.UpdateChallan(Challan_id, this.Updateinletchallanfrom.value).subscribe({
+  //     next: (res: any) => {
+  //       alert(res.message);
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //     }
+  //   });
+  // }
   selectedchallanId = 0;
   adminPassword = '';
 

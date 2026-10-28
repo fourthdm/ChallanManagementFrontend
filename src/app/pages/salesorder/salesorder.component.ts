@@ -10,6 +10,7 @@ declare var bootstrap: any;
   templateUrl: './salesorder.component.html',
   styleUrls: ['./salesorder.component.css']
 })
+
 export class SalesorderComponent implements OnInit {
 
   AllSaleorders: any[] = [];

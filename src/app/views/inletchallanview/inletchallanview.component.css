@@ -1,150 +1,150 @@
-.cards {
-    background-color: rgba(237, 237, 255);
-}
-
-.card-bodys {
-    padding: 4%;
-}
-
-.maincard {
-    border: none;
-    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
-}
-
-.cards {
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-    /* box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px; */
-}
-
-.Updatedate {
-    padding-left: 5%;
-}
-
-.times {
-    float: right;
-}
-
-.actions {
-    float: right;
-
-    :is(i) {
-        padding-left: 10px;
+    .cards {
+        background-color: rgba(237, 237, 255);
     }
-}
-.actions:hover{
-    cursor: pointer;
-}
 
-.amounts {
-    float: right !important;
-}
+    .card-bodys {
+        padding: 4%;
+    }
 
-.d {
-    display: grid;
-    grid-template-columns: repeat(2);
-    gap: 35px;
-}
+    .maincard {
+        border: none;
+        box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+    }
 
-.table-striped {
-    background-color: rgb(237, 237, 255);
-}
-.historytext {
-    font-size: 20px;
-}
+    .cards {
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+        /* box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px; */
+    }
 
-.historytext:hover{
-    cursor: pointer;
-}
-label{
-    font-size: 16px;
-    /* font-weight: 600; */
-    line-height: 28px;
-    color: black;
-}
+    .Updatedate {
+        padding-left: 5%;
+    }
 
-.colmd{
-    display: grid;
-    grid-template-columns: repeat(5, auto);
-    gap: 5px;
-    
-}
+    .times {
+        float: right;
+    }
 
-.formcheckbox {
-    display: grid;
-    grid-template-columns: repeat(3);
-    gap: 10px;
-    border: 1px solid #000;
-    background-color: white;
-    border-radius: 3px;
-    padding: 3% 8% 3% 8%;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
-}
+    .actions {
+        float: right;
 
-.Discount{
-    float: right;
-}
+        :is(i) {
+            padding-left: 10px;
+        }
+    }
+    .actions:hover{
+        cursor: pointer;
+    }
 
-i{
-    padding-top: 5%;
-    float: right;
-}
+    .amounts {
+        float: right !important;
+    }
 
-.radio{
-    font-size: 22px;
-    margin-right: 5%!important;
-}
+    .d {
+        display: grid;
+        grid-template-columns: repeat(2);
+        gap: 35px;
+    }
 
-.tranname{
-    padding-left: 5%;
-}
+    .table-striped {
+        background-color: rgb(237, 237, 255);
+    }
+    .historytext {
+        font-size: 20px;
+    }
 
-.modal-body{
-    padding: 5%;
-}
-p,
-th,
-td,
-h1,
-h3,
-h5,
-label,
-b {
-    font-family: 'CustomFont';
-}
+    .historytext:hover{
+        cursor: pointer;
+    }
+    label{
+        font-size: 16px;
+        /* font-weight: 600; */
+        line-height: 28px;
+        color: black;
+    }
 
-span,
-select,
-option,
-button {
-    font-family: 'CustomFont';
-}
+    .colmd{
+        display: grid;
+        grid-template-columns: repeat(5, auto);
+        gap: 5px;
+        
+    }
 
-@font-face {
-    font-family: 'CustomFont';
-     src: url('/assets/font/centurygothic.ttf');
-    /* src: url('/assets/font/inter.regular.ttf'); */
-}
+    .formcheckbox {
+        display: grid;
+        grid-template-columns: repeat(3);
+        gap: 10px;
+        border: 1px solid #000;
+        background-color: white;
+        border-radius: 3px;
+        padding: 3% 8% 3% 8%;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    }
 
-.tables{
-background-color:   rgb(237, 237, 255);;
-}
+    .Discount{
+        float: right;
+    }
+
+    i{
+        padding-top: 5%;
+        float: right;
+    }
+
+    .radio{
+        font-size: 22px;
+        margin-right: 5%!important;
+    }
+
+    .tranname{
+        padding-left: 5%;
+    }
+
+    .modal-body{
+        padding: 5%;
+    }
+    p,
+    th,
+    td,
+    h1,
+    h3,
+    h5,
+    label,
+    b {
+        font-family: 'CustomFont';
+    }
+
+    span,
+    select,
+    option,
+    button {
+        font-family: 'CustomFont';
+    }
+
+    @font-face {
+        font-family: 'CustomFont';
+        src: url('/assets/font/centurygothic.ttf');
+        /* src: url('/assets/font/inter.regular.ttf'); */
+    }
+
+    .tables{
+    background-color:   rgb(237, 237, 255);;
+    }
 
 
-.iconi {
-    float: right;
-    padding-top: 6%;
-}
+    .iconi {
+        float: right;
+        padding-top: 6%;
+    }
 
-.colmddelivery {
-    display: grid;
-    grid-template-columns: repeat(3, auto);
-    gap: 5px;
-}
+    .colmddelivery {
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        gap: 5px;
+    }
 
-.modal-body, .modal-header, .modal-footer{
-      background-color: rgba(237, 237, 255);    
-}
-.card {
-    background-color: rgba(237, 237, 255);
-    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
-}
+    .modal-body, .modal-header, .modal-footer{
+        background-color: rgba(237, 237, 255);    
+    }
+    .card {
+        background-color: rgba(237, 237, 255);
+        box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+    }
